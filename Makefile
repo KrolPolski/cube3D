@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tparratt <tparratt@student.42.fr>          +#+  +:+       +#+         #
+#    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/08/26 15:25:48 by tparratt         ###   ########.fr        #
+#    Updated: 2024/08/28 09:06:50 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC			=	srcs/main.c \
 					srcs/validation.c \
 					srcs/utils.c \
 					srcs/parsing.c \
+					srcs/raycaster.c
 
 LIBFT		=	libft/libft.a
 

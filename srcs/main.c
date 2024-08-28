@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:42:37 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/26 17:46:37 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/28 08:58:53 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int main(int argc, char **argv)
     }
     else
         ft_putendl_fd("Incorrect number of arguments", 2);
+	setup_mlx(&map);
     return (0);
 }
