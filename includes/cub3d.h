@@ -23,5 +23,8 @@ void	print_2d(char **arr);
 int  	map_line_count(char *arg);
 void 	set_initial_map(char *arg, int lines, t_map *map);
 void 	set_final(t_map *map);
+void    validate(t_map *map);
+int		all_whitespace(char *line);
+void	free_map(t_map *map);
 
 #endif

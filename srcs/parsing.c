@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
+/*   Updated: 2024/08/28 14:57:22 by tparratt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 static int identify_line(char *line)
@@ -5,7 +17,7 @@ static int identify_line(char *line)
     if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "EA", 2) || !ft_strncmp(line, "WE", 2) ||
             !ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1))
         return (0);
-    else if (!ft_strncmp(line, "\n", 1)) // or all whitespace
+    else if (!ft_strncmp(line, "\n", 1)/* || all_whitespace(line)*/) // or all whitespace
         return (1);
     else
         return (2);
@@ -35,7 +47,7 @@ static int file_to_map(t_map *map, int i, char *line)
     char    *floor;
     char    *ceiling;
 
-    if (identify_line(line) == 2)
+    if (identify_line(line) == 2 || (i && identify_line(line) == 1)) // to add also empty lines within the map
     {
         map->map[i] = ft_strdup_mod(line);
         i++;
@@ -108,7 +120,7 @@ int  map_line_count(char *arg)
         line = get_next_line(fd);
         if (!line)
             break ;
-        if (identify_line(line) == 2)
+        if ((identify_line(line) == 2) || (no_of_lines && identify_line(line) == 1))
             no_of_lines++;
     }
     close(fd);
