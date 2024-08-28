@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/28 14:57:22 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:19:46 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,49 @@ static int  *set_color_array(char *str)
 
 static int file_to_map(t_map *map, int i, char *line)
 {
-    char    **arr;
-    char    *floor;
-    char    *ceiling;
+    char        **arr;
+    char        *floor;
+    char        *ceiling;
+    static int  flag;
 
     if (identify_line(line) == 2 || (i && identify_line(line) == 1)) // to add also empty lines within the map
     {
+        flag = 1;
         map->map[i] = ft_strdup_mod(line);
         i++;
     }
     else if (identify_line(line) == 0)
     {
-        arr = ft_split(line, ' ');
-        if (!ft_strncmp(arr[0], "NO", 2))
-            map->no = ft_strdup_mod(arr[1]);
-        if (!ft_strncmp(arr[0], "SO", 2))
-            map->so = ft_strdup_mod(arr[1]);
-        if (!ft_strncmp(arr[0], "EA", 2))
-            map->ea = ft_strdup_mod(arr[1]);
-        if (!ft_strncmp(arr[0], "WE", 2))
-            map->we = ft_strdup_mod(arr[1]);
-        if (!ft_strncmp(arr[0], "F", 1))
+        if (flag != 1)
         {
-            floor = ft_strdup_mod(arr[1]);
-            map->f = set_color_array(floor); 
-            free(floor);
+            arr = ft_split(line, ' ');
+            if (!ft_strncmp(arr[0], "NO", 2))
+                map->no = ft_strdup_mod(arr[1]);
+            if (!ft_strncmp(arr[0], "SO", 2))
+                map->so = ft_strdup_mod(arr[1]);
+            if (!ft_strncmp(arr[0], "EA", 2))
+                map->ea = ft_strdup_mod(arr[1]);
+            if (!ft_strncmp(arr[0], "WE", 2))
+                map->we = ft_strdup_mod(arr[1]);
+            if (!ft_strncmp(arr[0], "F", 1))
+            {
+                floor = ft_strdup_mod(arr[1]);
+                map->f = set_color_array(floor); 
+                free(floor);
+            }
+            if (!ft_strncmp(arr[0], "C", 2))
+            {
+                ceiling = ft_strdup_mod(arr[1]);
+                map->c = set_color_array(ceiling);
+                free(ceiling);
+            }
+            free_2d(arr);
         }
-        if (!ft_strncmp(arr[0], "C", 2))
+        else
         {
-            ceiling = ft_strdup_mod(arr[1]);
-            map->c = set_color_array(ceiling);
-            free(ceiling);
+            ft_putendl_fd("Error\nElements must appear before map content", 2);
+            exit(1);
         }
-        free_2d(arr);
     }
     return (i);
 }
