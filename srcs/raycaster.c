@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/08/28 10:22:13 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/08/28 10:52:05 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,54 @@ void	ft_movehook(void *param)
 	}
 	ray_caster(info->mlx, info->map, info->img);
 }*/
+void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
+{
+	t_info	*info;
 
+	info = (t_info *)param;
+	if	(((keydata.key == MLX_KEY_M)
+			&& keydata.action == MLX_PRESS))
+	{
+		if (info->map_visible)
+		{
+			info->map_visible = false;
+			info->img->map->enabled = false;
+			info->img->plyr->enabled = false;
+			info->img->fg->enabled = false;
+			ft_printf("2D map turned off\n");
+		}
+		else
+		{
+			info->map_visible = true;
+			info->img->map->enabled = true;
+			info->img->plyr->enabled = true;
+			info->img->fg->enabled = true;
+			ft_printf("2D map turned on\n");
+		}
+	}
+}
 void init_img(t_info *info)
 {
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
+	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
+	info->img->map = mlx_new_image(info->mlx, info->map_width, info->map_height);
 	ft_memset(info->img->bg->pixels, 255, info->img->bg->width
 		* info->img->bg->height * BPP);
 	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
+	mlx_image_to_window(info->mlx, info->img->world, 0, 0);
 }
+
+void raycaster(mlx_t *mlx, t_map *map, t_images *img)
+{
+	
+}
+
+void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
+{
+	ft_printf("Drawing 2d map\n");
+}
+
 void setup_mlx(t_map *map)
 {
 	t_info info;
@@ -121,8 +160,15 @@ void setup_mlx(t_map *map)
 	info.map = map;
 	info.s_width = 1366;
 	info.s_height = 768;
+	info.map_size_factor = 0.75;
+	info.map_width = info.s_width * info.map_size_factor;
+	info.map_height = info.s_height * info.map_size_factor;
+	info.map_visible = true;
 	info.mlx = mlx_init(info.s_width, info.s_height, "cub3d", true);
 	init_img(&info);
+	draw_2d_map(info.mlx, info.map, &info);
+	//raycaster(info.mlx, info.map, info.img);
+	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop(info.mlx);
 	mlx_terminate(info.mlx);
 }

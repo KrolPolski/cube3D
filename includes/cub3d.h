@@ -25,7 +25,10 @@ typedef struct s_images
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
 	mlx_image_t		*fg;
+	mlx_image_t		*world;
 	mlx_image_t		*bg;
+	mlx_image_t		*plyr;
+	mlx_image_t		*map;
 } t_images;
 
 enum e_dir
@@ -47,6 +50,10 @@ typedef struct s_info
 	double	p_x;
 	double	p_y;
 	double	p_orient;
+	bool	map_visible;
+	double	map_size_factor;
+	int		map_width;
+	int		map_height;
 
 } t_info;
 
