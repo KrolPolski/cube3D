@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/28 16:26:03 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:36:09 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,21 @@ static int  all_remaining(int i, char **arr)
     return (1);
 }
 
-// static void check_walls(t_map *map)
-// {
-    
-// }
+static void check_walls(t_map *map) //finish this
+{
+    int i;
+
+    i = 0;
+    while (map->map[0][i])
+    {
+        if (map->map[0][i] != '1' && map->map[0][i] != ' ')
+        {
+            ft_putendl_fd("Error\nMap not surrounded by walls", 2);
+            exit(1);
+        }
+        i++;
+    }
+}
 
 static void valid_chars(char c)
 {
@@ -120,4 +131,5 @@ void    validate(t_map *map)
 {
     find_empty_line(map);
     check_chars(map);
+    check_walls(map);
 }
