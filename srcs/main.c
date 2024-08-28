@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/28 14:16:00 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:32:05 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     {
         if (check_file_extension(argv[1]))
             return (1);
-        no_of_lines = map_line_count(argv[1]); //detect empty lines in map here?
+        no_of_lines = map_line_count(argv[1]);
         set_initial_map(argv[1], no_of_lines, &map);
         set_final(&map);
         

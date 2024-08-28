@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/28 14:55:42 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:26:03 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,77 @@ static int  all_remaining(int i, char **arr)
 {
     while (arr[i])
     {
-        if (all_whitespace(arr[i]))
+        if (!all_whitespace(arr[i]))
             return (0);
         i++;
     }
     return (1);
 }
 
-void    validate(t_map *map)
+// static void check_walls(t_map *map)
+// {
+    
+// }
+
+static void valid_chars(char c)
+{
+    if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W' && c != ' ')
+    {
+        ft_putendl_fd("Error\nInvalid map character(s)", 2);
+        exit(1);
+    }
+}
+
+static int start_positions(char c, int player_count)
+{
+    if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+    {
+        player_count++;
+        if (player_count > 1)
+        {
+            ft_putendl_fd("Error\nMore than one start position", 2);
+            exit(1);
+        }
+    }
+    return (player_count);
+}
+
+static void check_chars(t_map *map)
+{
+    int i;
+    int j;
+    int player_count;
+    int empty_space_count;
+
+    i = 0;
+    player_count = 0;
+    empty_space_count = 0;
+    while (map->map[i])
+    {
+        j = 0;
+        while (map->map[i][j])
+        {
+            if (map->map[i][j] == '0')
+                empty_space_count++;
+            player_count = start_positions(map->map[i][j], player_count);
+            valid_chars(map->map[i][j]);
+            j++;
+        }
+        i++;
+    }
+    if (player_count == 0)
+    {
+        ft_putendl_fd("Error\nNo start position", 2);
+        exit(1);
+    }
+    if (empty_space_count == 0)
+    {
+        ft_putendl_fd("Error\nNo empty space", 2);
+        exit(1);
+    }
+}
+
+static void find_empty_line(t_map *map)
 {
     int i;
 
@@ -51,4 +114,10 @@ void    validate(t_map *map)
         }
         i++;
     }
+}
+
+void    validate(t_map *map)
+{
+    find_empty_line(map);
+    check_chars(map);
 }
