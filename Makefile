@@ -20,8 +20,12 @@ SRC			=	srcs/main.c \
 LIBFT		=	libft/libft.a
 
 MLX42_DIR   = ./MLX42
-MLX42_LIBS  = $(MLX42_DIR)/build/libmlx42.a -lglfw -ldl -pthread -lm
 
+ifeq ($(shell uname), Darwin)
+	MLX42_LIBS = $(MLX42_DIR)/build/libmlx42.a -L"/opt/homebrew/opt/glfw/lib" -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+else
+MLX42_LIBS  = $(MLX42_DIR)/build/libmlx42.a -lglfw -ldl -pthread -lm
+endif
 OBJ			=	$(SRC:.c=.o)
 
 CC			=	cc
