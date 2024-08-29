@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/29 15:19:06 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:54:31 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,50 @@ static int  all_remaining(int i, char **arr)
 //     }
 // }
 
+static size_t	valid_position(t_map *map, size_t i, size_t j)
+{
+    if (!map->map[i])
+        return (0);
+    else if (!map->map[i][j])
+        return (0);
+	else if (map->map[i][j] == '1')
+		return (0);
+	else if (map->map[i][j] == 1)
+		return (0);
+	return (1);
+}
+
+static void	fill_if_valid(t_map *map, size_t i, size_t j)
+{
+	if (!valid_position(map, i, j))
+		return ;
+	map->map[i][j] = 1;
+	fill_if_valid(map, i - 1, j);
+	fill_if_valid(map, i + 1, j);
+	fill_if_valid(map, i, j - 1);
+	fill_if_valid(map, i, j + 1);
+}
+
+static void	valid_path(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	fill_if_valid(map, 0, 0);
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (map->map[i][j] != '1' && map->map[i][j] != 1)
+                print_error("Map not surrounded by walls");
+			j++;
+		}
+		i++;
+	}
+}
+
 static void valid_chars(char c)
 {
     if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W' && c != ' ')
@@ -214,5 +258,6 @@ void    validate(t_map *map)
 {
     find_empty_line(map);
     check_chars(map);
+    valid_path(map); // need to create the whitespace around the outside of the array
     //check_walls(map);
 }
