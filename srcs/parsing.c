@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/28 15:39:25 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/29 10:23:17 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ static int file_to_map(t_map *map, int i, char *line)
             free_2d(arr);
         }
         else
-        {
-            ft_putendl_fd("Error\nElements must appear before map content", 2);
-            exit(1);
-        }
+            print_error("Elements must appear before map content");
     }
     return (i);
 }

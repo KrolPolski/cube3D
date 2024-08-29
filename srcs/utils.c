@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/28 14:55:37 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/29 11:48:48 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,22 @@ int	all_whitespace(char *line)
 			return (0);
 	}
 	return (1);
+}
+
+void	print_error(char *str)
+{
+	ft_putendl_fd("Error", 2);
+	ft_putendl_fd(str, 2);
+	exit(1);
+}
+
+size_t	len_2d(char **arr)
+{
+	size_t len;
+
+    len = 0;
+    while (arr[len])
+        len++;
+    len--;
+	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/28 15:32:05 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/08/29 10:18:15 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int main(int argc, char **argv)
     
     if (argc == 2)
     {
-        if (check_file_extension(argv[1]))
-            return (1);
+        check_file_extension(argv[1]);
         no_of_lines = map_line_count(argv[1]);
         set_initial_map(argv[1], no_of_lines, &map);
         set_final(&map);
