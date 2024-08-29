@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/08/28 10:52:05 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:07:24 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,12 @@ void init_img(t_info *info)
 	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->map = mlx_new_image(info->mlx, info->map_width, info->map_height);
-	ft_memset(info->img->bg->pixels, 255, info->img->bg->width
+	ft_memset(info->img->bg->pixels, 180, info->img->bg->width
 		* info->img->bg->height * BPP);
 	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
 	mlx_image_to_window(info->mlx, info->img->world, 0, 0);
+	ft_memset(info->img->map->pixels, 255, info->img->bg->width
+		* info->img->bg->height * BPP);
 }
 
 void raycaster(mlx_t *mlx, t_map *map, t_images *img)
@@ -150,7 +152,21 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img)
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {
+	int x;
+	int y;
+	int sq_w;
+	int	sq_h;
 	ft_printf("Drawing 2d map\n");
+	mlx_image_to_window(info->mlx, info->img->map, info->map_width / 8, info->map_height / 8);
+	x = 0;
+	y = 0;
+	ft_printf("map->map[0] is '%s'\n", map->map[0]);
+	//x = ft_strlen(map->map[0]);
+	//while (map->map[y])
+	{
+		//y++;
+	}
+	ft_printf("Map is %d wide and %d tall\n", x, y);
 }
 
 void setup_mlx(t_map *map)
@@ -166,8 +182,12 @@ void setup_mlx(t_map *map)
 	info.map_visible = true;
 	info.mlx = mlx_init(info.s_width, info.s_height, "cub3d", true);
 	init_img(&info);
+	int i = 0;
+	while (map->map[i])
+		{ft_printf("%s\n", map->map[i]);
+		i++;}
 	draw_2d_map(info.mlx, info.map, &info);
-	//raycaster(info.mlx, info.map, info.img);
+	//raycaster(info.mlx, info.map, info.img); 
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop(info.mlx);
 	mlx_terminate(info.mlx);
