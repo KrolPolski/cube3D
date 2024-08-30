@@ -37,7 +37,7 @@ static int  *set_color_array(char *str)
     if (len >= 3)
     {
         free_2d(str_arr);
-        print_error("RGB string too long");
+        print_error("RGB contains too many integers");
     }
     int_arr = (int *)malloc(3 * sizeof(int));
     while (str_arr[i])
@@ -54,18 +54,24 @@ static int  *set_color_array(char *str)
         }
         int_arr[i] = ft_atoi(str_arr[i]);
         if (int_arr[i] < 0 || int_arr[i] > 255)
-            print_error("RGB integer not in  correct range");
+            print_error("RGB integer not in correct range");
         i++;
     }
     free_2d(str_arr);
     return (int_arr);
 }
 
+static void all_elements_present(t_map *map) // this strings must be initialized to NULL first
+{
+    if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
+        print_error("Not all elements present");
+    free(map->floor);
+    free(map->ceiling);
+}
+
 static int file_to_map(t_map *map, int i, char *line)
 {
     char        **arr;
-    char        *floor;
-    char        *ceiling;
     static int  flag;
 
     if (identify_line(line) == 2 || (i && identify_line(line) == 1)) // to add also empty lines within the map
@@ -89,15 +95,13 @@ static int file_to_map(t_map *map, int i, char *line)
                 map->we = ft_strdup_mod(arr[1]);
             if (!ft_strncmp(arr[0], "F", 1))
             {
-                floor = ft_strdup_mod(arr[1]);
-                map->f = set_color_array(floor); 
-                free(floor);
+                map->floor = ft_strdup_mod(arr[1]);
+                map->f = set_color_array(map->floor); 
             }
             if (!ft_strncmp(arr[0], "C", 2))
             {
-                ceiling = ft_strdup_mod(arr[1]);
-                map->c = set_color_array(ceiling);
-                free(ceiling);
+                map->ceiling = ft_strdup_mod(arr[1]);
+                map->c = set_color_array(map->ceiling);
             }
             free_2d(arr);
         }
@@ -127,6 +131,7 @@ void set_initial_map(char *arg, int lines, t_map *map)
         i = file_to_map(map, i, line);
     }
     map->map[i] = NULL;
+    all_elements_present(map);
     close(fd);
 }
 

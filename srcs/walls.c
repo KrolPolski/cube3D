@@ -32,8 +32,8 @@ static int	fill_if_valid(t_map *map, int i, int j)
 
 static void compare_maps(t_map *map)
 {
-    int i;
-    int j;
+    size_t i;
+    size_t j;
 
     i = 0;
     while (map->map[i])
@@ -42,6 +42,11 @@ static void compare_maps(t_map *map)
         while (map->map[i][j])
         {
             if (map->map[i][j] == ' ' && map->copy[i][j] == 'a')
+            {
+                free_2d(map->copy);
+                print_error("Map not surrounded by walls");
+            }
+            if ((i == len_2d(map->map) || i == 0 || j == (ft_strlen(map->map[i]) - 1) || j == 0) && map->copy[i][j] == 'a')
             {
                 free_2d(map->copy);
                 print_error("Map not surrounded by walls");
@@ -99,7 +104,7 @@ void	check_walls(t_map *map)
     if (fills == 1)
     {
         free_2d(map->copy);
-        print_error("Player surrounded by walls");
+        print_error("Start position surrounded by walls");
     }
     compare_maps(map);
     free_2d(map->copy);

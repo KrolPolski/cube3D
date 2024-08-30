@@ -14,6 +14,8 @@ typedef struct s_map
     char    *so;
     char    *ea;
     char    *we;
+	char	*floor;
+	char	*ceiling;
 	int		*f;
 	int		*c;
 }				t_map;

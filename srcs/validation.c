@@ -54,18 +54,14 @@ static void check_chars(t_map *map)
     int i;
     int j;
     int player_count;
-    int empty_space_count;
 
     i = 0;
     player_count = 0;
-    empty_space_count = 0;
     while (map->map[i])
     {
         j = 0;
         while (map->map[i][j])
         {
-            if (map->map[i][j] == '0')
-                empty_space_count++;
             player_count = start_positions(map->map[i][j], player_count);
             valid_chars(map->map[i][j]);
             j++;
@@ -74,8 +70,6 @@ static void check_chars(t_map *map)
     }
     if (player_count == 0)
         print_error("No start position");
-    if (empty_space_count == 0)
-        print_error("No empty space");
 }
 
 static void find_empty_line(t_map *map)
