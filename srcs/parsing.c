@@ -17,7 +17,7 @@ static int identify_line(char *line)
     if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "EA", 2) || !ft_strncmp(line, "WE", 2) ||
             !ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1))
         return (0);
-    else if (!ft_strncmp(line, "\n", 1)/* || all_whitespace(line)*/) // or all whitespace
+    else if (!ft_strncmp(line, "\n", 1))
         return (1);
     else
         return (2);
@@ -26,15 +26,35 @@ static int identify_line(char *line)
 static int  *set_color_array(char *str)
 {
     int     i;
+    int     j;
     char    **str_arr;
     int     *int_arr;
+    int     len;
 
     i = 0;
     str_arr = ft_split(str, ',');
+    len = len_2d(str_arr);
+    if (len >= 3)
+    {
+        free_2d(str_arr);
+        print_error("RGB string too long");
+    }
     int_arr = (int *)malloc(3 * sizeof(int));
     while (str_arr[i])
     {
+        j = 0;
+        while (str_arr[i][j])
+        {
+            if (ft_isalpha(str_arr[i][j]))
+            {
+                free_2d(str_arr);
+                print_error("RGB contains alphabets");
+            }
+            j++;
+        }
         int_arr[i] = ft_atoi(str_arr[i]);
+        if (int_arr[i] < 0 || int_arr[i] > 255)
+            print_error("RGB integer not in  correct range");
         i++;
     }
     free_2d(str_arr);
@@ -117,7 +137,11 @@ int  map_line_count(char *arg)
     int     no_of_lines;
     
     fd = open(arg, O_RDONLY);
+    if (fd == -1)
+        print_error("Cannot open file");
     line = get_next_line(fd);
+    if (!line)
+        print_error("Empty file");
     no_of_lines = 0;
     if (identify_line(line) == 2)
         no_of_lines++;

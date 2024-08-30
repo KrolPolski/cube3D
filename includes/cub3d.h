@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include "../libft/include/libft.h"
 
 typedef struct s_map
