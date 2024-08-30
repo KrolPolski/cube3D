@@ -8,6 +8,7 @@
 typedef struct s_map
 {
 	char    **map;
+	char	**copy;
  	char    *no;
     char    *so;
     char    *ea;
