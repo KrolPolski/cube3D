@@ -16,6 +16,7 @@ SRC			=	srcs/main.c \
 					srcs/validation.c \
 					srcs/utils.c \
 					srcs/parsing.c \
+					srcs/walls.c \
 
 LIBFT		=	libft/libft.a
 
