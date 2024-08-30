@@ -16,6 +16,11 @@ typedef struct s_map
     char    *we;
 	int		*f;
 	int		*c;
+	int 	x_len;
+	int 	y_len;
+	int 	sq_w;
+	int		sq_h;
+	int 	sq;
 }				t_map;
 
 typedef struct s_images
