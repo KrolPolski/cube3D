@@ -29,5 +29,6 @@ int		all_whitespace(char *line);
 void	free_map(t_map *map);
 void	print_error(char *str);
 size_t	len_2d(char **arr);
+void	check_walls(t_map *map);
 
 #endif
