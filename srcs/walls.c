@@ -13,17 +13,21 @@ static size_t	valid_position(t_map *map, size_t i, size_t j)
 	return (1);
 }
 
-static void	fill_if_valid(t_map *map, int i, int j)
+static int	fill_if_valid(t_map *map, int i, int j)
 {
+    static int fills;
+
     if (i < 0 || j < 0)
-        return ;
+        return (fills);
 	else if (!valid_position(map, i, j))
-		return ;
+		return (fills);
+    fills++;
 	map->copy[i][j] = 'a';
-	fill_if_valid(map, i - 1, j);
-	fill_if_valid(map, i + 1, j);
-	fill_if_valid(map, i, j - 1);
-	fill_if_valid(map, i, j + 1);
+	fills = fill_if_valid(map, i - 1, j);
+	fills = fill_if_valid(map, i + 1, j);
+	fills = fill_if_valid(map, i, j - 1);
+	fills = fill_if_valid(map, i, j + 1);
+    return (fills);
 }
 
 static void compare_maps(t_map *map)
@@ -70,6 +74,7 @@ void	check_walls(t_map *map)
 	int     i;
     int 	j;
     int     flag;
+    int     fills;
 
     i = 0;
     flag = 0;
@@ -90,7 +95,12 @@ void	check_walls(t_map *map)
         i++;
     }
     copy_map(map);
-	fill_if_valid(map, i, j);
+	fills = fill_if_valid(map, i, j);
+    if (fills == 1)
+    {
+        free_2d(map->copy);
+        print_error("Player surrounded by walls");
+    }
     compare_maps(map);
     free_2d(map->copy);
 }
