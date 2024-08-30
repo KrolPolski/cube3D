@@ -37,13 +37,13 @@ int main(int argc, char **argv)
         
         validate(&map);
 
-        ft_putendl_fd(map.no, 1);
-        ft_putendl_fd(map.so, 1);
-        ft_putendl_fd(map.ea, 1);
-        ft_putendl_fd(map.we, 1);
-        print_2d(map.map);
+        //ft_putendl_fd(map.no, 1);
+        //ft_putendl_fd(map.so, 1);
+        //ft_putendl_fd(map.ea, 1);
+        //ft_putendl_fd(map.we, 1);
+        //print_2d(map.map);
         
-        free_map(&map);
+        //free_map(&map);
     }
     else
         ft_putendl_fd("Error\nIncorrect number of arguments", 2);
