@@ -3,10 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
+<<<<<<< HEAD
 #    By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
 #    Updated: 2024/08/28 11:34:36 by tparratt         ###   ########.fr        #
+=======
+#    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
+#    Updated: 2024/08/28 10:52:15 by rboudwin         ###   ########.fr        #
+>>>>>>> raycaster
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +24,7 @@ SRC			=	srcs/main.c \
 					srcs/utils.c \
 					srcs/parsing.c \
 					srcs/walls.c \
+					srcs/raycaster.c
 
 LIBFT		=	libft/libft.a
 
@@ -33,7 +41,7 @@ CC			=	cc
 
 RM			=	rm -f
 
-CFLAGS		= -Wextra -Wall -Werror
+CFLAGS		= #-Wextra -Wall -Werror
 
 $(NAME):	$(OBJ)
 			make -C ./libft
