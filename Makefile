@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tparratt <tparratt@student.42.fr>          +#+  +:+       +#+         #
+#    By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/08/26 15:25:48 by tparratt         ###   ########.fr        #
+#    Updated: 2024/08/28 11:34:36 by tparratt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC			=	srcs/main.c \
 					srcs/validation.c \
 					srcs/utils.c \
 					srcs/parsing.c \
+					srcs/walls.c \
 
 LIBFT		=	libft/libft.a
 
@@ -38,7 +39,7 @@ $(NAME):	$(OBJ)
 			make -C ./libft
 			cmake $(MLX42_DIR) -B $(MLX42_DIR)/build
 			make -C $(MLX42_DIR)/build -j4
-			$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(LIBFT) $(MLX42_LIBS)
+			$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(LIBFT) $(MLX42_LIBS) -fsanitize=address
 
 all:		$(NAME)
 
