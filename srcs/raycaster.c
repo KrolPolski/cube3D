@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/02 15:35:28 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:38:30 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,9 +276,23 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 	*/
 	int px_x;
 	int px_y;
-	px_x = info->p_x * map->sq;
-	px_y = info->p_y * map->sq;
-	mlx_put_pixel(info->img->plyr, px_x, px_y, get_rgba(255,0,0,255));
+	int i;
+	int k;
+	
+	i = 0;
+	k = 0;
+	px_x = info->p_x * map->sq - 5;
+	px_y = info->p_y * map->sq - 5;
+	while (k < 10)
+	{
+		while (i < 10)
+		{
+			mlx_put_pixel(info->img->plyr, px_x + i, px_y + k, get_rgba(255,0,0,255));
+			i++;
+		}
+		i = 0;
+		k++;
+	}
 }
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
