@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/02 11:03:13 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:27:35 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,15 +139,15 @@ void init_img(t_info *info)
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	if (!info->img->bg)
 		ft_putstr_fd("Image initialization error", 2);
-	//info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	//info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	//info->img->map = mlx_new_image(info->mlx, info->map_width, info->map_height);
-	//ft_memset(info->img->bg->pixels, 180, info->img->bg->width
-	//	* info->img->bg->height * BPP);
-	//mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
-	//mlx_image_to_window(info->mlx, info->img->world, 0, 0);
-	//ft_memset(info->img->map->pixels, 255, info->img->map->width
-	//	* info->img->map->height * BPP);
+	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
+	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
+	info->img->map = mlx_new_image(info->mlx, info->map_width, info->map_height);
+	ft_memset(info->img->bg->pixels, 180, info->img->bg->width
+		* info->img->bg->height * BPP);
+	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
+	mlx_image_to_window(info->mlx, info->img->world, 0, 0);
+	ft_memset(info->img->map->pixels, 255, info->img->map->width
+		* info->img->map->height * BPP);
 }
 
 void raycaster(mlx_t *mlx, t_map *map, t_images *img)
@@ -181,8 +181,10 @@ void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 void setup_mlx(t_map *map)
 {
 	t_info info;
-
+	t_images img;
+	
 	info.map = map;
+	info.img = &img;
 	info.s_width = 1366;
 	info.s_height = 768;
 	info.map_size_factor = 0.75;
