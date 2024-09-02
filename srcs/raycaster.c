@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/02 13:48:35 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:35:28 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,8 +194,7 @@ void init_plyr(t_info *info, t_map *map)
 		info->p_orient = M_PI;
 	else
 	 	ft_putstr_fd("Could not set player orientation\n", 2);
-	printf("Our starting position is y: %f, x: %f, orientation is %f\n", info->p_y, info->p_x, info->p_orient); // this doesn't work because
-	//ft_printf doesn't handle floats
+	printf("Our starting position is y: %f, x: %f, orientation is %f\n", info->p_y, info->p_x, info->p_orient);
 	
 }
 
@@ -273,7 +272,13 @@ void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 
 void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 {
-	
+	/* we need to convert p_pos to pixels. map->sq can be a multiple, probably.
+	*/
+	int px_x;
+	int px_y;
+	px_x = info->p_x * map->sq;
+	px_y = info->p_y * map->sq;
+	mlx_put_pixel(info->img->plyr, px_x, px_y, get_rgba(255,0,0,255));
 }
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
