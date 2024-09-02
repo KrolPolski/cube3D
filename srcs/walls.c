@@ -44,11 +44,13 @@ static void compare_maps(t_map *map)
             if (map->map[i][j] == ' ' && map->copy[i][j] == 'a')
             {
                 free_2d(map->copy);
+                free_map(map);
                 print_error("Map not surrounded by walls");
             }
             if ((i == len_2d(map->map) || i == 0 || j == (ft_strlen(map->map[i]) - 1) || j == 0) && map->copy[i][j] == 'a')
             {
                 free_2d(map->copy);
+                free_map(map);
                 print_error("Map not surrounded by walls");
             }
             j++;
@@ -104,6 +106,7 @@ void	check_walls(t_map *map)
     if (fills == 1)
     {
         free_2d(map->copy);
+        free_map(map);
         print_error("Start position surrounded by walls");
     }
     compare_maps(map);

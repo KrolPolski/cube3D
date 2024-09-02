@@ -14,13 +14,51 @@
 
 void	free_map(t_map *map)
 {
-	free(map->c);
-    free(map->f);
-    free(map->no);
-    free(map->so);
-    free(map->ea);
-    free(map->we);
-    free_2d(map->map);
+	if (map->c)
+	{
+		ft_printf("ONEEEE\n");
+		free(map->c);
+	}
+	if (map->f)
+	{
+		ft_printf("TWOOOO\n");
+    	free(map->f);
+	}
+	if (map->ceiling)
+	{
+		ft_printf("ONE\n");
+		free(map->c);
+	}
+	if (map->floor)
+	{
+		ft_printf("TWO\n");
+    	free(map->f);
+	}
+	if (map->no)
+	{
+		ft_printf("THREE\n");
+    	free(map->no);
+	}
+	if (map->so)
+	{
+		ft_printf("FOUR\n");
+    	free(map->so);
+	}
+	if (map->ea)
+	{
+		ft_printf("FIVE\n");
+    	free(map->ea);
+	}
+	if (map->we)
+	{
+		ft_printf("SIX\n");
+    	free(map->we);
+	}
+	if (map->map[0])
+	{
+		ft_printf("SEVEN\n");
+    	free_2d(map->map);
+	}
 }
 
 char	*ft_strdup_mod(const char *s1)
@@ -56,7 +94,8 @@ void free_2d(char **arr)
     i = 0;
     while (arr[i])
     {
-        free(arr[i]);
+		if (arr[i])
+        	free(arr[i]);
         i++;
     }
     free(arr);

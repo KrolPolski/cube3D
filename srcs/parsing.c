@@ -23,7 +23,7 @@ static int identify_line(char *line)
         return (2);
 }
 
-static int  *set_color_array(char *str)
+static int  *set_color_array(char *str, t_map *map)
 {
     int     i;
     int     j;
@@ -37,6 +37,7 @@ static int  *set_color_array(char *str)
     if (len >= 3)
     {
         free_2d(str_arr);
+        free_map(map);
         print_error("RGB contains too many integers");
     }
     int_arr = (int *)malloc(3 * sizeof(int));
@@ -48,23 +49,32 @@ static int  *set_color_array(char *str)
             if (ft_isalpha(str_arr[i][j]))
             {
                 free_2d(str_arr);
+                free_map(map);
                 print_error("RGB contains alphabets");
             }
             j++;
         }
         int_arr[i] = ft_atoi(str_arr[i]);
         if (int_arr[i] < 0 || int_arr[i] > 255)
+        {
+            free_2d(str_arr);
+            free(int_arr);
+            free_map(map);
             print_error("RGB integer not in correct range");
+        }
         i++;
     }
     free_2d(str_arr);
     return (int_arr);
 }
 
-static void all_elements_present(t_map *map) // this strings must be initialized to NULL first
+static void all_elements_present(t_map *map)
 {
     if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
+    {
+        free_map(map);
         print_error("Not all elements present");
+    }
     free(map->floor);
     free(map->ceiling);
 }
@@ -96,28 +106,30 @@ static int file_to_map(t_map *map, int i, char *line)
             if (!ft_strncmp(arr[0], "F", 1))
             {
                 map->floor = ft_strdup_mod(arr[1]);
-                map->f = set_color_array(map->floor); 
+                map->f = set_color_array(map->floor, map); 
             }
             if (!ft_strncmp(arr[0], "C", 2))
             {
                 map->ceiling = ft_strdup_mod(arr[1]);
-                map->c = set_color_array(map->ceiling);
+                map->c = set_color_array(map->ceiling, map);
             }
             free_2d(arr);
         }
         else
+        {
+            free_map(map);
             print_error("Elements must appear before map content");
+        }
     }
     return (i);
 }
 
-void set_initial_map(char *arg, int lines, t_map *map)
+void set_initial_map(char *arg, t_map *map)
 {
     int     fd;
     char    *line;
     int     i;
     
-    map->map = malloc((lines * sizeof(char *)) + 1);
     fd = open(arg, O_RDONLY);
     i = 0;
     line = get_next_line(fd);

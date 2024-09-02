@@ -25,7 +25,7 @@ char	*ft_strdup_mod(const char *s1);
 void	free_2d(char **arr);
 void	print_2d(char **arr);
 int  	map_line_count(char *arg);
-void 	set_initial_map(char *arg, int lines, t_map *map);
+void 	set_initial_map(char *arg, t_map *map);
 void 	set_final(t_map *map);
 void    validate(t_map *map);
 int		all_whitespace(char *line);

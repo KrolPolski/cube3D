@@ -12,14 +12,25 @@
 
 #include "../includes/cub3d.h"
 
-static void elements_to_null(t_map *map)
+static void elements_to_null(t_map *map, int no_of_lines)
 {
+    int i;
+
+    i = 0;
     map->no = NULL;
     map->so = NULL;
     map->ea = NULL;
     map->we = NULL;
     map->floor = NULL;
     map->ceiling = NULL;
+    map->f = NULL;
+    map->c = NULL;
+    map->map = malloc((no_of_lines * sizeof(char *)) + 1);
+    while (i < no_of_lines)
+    {
+        map->map[i] = NULL;
+        i++;
+    }
 }
 
 int main(int argc, char **argv)
@@ -30,9 +41,9 @@ int main(int argc, char **argv)
     if (argc == 2)
     {
         check_file_extension(argv[1]);
-        elements_to_null(&map);
         no_of_lines = map_line_count(argv[1]);
-        set_initial_map(argv[1], no_of_lines, &map);
+        elements_to_null(&map, no_of_lines);
+        set_initial_map(argv[1], &map);
         set_final(&map);
         
         validate(&map);
@@ -43,7 +54,7 @@ int main(int argc, char **argv)
         //ft_putendl_fd(map.we, 1);
         //print_2d(map.map);
         
-        //free_map(&map);
+        free_map(&map);
     }
     else
         ft_putendl_fd("Error\nIncorrect number of arguments", 2);

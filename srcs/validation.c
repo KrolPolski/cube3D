@@ -32,19 +32,25 @@ static int  all_remaining(int i, char **arr)
     return (1);
 }
 
-static void valid_chars(char c)
+static void valid_chars(char c, t_map *map)
 {
     if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W' && c != ' ')
+    {
+        free_map(map);
         print_error("Invalid map character(s)");
+    }
 }
 
-static int start_positions(char c, int player_count)
+static int start_positions(char c, int player_count, t_map *map)
 {
     if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
     {
         player_count++;
         if (player_count > 1)
+        {
+            free_map(map);
             print_error("More than one start position");
+        }
     }
     return (player_count);
 }
@@ -62,14 +68,17 @@ static void check_chars(t_map *map)
         j = 0;
         while (map->map[i][j])
         {
-            player_count = start_positions(map->map[i][j], player_count);
-            valid_chars(map->map[i][j]);
+            player_count = start_positions(map->map[i][j], player_count, map);
+            valid_chars(map->map[i][j], map);
             j++;
         }
         i++;
     }
     if (player_count == 0)
+    {
+        free_map(map);
         print_error("No start position");
+    }
 }
 
 static void find_empty_line(t_map *map)
@@ -80,7 +89,10 @@ static void find_empty_line(t_map *map)
     while (map->map[i])
     {
         if (all_whitespace(map->map[i]) && !all_remaining(i, map->map))
+        {
+            free_map(map);
             print_error("Empty line within map");
+        }
         i++;
     }
 }
