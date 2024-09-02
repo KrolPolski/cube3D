@@ -3,21 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+         #
+#    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/08/28 11:34:36 by tparratt         ###   ########.fr        #
+#    Updated: 2024/09/02 10:58:32 by rboudwin         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#    Updated: 2024/08/28 10:52:15 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	cub3d
 
-SRC			=	srcs/main.c \
-					srcs/validation.c \
-					srcs/utils.c \
-					srcs/parsing.c \
-					srcs/walls.c \
-
+SRC		=	srcs/main.c \
+			srcs/validation.c \
+			srcs/utils.c \
+			srcs/parsing.c \
+			srcs/walls.c \
+			srcs/raycaster.c
 LIBFT		=	libft/libft.a
 
 MLX42_DIR   = ./MLX42
@@ -33,7 +37,7 @@ CC			=	cc
 
 RM			=	rm -f
 
-CFLAGS		= -Wextra -Wall -Werror
+CFLAGS		= #-Wextra -Wall -Werror
 
 $(NAME):	$(OBJ)
 			make -C ./libft
