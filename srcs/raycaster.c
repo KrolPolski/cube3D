@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/02 11:55:23 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:57:54 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,16 @@ void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 		{
 			info->map_visible = false;
 			info->img->map->enabled = false;
-			info->img->plyr->enabled = false;
-			info->img->fg->enabled = false;
+			//info->img->plyr->enabled = false;
+			//info->img->fg->enabled = false;
 			ft_printf("2D map turned off\n");
 		}
 		else
 		{
 			info->map_visible = true;
 			info->img->map->enabled = true;
-			info->img->plyr->enabled = true;
-			info->img->fg->enabled = true;
+			//info->img->plyr->enabled = true;
+			//info->img->fg->enabled = true;
 			ft_printf("2D map turned on\n");
 		}
 	}
