@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/02 11:27:35 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:55:23 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,73 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img)
 	
 }
 
+void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
+{
+	int x;
+	int y;
+	int px_x;
+	int px_y;
+	x = 0;
+	y = 0;
+	int i = 0;
+	int k = 0;
+	px_x = 0;
+	px_y = 0;
+	ft_printf("inside draw_squares\n");
+	print_2d(map->map);
+	while (map->map[y])
+	{
+		//ft_printf("inside first while loop\n");
+		while(map->map[y][x] != '\0')
+		{
+			//ft_printf("inside second while loop\n");
+			ft_printf("%c", map->map[y][x]);
+			if (map->map[y][x] == '0')
+			{
+				ft_printf("found a 0\n");
+				while (k < map->sq)
+				{
+					while (i < map->sq)
+					{
+						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(0, 0, 0, 255));
+						i++;
+					}
+					
+					i = 0;
+					k++;
+				}
+				k = 0;
+				
+			}
+			else if (map->map[y][x] == '1')
+			{
+				ft_printf("found a 0\n");
+				while (k < map->sq)
+				{
+					while (i < map->sq)
+					{
+						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(200, 200, 200, 255));
+						i++;
+					}
+					
+					i = 0;
+					k++;
+				}
+				k = 0;
+				
+			}
+			x++;
+			px_x += map->sq;
+		}
+		px_y += map->sq;
+		
+	px_x = 0;
+	x = 0;
+	y++;
+	}
+	
+}
+
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
 	ft_printf("Drawing 2d map\n");
@@ -175,7 +242,7 @@ void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 	else
 		map->sq = map->sq_h;
 	printf("Sq_w: %d\n Sq_h: %d\n sq: %d\n", map->sq_w, map->sq_h, map->sq);
-	//draw_squares(mlx, map, info);
+	draw_squares(mlx, map, info);
 }
 
 void setup_mlx(t_map *map)
@@ -200,7 +267,7 @@ void setup_mlx(t_map *map)
 	int i = 0;
 	ft_printf("Loading map: \n");
 	print_2d(map->map);
-	//draw_2d_map(info.mlx, info.map, &info);
+	draw_2d_map(info.mlx, info.map, &info);
 	//raycaster(info.mlx, info.map, info.img); 
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop(info.mlx);
