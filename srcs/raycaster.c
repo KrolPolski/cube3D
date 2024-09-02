@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/08/30 09:09:20 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:03:13 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,16 +133,21 @@ void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 }
 void init_img(t_info *info)
 {
+	ft_printf("Inside init_img\n");
+	ft_printf("width is %d and height is %d\n", info->s_width, info->s_height);
+	ft_printf("mlx pointer is %p\n", info->mlx);
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	info->img->map = mlx_new_image(info->mlx, info->map_width, info->map_height);
-	ft_memset(info->img->bg->pixels, 180, info->img->bg->width
-		* info->img->bg->height * BPP);
-	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
-	mlx_image_to_window(info->mlx, info->img->world, 0, 0);
-	ft_memset(info->img->map->pixels, 255, info->img->map->width
-		* info->img->map->height * BPP);
+	if (!info->img->bg)
+		ft_putstr_fd("Image initialization error", 2);
+	//info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
+	//info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
+	//info->img->map = mlx_new_image(info->mlx, info->map_width, info->map_height);
+	//ft_memset(info->img->bg->pixels, 180, info->img->bg->width
+	//	* info->img->bg->height * BPP);
+	//mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
+	//mlx_image_to_window(info->mlx, info->img->world, 0, 0);
+	//ft_memset(info->img->map->pixels, 255, info->img->map->width
+	//	* info->img->map->height * BPP);
 }
 
 void raycaster(mlx_t *mlx, t_map *map, t_images *img)
@@ -185,11 +190,15 @@ void setup_mlx(t_map *map)
 	info.map_height = info.s_height * info.map_size_factor;
 	info.map_visible = true;
 	info.mlx = mlx_init(info.s_width, info.s_height, "cub3d", true);
+	if (!info.mlx)
+	{
+		ft_putstr_fd("MLX initialization error\n", 2);
+	}
 	init_img(&info);
 	int i = 0;
 	ft_printf("Loading map: \n");
 	print_2d(map->map);
-	draw_2d_map(info.mlx, info.map, &info);
+	//draw_2d_map(info.mlx, info.map, &info);
 	//raycaster(info.mlx, info.map, info.img); 
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop(info.mlx);
