@@ -67,10 +67,20 @@ static void copy_map(t_map *map)
     len = 0;
     len = len_2d(map->map);
     map->copy = malloc(len * sizeof(char *) + 1);
+    if (!map->copy)
+    {
+        free_map(map);
+        print_error("Memory allocation failure");
+    }
     i = 0;
     while (map->map[i])
     {
         map->copy[i] = ft_strdup(map->map[i]);
+        if (!map->copy[i])
+        {
+            free_map(map);
+            print_error("Memory allocation failure");
+        }
         i++;
     }
     map->copy[i] = NULL;

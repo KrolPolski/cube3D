@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/31 10:22:25 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:21:54 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int main(int argc, char **argv)
     int     no_of_lines;
     t_map   map;
     
-    if (argc == 2)
+    if (argc != 2)
+        ft_putendl_fd("Error\nIncorrect number of arguments", 2);
+    else
     {
         check_file_extension(argv[1]);
         no_of_lines = map_line_count(argv[1]);
@@ -52,13 +54,12 @@ int main(int argc, char **argv)
         //ft_putendl_fd(map.so, 1);
         //ft_putendl_fd(map.ea, 1);
         //ft_putendl_fd(map.we, 1);
-        //print_2d(map.map);
         
+        print_2d(map.map);
         free_map(&map);
     }
-    else
-        ft_putendl_fd("Error\nIncorrect number of arguments", 2);
-	setup_mlx(&map);
+	// setup_mlx(&map);
+    // free_map(&map);
     return (0);
 }
 
@@ -92,6 +93,7 @@ Still to do: (This list will get bigger before it gets smaller!)
     - Texture file error handling?
     - Handle freeing at exit
     - Malloc error handling
+    - Mallof failure in gnl??
     - File opening error handling
     - Handle ' ' character inside map?
     - Norminette

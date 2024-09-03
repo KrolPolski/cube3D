@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/29 11:48:48 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/03 09:44:58 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,50 +15,23 @@
 void	free_map(t_map *map)
 {
 	if (map->c)
-	{
-		ft_printf("ONEEEE\n");
 		free(map->c);
-	}
 	if (map->f)
-	{
-		ft_printf("TWOOOO\n");
     	free(map->f);
-	}
 	if (map->ceiling)
-	{
-		ft_printf("ONE\n");
-		free(map->c);
-	}
+		free(map->ceiling);
 	if (map->floor)
-	{
-		ft_printf("TWO\n");
-    	free(map->f);
-	}
+    	free(map->floor);
 	if (map->no)
-	{
-		ft_printf("THREE\n");
     	free(map->no);
-	}
 	if (map->so)
-	{
-		ft_printf("FOUR\n");
     	free(map->so);
-	}
 	if (map->ea)
-	{
-		ft_printf("FIVE\n");
     	free(map->ea);
-	}
 	if (map->we)
-	{
-		ft_printf("SIX\n");
     	free(map->we);
-	}
 	if (map->map[0])
-	{
-		ft_printf("SEVEN\n");
     	free_2d(map->map);
-	}
 }
 
 char	*ft_strdup_mod(const char *s1)
