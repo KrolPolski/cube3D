@@ -6,12 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 11:15:30 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:25:20 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+// determines whether a line is; (0) a non-map element, (1) an empty line, (3) part of map element
 static int identify_line(char *line)
 {
     if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "EA", 2) || !ft_strncmp(line, "WE", 2) ||
@@ -23,27 +24,12 @@ static int identify_line(char *line)
         return (2);
 }
 
-static int  *set_color_array(char *str, t_map *map)
+static int  *set(char **str_arr, t_map *map, int *int_arr)
 {
-    int     i;
-    int     j;
-    char    **str_arr;
-    int     *int_arr;
-    int     len;
+    int i;
+    int j;
 
     i = 0;
-    str_arr = ft_split(str, ',');
-    if (!str_arr)
-        print_error("Memory allocation failure", map);
-    len = len_2d(str_arr);
-    if (len >= 3)
-    {
-        free_2d(str_arr);
-        print_error("RGB contains too many integers", map);
-    }
-    int_arr = (int *)malloc(3 * sizeof(int));
-    if (!int_arr)
-        print_error("Memory allocation failure", map);
     while (str_arr[i])
     {
         j = 0;
@@ -65,16 +51,41 @@ static int  *set_color_array(char *str, t_map *map)
         }
         i++;
     }
+    return (int_arr);
+}
+
+// creates int array by atoi-ing each string in ceiling and floor
+static int  *set_color_array(char *str, t_map *map)
+{
+    char    **str_arr;
+    int     *int_arr;
+    int     len;
+
+    str_arr = ft_split(str, ',');
+    if (!str_arr)
+        print_error("Memory allocation failure", map);
+    len = len_2d(str_arr);
+    if (len >= 3)
+    {
+        free_2d(str_arr);
+        print_error("RGB contains too many integers", map);
+    }
+    int_arr = (int *)malloc(3 * sizeof(int));
+    if (!int_arr)
+        print_error("Memory allocation failure", map);
+    int_arr = set(str_arr, map, int_arr);
     free_2d(str_arr);
     return (int_arr);
 }
 
+// checks that all necessary elements are present in map struct
 static void all_elements_present(t_map *map)
 {
     if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
         print_error("Not all elements present", map);
 }
 
+// intializes one line to map struct
 static int file_to_map(t_map *map, int i, char *line)
 {
     char        **arr;
@@ -145,6 +156,7 @@ static int file_to_map(t_map *map, int i, char *line)
     return (i);
 }
 
+// adds information to map struct from input file
 void set_initial_map(char *arg, t_map *map)
 {
     int     fd;
@@ -172,6 +184,7 @@ void set_initial_map(char *arg, t_map *map)
     close(fd);
 }
 
+// returns the number of lines in the map element of the input file
 int  map_line_count(char *arg)
 {
     int     fd;
@@ -200,7 +213,8 @@ int  map_line_count(char *arg)
     return (no_of_lines);
 }
 
-static size_t   get_longest_len(t_map *map)
+// returns map width by finding longest string in the map
+static size_t   map_width(t_map *map)
 {
     int     i;
     size_t  len;
@@ -216,6 +230,7 @@ static size_t   get_longest_len(t_map *map)
     return (len);
 }
 
+// returns the string of spaces to be added any strings in the map that are shorter than the longest string in the map
 static char *get_s2(size_t len, char *s1, t_map *map)
 {
     size_t  i;
@@ -234,24 +249,25 @@ static char *get_s2(size_t len, char *s1, t_map *map)
     return (str);
 }
 
+// sets the final map->map 2d array
 void set_final(t_map *map)
 {
     int     i;
-    size_t  len;
+    size_t  width;
     char    *s1;
     char    *s2;
     char    *temp;
 
-    len = get_longest_len(map);
+    width = map_width(map);
     i = 0;
     while (map->map[i])
     {
-        if (ft_strlen(map->map[i]) < len)
+        if (ft_strlen(map->map[i]) < width)
         {
             s1 = ft_strdup(map->map[i]);
             if (!s1)
                 print_error("Memory allocation failure", map);
-            s2 = get_s2(len, s1, map);
+            s2 = get_s2(width, s1, map);
             temp = ft_strjoin(s1, s2);
             if (!temp)
                 print_error("Memory allocation failure", map);
@@ -267,6 +283,7 @@ void set_final(t_map *map)
     }
 }
 
+// initializes all map struct elements to NULL
 static void elements_to_null(t_map *map, int no_of_lines)
 {
     int i;
