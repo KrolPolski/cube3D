@@ -13,6 +13,7 @@ static size_t	valid_position(t_map *map, size_t i, size_t j)
 	return (1);
 }
 
+// recursively fills the space within the map with 'a' characters
 static int	fill_if_valid(t_map *map, int i, int j)
 {
     static int fills;
@@ -57,6 +58,7 @@ static void compare_maps(t_map *map)
     }
 }
 
+// creates a copy of map->map for use in fill
 static void copy_map(t_map *map)
 {
     int len;
@@ -78,6 +80,8 @@ static void copy_map(t_map *map)
     map->copy[i] = NULL;
 }
 
+// seperate this function
+// gets the start position for fill_if_valid, copies map, fills if valid, compares maps
 void	check_walls(t_map *map)
 {
 	int     i;

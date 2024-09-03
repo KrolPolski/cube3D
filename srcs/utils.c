@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 11:09:12 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:32:05 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_map(t_map *map)
     	free_2d(map->map);
 }
 
+// modified ft_strdup to not include newline character in duplication
 char	*ft_strdup_mod(const char *s1)
 {
 	size_t	len;
@@ -93,6 +94,7 @@ static int	is_it_space(char *s, int i)
 	return (1);
 }
 
+// checks whether or not a string is composed entirely of whitespace characters
 int	all_whitespace(char *line)
 {
 	int	i;
@@ -116,6 +118,7 @@ void	print_error(char *str, t_map *map)
 	exit(1);
 }
 
+// the number of strings contained in a 2d array
 size_t	len_2d(char **arr)
 {
 	size_t len;
