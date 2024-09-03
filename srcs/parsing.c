@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 10:27:08 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:15:30 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,16 @@ static int  *set_color_array(char *str, t_map *map)
     i = 0;
     str_arr = ft_split(str, ',');
     if (!str_arr)
-    {
-        free_map(map);
-        print_error("Memory allocation failure");
-    }
+        print_error("Memory allocation failure", map);
     len = len_2d(str_arr);
     if (len >= 3)
     {
         free_2d(str_arr);
-        free_map(map);
-        print_error("RGB contains too many integers");
+        print_error("RGB contains too many integers", map);
     }
     int_arr = (int *)malloc(3 * sizeof(int));
     if (!int_arr)
-    {
-        free_map(map);
-        print_error("Memory allocation failure");
-    }
+        print_error("Memory allocation failure", map);
     while (str_arr[i])
     {
         j = 0;
@@ -59,8 +52,7 @@ static int  *set_color_array(char *str, t_map *map)
             if (ft_isalpha(str_arr[i][j]))
             {
                 free_2d(str_arr);
-                free_map(map);
-                print_error("RGB contains alphabets");
+                print_error("RGB contains alphabets", map);
             }
             j++;
         }
@@ -69,8 +61,7 @@ static int  *set_color_array(char *str, t_map *map)
         {
             free_2d(str_arr);
             free(int_arr);
-            free_map(map);
-            print_error("RGB integer not in correct range");
+            print_error("RGB integer not in correct range", map);
         }
         i++;
     }
@@ -81,10 +72,7 @@ static int  *set_color_array(char *str, t_map *map)
 static void all_elements_present(t_map *map)
 {
     if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
-    {
-        free_map(map);
-        print_error("Not all elements present");
-    }
+        print_error("Not all elements present", map);
 }
 
 static int file_to_map(t_map *map, int i, char *line)
@@ -97,10 +85,7 @@ static int file_to_map(t_map *map, int i, char *line)
         flag = 1;
         map->map[i] = ft_strdup_mod(line);
         if (!map->map[i])
-        {
-            free_map(map);
-            print_error("Memory allocation failure");
-        }
+            print_error("Memory allocation failure", map);
         i++;
     }
     else if (identify_line(line) == 0)
@@ -109,75 +94,53 @@ static int file_to_map(t_map *map, int i, char *line)
         {
             arr = ft_split(line, ' ');
             if (!arr)
-            {
-                free_map(map);
-                print_error("Memory allocation failure");
-            }
+                print_error("Memory allocation failure", map);
             if (!ft_strncmp(arr[0], "NO", 2))
             {
                 map->no = ft_strdup_mod(arr[1]);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                }
+                if (!map->no)
+                    print_error("Memory allocation failure", map);
             }
             if (!ft_strncmp(arr[0], "SO", 2))
             {
                 map->so = ft_strdup_mod(arr[1]);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                }
+                if (!map->so)
+                    print_error("Memory allocation failure", map);
             }
             if (!ft_strncmp(arr[0], "EA", 2))
             {
                 map->ea = ft_strdup_mod(arr[1]);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                }
+                if (!map->ea)
+                    print_error("Memory allocation failure", map);
             }
             if (!ft_strncmp(arr[0], "WE", 2))
             {
                 map->we = ft_strdup_mod(arr[1]);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                }
+                if (!map->we)
+                    print_error("Memory allocation failure", map);
             }
             if (!ft_strncmp(arr[0], "F", 1))
             {
                 map->floor = ft_strdup_mod(arr[1]);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                }
+                if (!map->floor)
+                    print_error("Memory allocation failure", map);
                 map->f = set_color_array(map->floor, map);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                } 
+                if (!map->f)
+                    print_error("Memory allocation failure", map);
             }
             if (!ft_strncmp(arr[0], "C", 2))
             {
                 map->ceiling = ft_strdup_mod(arr[1]);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                }    
+                if (!map->ceiling)
+                    print_error("Memory allocation failure", map); 
                 map->c = set_color_array(map->ceiling, map);
-                {
-                    free_map(map);
-                    print_error("Memory allocation failure");
-                }
+                if (!map->c)
+                    print_error("Memory allocation failure", map);
             }
             free_2d(arr);
         }
         else
-        {
-            free_map(map);
-            print_error("Elements must appear before map content");
-        }
+            print_error("Elements must appear before map content", map);
     }
     return (i);
 }
@@ -190,11 +153,11 @@ void set_initial_map(char *arg, t_map *map)
     
     fd = open(arg, O_RDONLY);
     if (fd == -1)
-        print_error("Cannot open file");
+        print_error("Cannot open file", map);
     i = 0;
     line = get_next_line(fd);
     if (!line)
-        print_error("gnl error");
+        print_error("gnl error", map);
     i = file_to_map(map, i, line);
     while (line)
     {
@@ -217,10 +180,10 @@ int  map_line_count(char *arg)
     
     fd = open(arg, O_RDONLY);
     if (fd == -1)
-        print_error("Cannot open file");
+        print_error("Cannot open file", NULL); // check this works with map as NULL
     line = get_next_line(fd);
     if (!line)
-        print_error("gnl error");
+        print_error("gnl error", NULL);
     no_of_lines = 0;
     if (identify_line(line) == 2)
         no_of_lines++;
@@ -261,10 +224,7 @@ static char *get_s2(size_t len, char *s1, t_map *map)
     i = 0;
     str = malloc((len - ft_strlen(s1)) * sizeof(char) + 1);
     if (!str)
-    {
-        free_map(map);
-        print_error("Memory allocation failure");
-    }
+        print_error("Memory allocation failure", map);
     while (i < (len - ft_strlen(s1)))
     {
         str[i] = ' ';
@@ -290,26 +250,51 @@ void set_final(t_map *map)
         {
             s1 = ft_strdup(map->map[i]);
             if (!s1)
-            {
-                free_map(map);
-                print_error("Memory allocation failure");
-            }
+                print_error("Memory allocation failure", map);
             s2 = get_s2(len, s1, map);
             temp = ft_strjoin(s1, s2);
-            {
-                free_map(map);
-                print_error("Memory allocation failure");
-            }
+            if (!temp)
+                print_error("Memory allocation failure", map);
             free(map->map[i]);
             map->map[i] = ft_strdup(temp);
-            {
-                free_map(map);
-                print_error("Memory allocation failure");
-            }
+            if (!map->map[i])
+                print_error("Memory allocation failure", map);
             free(temp);
             free(s1);
             free(s2);
         }
         i++;
     }
+}
+
+static void elements_to_null(t_map *map, int no_of_lines)
+{
+    int i;
+
+    i = 0;
+    map->no = NULL;
+    map->so = NULL;
+    map->ea = NULL;
+    map->we = NULL;
+    map->floor = NULL;
+    map->ceiling = NULL;
+    map->f = NULL;
+    map->c = NULL;
+    map->map = malloc((no_of_lines * sizeof(char *)) + 1);
+    while (i < no_of_lines)
+    {
+        map->map[i] = NULL;
+        i++;
+    }
+}
+
+void    parse(char **argv, t_map *map)
+{
+    int     no_of_lines;
+    
+    check_file_extension(argv[1]);
+    no_of_lines = map_line_count(argv[1]);
+    elements_to_null(map, no_of_lines);
+    set_initial_map(argv[1], map);
+    set_final(map);
 }

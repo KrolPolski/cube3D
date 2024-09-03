@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 09:44:58 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:09:12 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,11 @@ int	all_whitespace(char *line)
 	return (1);
 }
 
-void	print_error(char *str)
+void	print_error(char *str, t_map *map)
 {
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(str, 2);
+	free_map(map);
 	exit(1);
 }
 

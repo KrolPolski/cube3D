@@ -6,48 +6,21 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 10:21:54 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:06:24 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void elements_to_null(t_map *map, int no_of_lines)
-{
-    int i;
-
-    i = 0;
-    map->no = NULL;
-    map->so = NULL;
-    map->ea = NULL;
-    map->we = NULL;
-    map->floor = NULL;
-    map->ceiling = NULL;
-    map->f = NULL;
-    map->c = NULL;
-    map->map = malloc((no_of_lines * sizeof(char *)) + 1);
-    while (i < no_of_lines)
-    {
-        map->map[i] = NULL;
-        i++;
-    }
-}
-
 int main(int argc, char **argv)
 {
-    int     no_of_lines;
     t_map   map;
     
     if (argc != 2)
         ft_putendl_fd("Error\nIncorrect number of arguments", 2);
     else
     {
-        check_file_extension(argv[1]);
-        no_of_lines = map_line_count(argv[1]);
-        elements_to_null(&map, no_of_lines);
-        set_initial_map(argv[1], &map);
-        set_final(&map);
-        
+        parse(argv, &map);
         validate(&map);
 
         //ft_putendl_fd(map.no, 1);
@@ -93,8 +66,6 @@ Still to do: (This list will get bigger before it gets smaller!)
     - Texture file error handling?
     - Handle freeing at exit
     - Malloc error handling
-    - Mallof failure in gnl??
-    - File opening error handling
-    - Handle ' ' character inside map?
+    - Malloc failure in gnl??
     - Norminette
 */

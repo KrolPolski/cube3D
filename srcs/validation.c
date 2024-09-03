@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/29 16:54:31 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:16:22 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void  check_file_extension(char *arg)
     
     ext = ft_strchr(arg, '.');
     if (ext == NULL || ft_strncmp(ext, ".cub", 5))
-        print_error("Wrong file extension");
+        print_error("Memory allocation failure", NULL);
 }
 
 static int  all_remaining(int i, char **arr)
@@ -35,10 +35,7 @@ static int  all_remaining(int i, char **arr)
 static void valid_chars(char c, t_map *map)
 {
     if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W' && c != ' ')
-    {
-        free_map(map);
-        print_error("Invalid map character(s)");
-    }
+        print_error("Memory allocation failure", map);
 }
 
 static int start_positions(char c, int player_count, t_map *map)
@@ -47,10 +44,7 @@ static int start_positions(char c, int player_count, t_map *map)
     {
         player_count++;
         if (player_count > 1)
-        {
-            free_map(map);
-            print_error("More than one start position");
-        }
+            print_error("Memory allocation failure", map);
     }
     return (player_count);
 }
@@ -75,10 +69,7 @@ static void check_chars(t_map *map)
         i++;
     }
     if (player_count == 0)
-    {
-        free_map(map);
-        print_error("No start position");
-    }
+        print_error("Memory allocation failure", map);
 }
 
 static void find_empty_line(t_map *map)
@@ -89,10 +80,7 @@ static void find_empty_line(t_map *map)
     while (map->map[i])
     {
         if (all_whitespace(map->map[i]) && !all_remaining(i, map->map))
-        {
-            free_map(map);
-            print_error("Empty line within map");
-        }
+            print_error("Memory allocation failure", map);
         i++;
     }
 }

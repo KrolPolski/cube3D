@@ -44,14 +44,12 @@ static void compare_maps(t_map *map)
             if (map->map[i][j] == ' ' && map->copy[i][j] == 'a')
             {
                 free_2d(map->copy);
-                free_map(map);
-                print_error("Map not surrounded by walls");
+                print_error("Map not surrounded by walls", map);
             }
             if ((i == len_2d(map->map) || i == 0 || j == (ft_strlen(map->map[i]) - 1) || j == 0) && map->copy[i][j] == 'a')
             {
                 free_2d(map->copy);
-                free_map(map);
-                print_error("Map not surrounded by walls");
+                print_error("Map not surrounded by walls", map);
             }
             j++;
         }
@@ -68,19 +66,13 @@ static void copy_map(t_map *map)
     len = len_2d(map->map);
     map->copy = malloc(len * sizeof(char *) + 1);
     if (!map->copy)
-    {
-        free_map(map);
-        print_error("Memory allocation failure");
-    }
+        print_error("Memory allocation failure", map);
     i = 0;
     while (map->map[i])
     {
         map->copy[i] = ft_strdup(map->map[i]);
         if (!map->copy[i])
-        {
-            free_map(map);
-            print_error("Memory allocation failure");
-        }
+            print_error("Memory allocation failure", map);
         i++;
     }
     map->copy[i] = NULL;
@@ -116,8 +108,7 @@ void	check_walls(t_map *map)
     if (fills == 1)
     {
         free_2d(map->copy);
-        free_map(map);
-        print_error("Start position surrounded by walls");
+        print_error("Start position surrounded by walls", map);
     }
     compare_maps(map);
     free_2d(map->copy);
