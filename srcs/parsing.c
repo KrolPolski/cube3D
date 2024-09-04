@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 14:25:20 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:26:38 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,65 @@ static int  *set_color_array(char *str, t_map *map)
 static void all_elements_present(t_map *map)
 {
     if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
+    {
+        ft_putendl_fd(map->no, 1);
+        ft_putendl_fd(map->so, 1);
+        ft_putendl_fd(map->ea, 1);
+        ft_putendl_fd(map->we, 1);
+        print_2d(map->map);
         print_error("Not all elements present", map);
+    }
+}
+
+static int  *set_color(char *str, char **arr, t_map *map)
+{
+    int *res;
+    
+    str = ft_strdup_mod(arr[1]);
+    if (!str)
+        print_error("Memory allocation failure", map);
+    res = set_color_array(str, map);
+    if (!res)
+        print_error("Memory allocation failure", map);
+    free(str);
+    return (res);
+}
+
+static char *set_texture(char **arr, t_map *map)
+{
+    char *res;
+    
+    res = ft_strdup_mod(arr[1]);
+    if (!res)
+        print_error("Memory allocation failure", map);
+    return (res);
+}
+
+static void set_elements(char *line, t_map *map)
+{
+    char    **arr;
+    
+    arr = ft_split(line, ' ');
+    if (!arr)
+        print_error("Memory allocation failure", map);
+    if (!ft_strncmp(arr[0], "NO", 2))
+        map->no = set_texture(arr, map);
+    if (!ft_strncmp(arr[0], "SO", 2))
+        map->so = set_texture(arr, map);
+    if (!ft_strncmp(arr[0], "EA", 2))
+        map->ea = set_texture(arr, map);
+    if (!ft_strncmp(arr[0], "WE", 2))
+        map->we = set_texture(arr, map);
+    if (!ft_strncmp(arr[0], "F", 1))
+        map->f = set_color(map->floor, arr, map);
+    if (!ft_strncmp(arr[0], "C", 2))
+        map->c = set_color(map->ceiling, arr, map);
+    free_2d(arr);
 }
 
 // intializes one line to map struct
 static int file_to_map(t_map *map, int i, char *line)
 {
-    char        **arr;
     static int  flag;
 
     if (identify_line(line) == 2 || (i && identify_line(line) == 1)) // to add also empty lines within the map
@@ -102,54 +154,7 @@ static int file_to_map(t_map *map, int i, char *line)
     else if (identify_line(line) == 0)
     {
         if (flag != 1)
-        {
-            arr = ft_split(line, ' ');
-            if (!arr)
-                print_error("Memory allocation failure", map);
-            if (!ft_strncmp(arr[0], "NO", 2))
-            {
-                map->no = ft_strdup_mod(arr[1]);
-                if (!map->no)
-                    print_error("Memory allocation failure", map);
-            }
-            if (!ft_strncmp(arr[0], "SO", 2))
-            {
-                map->so = ft_strdup_mod(arr[1]);
-                if (!map->so)
-                    print_error("Memory allocation failure", map);
-            }
-            if (!ft_strncmp(arr[0], "EA", 2))
-            {
-                map->ea = ft_strdup_mod(arr[1]);
-                if (!map->ea)
-                    print_error("Memory allocation failure", map);
-            }
-            if (!ft_strncmp(arr[0], "WE", 2))
-            {
-                map->we = ft_strdup_mod(arr[1]);
-                if (!map->we)
-                    print_error("Memory allocation failure", map);
-            }
-            if (!ft_strncmp(arr[0], "F", 1))
-            {
-                map->floor = ft_strdup_mod(arr[1]);
-                if (!map->floor)
-                    print_error("Memory allocation failure", map);
-                map->f = set_color_array(map->floor, map);
-                if (!map->f)
-                    print_error("Memory allocation failure", map);
-            }
-            if (!ft_strncmp(arr[0], "C", 2))
-            {
-                map->ceiling = ft_strdup_mod(arr[1]);
-                if (!map->ceiling)
-                    print_error("Memory allocation failure", map); 
-                map->c = set_color_array(map->ceiling, map);
-                if (!map->c)
-                    print_error("Memory allocation failure", map);
-            }
-            free_2d(arr);
-        }
+            set_elements(line, map);
         else
             print_error("Elements must appear before map content", map);
     }
@@ -193,10 +198,10 @@ int  map_line_count(char *arg)
     
     fd = open(arg, O_RDONLY);
     if (fd == -1)
-        print_error("Cannot open file", NULL); // check this works with map as NULL
+        print_error("Cannot open file", NULL);
     line = get_next_line(fd);
     if (!line)
-        print_error("gnl error", NULL);
+        print_error("Empty file", NULL); // change
     no_of_lines = 0;
     if (identify_line(line) == 2)
         no_of_lines++;

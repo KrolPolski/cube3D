@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 14:32:05 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/04 10:14:32 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ void	print_error(char *str, t_map *map)
 {
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(str, 2);
-	free_map(map);
+	if (map)
+		free_map(map);
 	exit(1);
 }
 

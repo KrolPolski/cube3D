@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 11:06:24 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:18:39 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,24 @@ int main(int argc, char **argv)
         parse(argv, &map);
         validate(&map);
 
-        //ft_putendl_fd(map.no, 1);
-        //ft_putendl_fd(map.so, 1);
-        //ft_putendl_fd(map.ea, 1);
-        //ft_putendl_fd(map.we, 1);
-        
+        ft_putendl_fd(map.no, 1);
+        ft_putendl_fd(map.so, 1);
+        ft_putendl_fd(map.ea, 1);
+        ft_putendl_fd(map.we, 1);
+        int i = 0;
+        while (i < 3)
+        {
+            ft_printf("%d ", map.f[i]);
+            i++;
+        }
+        ft_printf("\n");
+        i = 0;
+        while (i < 3)
+        {
+            ft_printf("%d ", map.c[i]);
+            i++;
+        }
+        ft_printf("\n");
         print_2d(map.map);
         free_map(&map);
     }
