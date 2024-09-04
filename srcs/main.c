@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/04 11:18:39 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/04 12:23:42 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,4 @@ Handles the following errors:
     - Empty line within map
     - Map not surrounded by walls
     - Start position surrounded by walls
-
-Still to do: (This list will get bigger before it gets smaller!)
-    - Handle very large maps
-    - Texture file error handling?
-    - Handle freeing at exit
-    - Malloc error handling
-    - Malloc failure in gnl??
-    - Norminette
 */

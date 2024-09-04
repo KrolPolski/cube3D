@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/03 14:40:22 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/04 12:19:28 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,6 @@ void  check_file_extension(char *arg)
     ext = ft_strchr(arg, '.');
     if (ext == NULL || ft_strncmp(ext, ".cub", 5))
         print_error("Wrong file extension", NULL);
-}
-
-static int  all_remaining(int i, char **arr)
-{
-    while (arr[i])
-    {
-        if (!all_whitespace(arr[i]))
-            return (0);
-        i++;
-    }
-    return (1);
 }
 
 static void valid_chars(char c, t_map *map)
@@ -73,6 +62,18 @@ static void check_chars(t_map *map)
         print_error("No start position", map);
 }
 
+// checks if all remaining lines are whitespace
+static int  all_remaining(int i, char **arr)
+{
+    while (arr[i])
+    {
+        if (!all_whitespace(arr[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 // determines if there are any empty lines within the map element
 static void find_empty_line(t_map *map)
 {
@@ -81,7 +82,7 @@ static void find_empty_line(t_map *map)
     i = 0;
     while (map->map[i])
     {
-        if (all_whitespace(map->map[i]) && !all_remaining(i, map->map)) // make clearer...
+        if (all_whitespace(map->map[i]) && !all_remaining(i, map->map))
             print_error("Empty line within map", map);
         i++;
     }
