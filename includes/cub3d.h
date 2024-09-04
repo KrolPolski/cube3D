@@ -12,6 +12,8 @@
 typedef struct s_map
 {
 	char    **map;
+	int		start_i;
+	int		start_j;
 	char	**copy;
  	char    *no;
     char    *so;

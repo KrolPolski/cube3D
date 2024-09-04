@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/04 09:51:04 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/04 12:07:58 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,12 @@ static void copy_map(t_map *map)
     map->copy[i] = NULL;
 }
 
-// seperate this function
-// gets the start position for fill_if_valid, copies map, fills if valid, compares maps
-void	check_walls(t_map *map)
+static void get_start_pos(t_map *map)
 {
-	int     i;
-    int 	j;
-    int     flag;
-    int     fills;
-
+    int i;
+    int j;
+    
     i = 0;
-    flag = 0;
     while (map->map[i])
     {
         j = 0;
@@ -110,17 +105,24 @@ void	check_walls(t_map *map)
         {
             if (map->map[i][j] == 'N' || map->map[i][j] == 'S' || map->map[i][j] == 'E' || map->map[i][j] == 'W')
             {
-                flag = 1;
-                break ;
+                map->start_i = i;
+                map->start_j = j;
             }
             j++;
         }
-        if (flag == 1)
-            break ;
         i++;
     }
+}
+
+// seperate this function
+// gets the start position for fill_if_valid, copies map, fills if valid, compares maps
+void	check_walls(t_map *map)
+{
+    int     fills;
+
+    get_start_pos(map);
     copy_map(map);
-	fills = fill_if_valid(map, i, j);
+	fills = fill_if_valid(map, map->start_i, map->start_j);
     if (fills == 1)
     {
         free_2d(map->copy);
