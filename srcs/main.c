@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/05 12:53:05 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:32:25 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int main(int argc, char **argv)
         parse(argv, &map);
         validate(&map);
         
-        print_all(&map);
-        free_map(&map);
+        //print_all(&map);
+        //free_map(&map);
     }
-	// setup_mlx(&map);
-    // free_map(&map);
+	setup_mlx(&map);
+    free_map(&map);
     return (0);
 }
 
@@ -78,4 +78,9 @@ Handles the following errors:
     - Empty line within map
     - Map not surrounded by walls
     - Start position surrounded by walls
+
+Now also have:
+    - texture path validation (must have .png extension, must exist/have correct path, must have correct permissions)
+    - cleanup in case of exit
+    - memory allocation error handling
 */
