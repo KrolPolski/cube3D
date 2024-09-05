@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/05 11:21:49 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:27:42 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,24 @@ void	move_backward(t_info *info)
 		info->p_y -= (sin(info->p_orient)) / 20;
 	}
 }
-/*
-void	move_left(t_map *map)
+
+void	move_left(t_info *info)
 {
-	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient - 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient - 90 * DEG_2_RAD))) != '1')
+//	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient - 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient - 90 * DEG_2_RAD))) != '1')
 	{
-		info->p_x += round(5 * sin(info->p_orient - 90 * DEG_2_RAD));
-		info->p_y -= round(5 * cos(info->p_orient - 90 * DEG_2_RAD));
+		info->p_x += cos(info->p_orient - M_PI_2) / 20;
+		info->p_y += sin(info->p_orient - M_PI_2) / 20;
 	}
 }
 
-void	move_right(t_map *map)
+void	move_right(t_info *info)
 {
-	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient + 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient + 90 * DEG_2_RAD))) != '1')
+//	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient + 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient + 90 * DEG_2_RAD))) != '1')
 	{
-		info->p_x += round(5 * sin(info->p_orient + 90 * DEG_2_RAD));
-		info->p_y -= round(5 * cos(info->p_orient + 90 * DEG_2_RAD));
+		info->p_x += cos(info->p_orient + M_PI_2) / 20;
+		info->p_y += sin(info->p_orient + M_PI_2) / 20;
 	}
-}*/
+}
 
 void	ft_movehook(void *param)
 {
@@ -86,7 +86,7 @@ void	ft_movehook(void *param)
 	{
 		move_backward(info);
 	}
-/*
+
 	if (mlx_is_key_down(info->mlx, MLX_KEY_A))
 	{
 		move_left(info);
@@ -94,7 +94,7 @@ void	ft_movehook(void *param)
 	if (mlx_is_key_down(info->mlx, MLX_KEY_D))
 	{
 		move_right(info);
-	}*/
+	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_LEFT))
 	{
 		info->p_orient -= 0.03490659; //2 degrees in radians
