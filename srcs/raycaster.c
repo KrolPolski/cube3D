@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/05 09:39:08 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:19:57 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,54 +32,56 @@ char	detect_square(t_map *map, double x, double y)
 	return (sq);
 }
 
-/*void	move_forward(t_map *info)
+void	move_forward(t_info *info)
 {
-	if (detect_square(info->map, info->p_x + round(5 * sin(info->p_orient)), map->p_pos_y - round(cos(info->p_orient))) != '1')
+	if (detect_square(info->map, info->p_x + round(5 * sin(info->p_orient)), info->p_y - round(cos(info->p_orient))) != '1')
 	{
-		map->p_pos_x += round(5 * sin(map->p_orient));
-		map->p_pos_y -= round(5 * cos(map->p_orient));
+		info->p_x += round(5 * sin(info->p_orient));
+		info->p_y -= round(5 * cos(info->p_orient));
 	}
 }
 
-void	move_backward(t_map *map)
+/*void	move_backward(t_info *info)
 {
-	if (detect_square(map, map->p_pos_x - round(5 * sin(map->p_orient)), map->p_pos_y + round(5 * cos(map->p_orient))) != '1')
+	if (detect_square(map, info->p_x - round(5 * sin(info->p_orient)), info->p_y + round(5 * cos(info->p_orient))) != '1')
 	{
-		map->p_pos_x -= round(5 * sin(map->p_orient));
-		map->p_pos_y += round(5 * cos(map->p_orient));
+		info->p_x -= round(5 * sin(info->p_orient));
+		info->p_y += round(5 * cos(info->p_orient));
 	}
 }
 
 void	move_left(t_map *map)
 {
-	if (detect_square(map, map->p_pos_x + round(5 * sin(map->p_orient - 90 * DEG_2_RAD)), map->p_pos_y - round(5 * cos(map->p_orient - 90 * DEG_2_RAD))) != '1')
+	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient - 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient - 90 * DEG_2_RAD))) != '1')
 	{
-		map->p_pos_x += round(5 * sin(map->p_orient - 90 * DEG_2_RAD));
-		map->p_pos_y -= round(5 * cos(map->p_orient - 90 * DEG_2_RAD));
+		info->p_x += round(5 * sin(info->p_orient - 90 * DEG_2_RAD));
+		info->p_y -= round(5 * cos(info->p_orient - 90 * DEG_2_RAD));
 	}
 }
 
 void	move_right(t_map *map)
 {
-	if (detect_square(map, map->p_pos_x + round(5 * sin(map->p_orient + 90 * DEG_2_RAD)), map->p_pos_y - round(5 * cos(map->p_orient + 90 * DEG_2_RAD))) != '1')
+	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient + 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient + 90 * DEG_2_RAD))) != '1')
 	{
-		map->p_pos_x += round(5 * sin(map->p_orient + 90 * DEG_2_RAD));
-		map->p_pos_y -= round(5 * cos(map->p_orient + 90 * DEG_2_RAD));
+		info->p_x += round(5 * sin(info->p_orient + 90 * DEG_2_RAD));
+		info->p_y -= round(5 * cos(info->p_orient + 90 * DEG_2_RAD));
 	}
-}
+}*/
 
 void	ft_movehook(void *param)
 {
 	t_info *info;
 
 	info = (t_info *)param;
+	printf("Inside ft_movehook\n");
 	if (mlx_is_key_down(info->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(info->mlx);
-	if (mlx_is_key_down(info->mlx, MLX_KEY_W) || mlx_is_key_down(info->mlx, MLX_KEY_UP))
+		{printf("escape press detected\n");
+		mlx_close_window(info->mlx);}
+	/*if (mlx_is_key_down(info->mlx, MLX_KEY_W) || mlx_is_key_down(info->mlx, MLX_KEY_UP))
 	{
 		move_forward(info);
-	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_S) || mlx_is_key_down(info->mlx, MLX_KEY_DOWN))
+	}*/
+	/*if (mlx_is_key_down(info->mlx, MLX_KEY_S) || mlx_is_key_down(info->mlx, MLX_KEY_DOWN))
 	{
 		move_backward(info);
 	}
@@ -101,11 +103,12 @@ void	ft_movehook(void *param)
 	if (mlx_is_key_down(info->mlx, MLX_KEY_RIGHT))
 	{
 		info->p_orient += 0.03490659; //2 degrees in radians
-		if (map->p_orient >= 2 * M_PI)
-			map->p_orient -= 2 * M_PI;
-	}
-	ray_caster(info->mlx, info->map, info->img);
-}*/
+		if (info->p_orient >= 2 * M_PI)
+			info->p_orient -= 2 * M_PI;
+	}*/
+	//ray_caster(info->mlx, info->map, info->img);
+	//draw_2d_player(info->mlx, info->map, info);
+}
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 {
 	t_info	*info;
@@ -134,9 +137,9 @@ void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 }
 void init_img(t_info *info)
 {
-	ft_printf("Inside init_img\n");
-	ft_printf("width is %d and height is %d\n", info->s_width, info->s_height);
-	ft_printf("mlx pointer is %p\n", info->mlx);
+	//ft_printf("Inside init_img\n");
+	//ft_printf("width is %d and height is %d\n", info->s_width, info->s_height);
+	//ft_printf("mlx pointer is %p\n", info->mlx);
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	if (!info->img->bg)
 		ft_putstr_fd("Image initialization error", 2);
@@ -181,7 +184,7 @@ void init_plyr(t_info *info, t_map *map)
 	}
 	if (!found)
 		ft_putstr_fd("Error: No starting position found\n", 2);
-	ft_printf("We have found the starting position at y: %d x: %d\n", y, x);
+	//ft_printf("We have found the starting position at y: %d x: %d\n", y, x);
 	info->p_x = x + 0.5;
 	info->p_y = y + 0.5;
 	info->p_orient = 42;
@@ -216,7 +219,7 @@ void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	int k = 0;
 	px_x = 0;
 	px_y = 0;
-	ft_printf("inside draw_squares\n");
+	//ft_printf("inside draw_squares\n");
 	print_2d(map->map);
 	while (map->map[y])
 	{
@@ -298,6 +301,9 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 	int i;
 	int k;
 	
+	mlx_delete_image(mlx, info->img->plyr);
+	info->img->plyr = mlx_new_image(info->mlx, info->map_width, info->map_height);
+	mlx_image_to_window(info->mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
 	i = 0;
 	k = 0;
 	px_x = info->p_x * map->sq - 5;
@@ -317,26 +323,26 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
-	ft_printf("Drawing 2d map\n");
+	//ft_printf("Drawing 2d map\n");
 	mlx_image_to_window(info->mlx, info->img->map, info->map_width / 8, info->map_height / 8);
-	mlx_image_to_window(info->mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
+	
 	
 	map->x_len = 0;
 	map->y_len = 0;
-	ft_printf("map->map[0] is '%s'\n", map->map[0]);
+	//ft_printf("map->map[0] is '%s'\n", map->map[0]);
 	map->x_len = ft_strlen(map->map[0]);
 	while (map->map[map->y_len])
 	{
 		map->y_len++;
 	}
-	ft_printf("Map is %d wide and %d tall\n", map->x_len, map->y_len);
+	//ft_printf("Map is %d wide and %d tall\n", map->x_len, map->y_len);
 	map->sq_w = info->map_width / map->x_len;
 	map->sq_h = info->map_height / map->y_len;
 	if (map->sq_w <= map->sq_h)
 		map->sq = map->sq_w;
 	else
 		map->sq = map->sq_h;
-	printf("Sq_w: %d\n Sq_h: %d\n sq: %d\n", map->sq_w, map->sq_h, map->sq);
+	//printf("Sq_w: %d\n Sq_h: %d\n sq: %d\n", map->sq_w, map->sq_h, map->sq);
 	draw_squares(mlx, map, info);
 	draw_2d_player(mlx, map, info);
 }
@@ -362,11 +368,12 @@ void setup_mlx(t_map *map)
 	init_img(&info);
 	init_plyr(&info, info.map);
 	int i = 0;
-	ft_printf("Loading map: \n");
-	print_2d(map->map);
+	//ft_printf("Loading map: \n");
+	//print_2d(map->map);
 	draw_2d_map(info.mlx, info.map, &info);
 	//raycaster(info.mlx, info.map, info.img); 
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
+	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
 	mlx_terminate(info.mlx);
 }
