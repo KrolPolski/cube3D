@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/05 11:27:42 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:31:24 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void	ft_movehook(void *param)
 			info->p_orient -= 2 * M_PI;
 	}
 	//ray_caster(info->mlx, info->map, info->img);
-	draw_2d_player(info->mlx, info->map, info);
+	if (info->img->plyr->enabled)
+		draw_2d_player(info->mlx, info->map, info);
 }
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 {
