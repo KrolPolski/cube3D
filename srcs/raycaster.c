@@ -6,11 +6,12 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/02 15:38:30 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/05 09:39:08 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <math.h>
 
 // 'Encodes' four individual bytes into an int.
 int	get_rgba(int r, int g, int b, int a)
@@ -269,7 +270,25 @@ void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	}
 	
 }
-
+void draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
+{
+	//start by drawing three rays, one at 0, one at -30, one at + 30;
+	int i;
+	i = 0;
+	int ray_x;
+	int ray_y;
+	
+	while (i < 30)
+	{
+		ray_x = px_x + round(i * cos(info->p_orient - M_PI / 6));
+		ray_y = px_y + round(i * sin(info->p_orient - M_PI / 6));
+		mlx_put_pixel(info->img->plyr, ray_x, ray_y, get_rgba(255, 255, 0, 255));
+		ray_x = px_x + round(i * cos(info->p_orient + M_PI / 6));
+		ray_y = px_y + round(i * sin(info->p_orient + M_PI / 6));
+		mlx_put_pixel(info->img->plyr, ray_x, ray_y, get_rgba(255, 255, 0, 255));
+		i++;
+	}
+}
 void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 {
 	/* we need to convert p_pos to pixels. map->sq can be a multiple, probably.
@@ -293,6 +312,7 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 		i = 0;
 		k++;
 	}
+	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
 }
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
