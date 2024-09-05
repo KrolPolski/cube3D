@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/05 10:27:00 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:21:49 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ void	move_forward(t_info *info)
 {
 	//if (detect_square(info->map, info->p_x + round(5 * sin(info->p_orient)), info->p_y - round(cos(info->p_orient))) != '1')
 	{
-		info->p_x -= cos(info->p_orient) / 20;
-		info->p_y += sin(info->p_orient) / 20;
+		info->p_x += (cos(info->p_orient)) / 20;
+		info->p_y += (sin(info->p_orient)) / 20;
+		printf("p_orient is %f\n", info->p_orient);
 	}
 }
 
@@ -45,8 +46,8 @@ void	move_backward(t_info *info)
 {
 	//if (detect_square(map, info->p_x - round(5 * sin(info->p_orient)), info->p_y + round(5 * cos(info->p_orient))) != '1')
 	{
-		info->p_x += round(5 * cos(info->p_orient)) / 20;
-		info->p_y -= round(5 * sin(info->p_orient)) / 40;
+		info->p_x -= (cos(info->p_orient)) / 20;
+		info->p_y -= (sin(info->p_orient)) / 20;
 	}
 }
 /*
@@ -73,7 +74,7 @@ void	ft_movehook(void *param)
 	t_info *info;
 
 	info = (t_info *)param;
-	printf("Inside ft_movehook\n");
+	//printf("Inside ft_movehook\n");
 	if (mlx_is_key_down(info->mlx, MLX_KEY_ESCAPE))
 		{printf("escape press detected\n");
 		mlx_close_window(info->mlx);}
