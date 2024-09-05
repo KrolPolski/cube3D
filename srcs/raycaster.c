@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/05 10:19:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/05 10:27:00 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,22 @@ char	detect_square(t_map *map, double x, double y)
 
 void	move_forward(t_info *info)
 {
-	if (detect_square(info->map, info->p_x + round(5 * sin(info->p_orient)), info->p_y - round(cos(info->p_orient))) != '1')
+	//if (detect_square(info->map, info->p_x + round(5 * sin(info->p_orient)), info->p_y - round(cos(info->p_orient))) != '1')
 	{
-		info->p_x += round(5 * sin(info->p_orient));
-		info->p_y -= round(5 * cos(info->p_orient));
+		info->p_x -= cos(info->p_orient) / 20;
+		info->p_y += sin(info->p_orient) / 20;
 	}
 }
 
-/*void	move_backward(t_info *info)
+void	move_backward(t_info *info)
 {
-	if (detect_square(map, info->p_x - round(5 * sin(info->p_orient)), info->p_y + round(5 * cos(info->p_orient))) != '1')
+	//if (detect_square(map, info->p_x - round(5 * sin(info->p_orient)), info->p_y + round(5 * cos(info->p_orient))) != '1')
 	{
-		info->p_x -= round(5 * sin(info->p_orient));
-		info->p_y += round(5 * cos(info->p_orient));
+		info->p_x += round(5 * cos(info->p_orient)) / 20;
+		info->p_y -= round(5 * sin(info->p_orient)) / 40;
 	}
 }
-
+/*
 void	move_left(t_map *map)
 {
 	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient - 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient - 90 * DEG_2_RAD))) != '1')
@@ -77,15 +77,15 @@ void	ft_movehook(void *param)
 	if (mlx_is_key_down(info->mlx, MLX_KEY_ESCAPE))
 		{printf("escape press detected\n");
 		mlx_close_window(info->mlx);}
-	/*if (mlx_is_key_down(info->mlx, MLX_KEY_W) || mlx_is_key_down(info->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(info->mlx, MLX_KEY_W) || mlx_is_key_down(info->mlx, MLX_KEY_UP))
 	{
 		move_forward(info);
-	}*/
-	/*if (mlx_is_key_down(info->mlx, MLX_KEY_S) || mlx_is_key_down(info->mlx, MLX_KEY_DOWN))
+	}
+	if (mlx_is_key_down(info->mlx, MLX_KEY_S) || mlx_is_key_down(info->mlx, MLX_KEY_DOWN))
 	{
 		move_backward(info);
 	}
-
+/*
 	if (mlx_is_key_down(info->mlx, MLX_KEY_A))
 	{
 		move_left(info);
@@ -93,7 +93,7 @@ void	ft_movehook(void *param)
 	if (mlx_is_key_down(info->mlx, MLX_KEY_D))
 	{
 		move_right(info);
-	}
+	}*/
 	if (mlx_is_key_down(info->mlx, MLX_KEY_LEFT))
 	{
 		info->p_orient -= 0.03490659; //2 degrees in radians
@@ -105,9 +105,9 @@ void	ft_movehook(void *param)
 		info->p_orient += 0.03490659; //2 degrees in radians
 		if (info->p_orient >= 2 * M_PI)
 			info->p_orient -= 2 * M_PI;
-	}*/
+	}
 	//ray_caster(info->mlx, info->map, info->img);
-	//draw_2d_player(info->mlx, info->map, info);
+	draw_2d_player(info->mlx, info->map, info);
 }
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 {
