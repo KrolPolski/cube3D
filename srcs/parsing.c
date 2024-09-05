@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/05 10:21:21 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:22:30 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void set_initial_map(char *arg, t_map *map)
     
     fd = open(arg, O_RDONLY);
     if (fd == -1)
-        print_error("Cannot open file", map);
+        print_error(NULL, NULL);
     i = 0;
     line = get_next_line(fd);
     if (!line)
@@ -198,7 +198,7 @@ int  map_line_count(char *arg)
     
     fd = open(arg, O_RDONLY);
     if (fd == -1)
-        print_error("Cannot open file", NULL);
+        print_error(NULL, NULL);
     line = get_next_line(fd);
     if (!line)
         print_error("Empty file", NULL); // change

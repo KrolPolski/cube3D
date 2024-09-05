@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/05 12:44:01 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:21:03 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ int	all_whitespace(char *line)
 void	print_error(char *str, t_map *map)
 {
 	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(str, 2);
+	if (str == NULL)
+		perror("Map or texture file");
+	else
+		ft_putendl_fd(str, 2);
 	if (map)
 		free_map(map);
 	exit(1);

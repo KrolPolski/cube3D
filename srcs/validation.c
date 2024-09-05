@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/05 12:49:31 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:20:07 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int  invalid_file_extension(char *arg, char *ext)
     int     i;
 
     str = ft_strchr_rev(arg, '.');
-    ft_putendl_fd(str, 1);
     if (str == NULL || ft_strncmp(str, ext, 5))
         return (1);
     return (0);
@@ -93,9 +92,13 @@ static void find_empty_line(t_map *map)
 
 static void check_textures(char *texture, t_map *map)
 {
-    ft_putendl_fd(texture, 1);
+    int fd;
+    
     if (invalid_file_extension(texture, ".png"))
         print_error("Texture should have .png file extension", map);
+    fd = open(texture, O_RDONLY);
+    if (fd == -1)
+        print_error(NULL, NULL);
 }
 
 void    validate(t_map *map)
