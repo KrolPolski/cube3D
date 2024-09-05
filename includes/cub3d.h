@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <errno.h>
 #include <math.h>
 #include "../libft/include/libft.h"
 #include "../MLX42/include/MLX42/MLX42.h"
@@ -11,6 +12,8 @@
 typedef struct s_map
 {
 	char    **map;
+	int		start_i;
+	int		start_j;
 	char	**copy;
  	char    *no;
     char    *so;
@@ -69,17 +72,19 @@ typedef struct s_info
 void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
-void 	check_file_extension(char *arg);
+int		invalid_file_extension(char *arg, char *ext);
+char	*ft_strchr_rev(const char *s, int c);
 char	*ft_strdup_mod(const char *s1);
 void	free_2d(char **arr);
 void	print_2d(char **arr);
 int  	map_line_count(char *arg);
-void 	set_initial_map(char *arg, int lines, t_map *map);
+void 	set_initial_map(char *arg, t_map *map);
 void 	set_final(t_map *map);
+void    parse(char **argv, t_map *map);
 void    validate(t_map *map);
 int		all_whitespace(char *line);
 void	free_map(t_map *map);
-void	print_error(char *str);
+void	print_error(char *str, t_map *map);
 size_t	len_2d(char **arr);
 void	check_walls(t_map *map);
 void	setup_mlx(t_map *map);

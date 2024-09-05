@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/08/29 11:48:48 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:21:03 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,27 @@
 
 void	free_map(t_map *map)
 {
-	free(map->c);
-    free(map->f);
-    free(map->no);
-    free(map->so);
-    free(map->ea);
-    free(map->we);
-    free_2d(map->map);
+	if (map->c)
+		free(map->c);
+	if (map->f)
+    	free(map->f);
+	if (map->ceiling)
+		free(map->ceiling);
+	if (map->floor)
+    	free(map->floor);
+	if (map->no)
+    	free(map->no);
+	if (map->so)
+    	free(map->so);
+	if (map->ea)
+    	free(map->ea);
+	if (map->we)
+    	free(map->we);
+	if (map->map[0])
+    	free_2d(map->map);
 }
 
+// modified ft_strdup to not include newline character in duplication
 char	*ft_strdup_mod(const char *s1)
 {
 	size_t	len;
@@ -56,7 +68,8 @@ void free_2d(char **arr)
     i = 0;
     while (arr[i])
     {
-        free(arr[i]);
+		if (arr[i])
+        	free(arr[i]);
         i++;
     }
     free(arr);
@@ -81,6 +94,7 @@ static int	is_it_space(char *s, int i)
 	return (1);
 }
 
+// checks whether or not a string is composed entirely of whitespace characters
 int	all_whitespace(char *line)
 {
 	int	i;
@@ -96,13 +110,19 @@ int	all_whitespace(char *line)
 	return (1);
 }
 
-void	print_error(char *str)
+void	print_error(char *str, t_map *map)
 {
 	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(str, 2);
+	if (str == NULL)
+		perror("Map or texture file");
+	else
+		ft_putendl_fd(str, 2);
+	if (map)
+		free_map(map);
 	exit(1);
 }
 
+// the number of strings contained in a 2d array
 size_t	len_2d(char **arr)
 {
 	size_t len;
@@ -112,4 +132,22 @@ size_t	len_2d(char **arr)
         len++;
     len--;
 	return (len);
+}
+
+char	*ft_strchr_rev(const char *s, int c)
+{
+	char	*str;
+
+	str = (char *)s;
+	while (*str != '\0')
+		str++;
+    while (str >= s)
+	{
+		if (*str == (char)c)
+			return (str);
+		str--;
+	}
+	if (c  == '\0')
+		return (str);
+	return (NULL);
 }
