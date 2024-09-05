@@ -6,19 +6,21 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/04 12:19:28 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:10:43 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void  check_file_extension(char *arg)
+int  invalid_file_extension(char *arg, char *ext)
 {
-    char    *ext;
-    
-    ext = ft_strchr(arg, '.');
-    if (ext == NULL || ft_strncmp(ext, ".cub", 5))
-        print_error("Wrong file extension", NULL);
+    char    *str;
+    int     i;
+
+    str = ft_strchr(arg, '.');
+    if (str == NULL || ft_strncmp(str, ext, 5))
+        return (1);
+    return (0);
 }
 
 static void valid_chars(char c, t_map *map)
@@ -88,8 +90,16 @@ static void find_empty_line(t_map *map)
     }
 }
 
+static void check_textures(t_map *map)
+{
+    ft_putendl_fd(map->no, 1);
+    if (invalid_file_extension(map->no, ".png"))
+        print_error("Texture should have .png file extension", map);
+}
+
 void    validate(t_map *map)
 {
+    check_textures(map);
     find_empty_line(map);
     check_chars(map);
     check_walls(map);

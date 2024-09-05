@@ -71,7 +71,7 @@ typedef struct s_info
 } t_info;
 
 int		get_rgba(int r, int g, int b, int a);
-void 	check_file_extension(char *arg);
+int		invalid_file_extension(char *arg, char *ext);
 char	*ft_strdup_mod(const char *s1);
 void	free_2d(char **arr);
 void	print_2d(char **arr);

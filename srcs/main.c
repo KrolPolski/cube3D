@@ -6,11 +6,34 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/04 12:54:05 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:11:18 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+static void print_all(t_map *map)
+{
+    ft_putendl_fd(map->no, 1);
+    ft_putendl_fd(map->so, 1);
+    ft_putendl_fd(map->ea, 1);
+    ft_putendl_fd(map->we, 1);
+    int i = 0;
+    while (i < 3)
+    {
+        ft_printf("%d ", map->f[i]);
+        i++;
+    }
+    ft_printf("\n");
+    i = 0;
+    while (i < 3)
+    {
+        ft_printf("%d ", map->c[i]);
+        i++;
+    }
+    ft_printf("\n");
+    print_2d(map->map);
+}
 
 int main(int argc, char **argv)
 {
@@ -22,26 +45,8 @@ int main(int argc, char **argv)
     {
         parse(argv, &map);
         validate(&map);
-
-        ft_putendl_fd(map.no, 1);
-        ft_putendl_fd(map.so, 1);
-        ft_putendl_fd(map.ea, 1);
-        ft_putendl_fd(map.we, 1);
-        int i = 0;
-        while (i < 3)
-        {
-            ft_printf("%d ", map.f[i]);
-            i++;
-        }
-        ft_printf("\n");
-        i = 0;
-        while (i < 3)
-        {
-            ft_printf("%d ", map.c[i]);
-            i++;
-        }
-        ft_printf("\n");
-        print_2d(map.map);
+        
+        print_all(&map);
         free_map(&map);
     }
 	// setup_mlx(&map);
