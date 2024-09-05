@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/05 11:31:24 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/05 11:43:14 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	detect_square(t_map *map, double x, double y)
 
 void	move_forward(t_info *info)
 {
-	//if (detect_square(info->map, info->p_x + round(5 * sin(info->p_orient)), info->p_y - round(cos(info->p_orient))) != '1')
+	if (detect_square(info->map, info->p_x + (cos(info->p_orient)) / 5, info->p_y + (sin(info->p_orient)) / 5) != '1')
 	{
 		info->p_x += (cos(info->p_orient)) / 20;
 		info->p_y += (sin(info->p_orient)) / 20;
@@ -44,7 +44,7 @@ void	move_forward(t_info *info)
 
 void	move_backward(t_info *info)
 {
-	//if (detect_square(map, info->p_x - round(5 * sin(info->p_orient)), info->p_y + round(5 * cos(info->p_orient))) != '1')
+	if (detect_square(info->map, info->p_x - cos(info->p_orient) / 5, info->p_y - sin(info->p_orient) / 5) != '1')
 	{
 		info->p_x -= (cos(info->p_orient)) / 20;
 		info->p_y -= (sin(info->p_orient)) / 20;
@@ -53,7 +53,7 @@ void	move_backward(t_info *info)
 
 void	move_left(t_info *info)
 {
-//	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient - 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient - 90 * DEG_2_RAD))) != '1')
+	if (detect_square(info->map, info->p_x + cos(info->p_orient - M_PI_2) / 5, info->p_y + sin(info->p_orient - M_PI_2)/5) != '1')
 	{
 		info->p_x += cos(info->p_orient - M_PI_2) / 20;
 		info->p_y += sin(info->p_orient - M_PI_2) / 20;
@@ -62,7 +62,7 @@ void	move_left(t_info *info)
 
 void	move_right(t_info *info)
 {
-//	if (detect_square(map, info->p_x + round(5 * sin(info->p_orient + 90 * DEG_2_RAD)), info->p_y - round(5 * cos(info->p_orient + 90 * DEG_2_RAD))) != '1')
+if (detect_square(info->map, info->p_x + cos(info->p_orient + M_PI_2) / 5, info->p_y + sin(info->p_orient + M_PI_2)/5) != '1')
 	{
 		info->p_x += cos(info->p_orient + M_PI_2) / 20;
 		info->p_y += sin(info->p_orient + M_PI_2) / 20;
