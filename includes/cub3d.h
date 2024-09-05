@@ -66,7 +66,8 @@ typedef struct s_info
 	int		map_height;
 
 } t_info;
-
+void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
+void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
 void 	check_file_extension(char *arg);
 char	*ft_strdup_mod(const char *s1);
