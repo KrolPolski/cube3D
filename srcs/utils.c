@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/04 10:14:32 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:44:01 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,22 @@ size_t	len_2d(char **arr)
         len++;
     len--;
 	return (len);
+}
+
+char	*ft_strchr_rev(const char *s, int c)
+{
+	char	*str;
+
+	str = (char *)s;
+	while (*str != '\0')
+		str++;
+    while (str >= s)
+	{
+		if (*str == (char)c)
+			return (str);
+		str--;
+	}
+	if (c  == '\0')
+		return (str);
+	return (NULL);
 }

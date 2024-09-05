@@ -73,6 +73,7 @@ void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
 int		invalid_file_extension(char *arg, char *ext);
+char	*ft_strchr_rev(const char *s, int c);
 char	*ft_strdup_mod(const char *s1);
 void	free_2d(char **arr);
 void	print_2d(char **arr);
