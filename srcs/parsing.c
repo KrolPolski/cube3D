@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/06 12:38:12 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:55:47 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,17 +122,41 @@ static void set_elements(char *line, t_map *map)
     if (!arr)
         print_error("Memory allocation failure", map);
     if (!ft_strncmp(arr[0], "NO", 2))
+    {
+        if (map->no)
+            print_error("More than one NO element in file", map);
         map->no = set_texture(arr, map);
+    }
     if (!ft_strncmp(arr[0], "SO", 2))
+    {
+        if (map->so)
+            print_error("More than one SO element in file", map);
         map->so = set_texture(arr, map);
+    }
     if (!ft_strncmp(arr[0], "EA", 2))
+    {
+        if (map->ea)
+            print_error("More than one EA element in file", map);
         map->ea = set_texture(arr, map);
+    }
     if (!ft_strncmp(arr[0], "WE", 2))
+    {
+        if (map->we)
+            print_error("More than one WE element in file", map);
         map->we = set_texture(arr, map);
-    if (!ft_strncmp(arr[0], "F", 1))
+    }
+    if (!ft_strncmp(arr[0], "F", 1)) // do these too
+    {
+        if (map->f)
+            print_error("More than one F element in file", map);
         map->f = set_color(map->floor, arr, map);
+    }
     if (!ft_strncmp(arr[0], "C", 2))
+    {
+        if (map->c)
+            print_error("More than one C element in file", map);
         map->c = set_color(map->ceiling, arr, map);
+    }
     free_2d(arr);
 }
 
@@ -181,7 +205,7 @@ void set_initial_map(char *arg, t_map *map)
     {
         free(line);
         line = get_next_line(fd);
-        if (!line) // What if we have malloc failure here?
+        if (!line)
             break ;
         i = file_to_map(map, i, line);
     }
