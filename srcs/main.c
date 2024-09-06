@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/05 13:32:25 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:37:02 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int main(int argc, char **argv)
         parse(argv, &map);
         validate(&map);
         
-        //print_all(&map);
-        //free_map(&map);
+        print_all(&map);
+        free_map(&map);
     }
-	setup_mlx(&map);
-    free_map(&map);
+	// setup_mlx(&map);
+    // free_map(&map);
     return (0);
 }
 

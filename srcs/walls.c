@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/04 12:07:58 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:23:14 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	check_walls(t_map *map)
     if (fills == 1)
     {
         free_2d(map->copy);
-        print_error("Start position surrounded by walls", map);
+        print_error("Start position surrounded by walls", map); // is this necessary?
     }
     compare_maps(map);
     free_2d(map->copy);
