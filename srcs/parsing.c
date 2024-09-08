@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/05 13:22:30 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:55:47 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int  *set_color_array(char *str, t_map *map)
     int     len;
 
     str_arr = ft_split(str, ',');
+    // each string in str_arr should not contain spaces
     if (!str_arr)
         print_error("Memory allocation failure", map);
     len = len_2d(str_arr);
@@ -79,17 +80,12 @@ static int  *set_color_array(char *str, t_map *map)
 }
 
 // checks that all necessary elements are present in map struct
-static void all_elements_present(t_map *map)
+static void all_elements_present(t_map *map) // change this to specifics?
 {
     if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
-    {
-        ft_putendl_fd(map->no, 1);
-        ft_putendl_fd(map->so, 1);
-        ft_putendl_fd(map->ea, 1);
-        ft_putendl_fd(map->we, 1);
-        print_2d(map->map);
         print_error("Not all elements present", map);
-    }
+    if (!map->map[0])
+        print_error("No map present", map);
 }
 
 static int  *set_color(char *str, char **arr, t_map *map)
@@ -121,20 +117,46 @@ static void set_elements(char *line, t_map *map)
     char    **arr;
     
     arr = ft_split(line, ' ');
+    if (len_2d(arr) > 1)
+        print_error("Element information should not contain spaces", map);
     if (!arr)
         print_error("Memory allocation failure", map);
     if (!ft_strncmp(arr[0], "NO", 2))
+    {
+        if (map->no)
+            print_error("More than one NO element in file", map);
         map->no = set_texture(arr, map);
+    }
     if (!ft_strncmp(arr[0], "SO", 2))
+    {
+        if (map->so)
+            print_error("More than one SO element in file", map);
         map->so = set_texture(arr, map);
+    }
     if (!ft_strncmp(arr[0], "EA", 2))
+    {
+        if (map->ea)
+            print_error("More than one EA element in file", map);
         map->ea = set_texture(arr, map);
+    }
     if (!ft_strncmp(arr[0], "WE", 2))
+    {
+        if (map->we)
+            print_error("More than one WE element in file", map);
         map->we = set_texture(arr, map);
-    if (!ft_strncmp(arr[0], "F", 1))
+    }
+    if (!ft_strncmp(arr[0], "F", 1)) // do these too
+    {
+        if (map->f)
+            print_error("More than one F element in file", map);
         map->f = set_color(map->floor, arr, map);
+    }
     if (!ft_strncmp(arr[0], "C", 2))
+    {
+        if (map->c)
+            print_error("More than one C element in file", map);
         map->c = set_color(map->ceiling, arr, map);
+    }
     free_2d(arr);
 }
 
@@ -142,7 +164,7 @@ static void set_elements(char *line, t_map *map)
 static int file_to_map(t_map *map, int i, char *line)
 {
     static int  flag;
-
+    
     if (identify_line(line) == 2 || (i && identify_line(line) == 1)) // to add also empty lines within the map
     {
         flag = 1;
@@ -156,7 +178,10 @@ static int file_to_map(t_map *map, int i, char *line)
         if (flag != 1)
             set_elements(line, map);
         else
+        {
+            map->map[i] = NULL;
             print_error("Elements must appear before map content", map);
+        }
     }
     return (i);
 }
@@ -180,7 +205,7 @@ void set_initial_map(char *arg, t_map *map)
     {
         free(line);
         line = get_next_line(fd);
-        if (!line) // What if we have malloc failure here?
+        if (!line)
             break ;
         i = file_to_map(map, i, line);
     }
@@ -201,7 +226,7 @@ int  map_line_count(char *arg)
         print_error(NULL, NULL);
     line = get_next_line(fd);
     if (!line)
-        print_error("Empty file", NULL); // change
+        print_error("Empty file", NULL);
     no_of_lines = 0;
     if (identify_line(line) == 2)
         no_of_lines++;
@@ -209,7 +234,7 @@ int  map_line_count(char *arg)
     {
         free(line);
         line = get_next_line(fd);
-        if (!line) // What if we have malloc failure here?
+        if (!line)
             break ;
         if ((identify_line(line) == 2) || (no_of_lines && identify_line(line) == 1))
             no_of_lines++;
@@ -315,7 +340,7 @@ void    parse(char **argv, t_map *map)
     int     no_of_lines;
     
     if (invalid_file_extension(argv[1], ".cub"))
-        print_error("Map should have .cub file extension", NULL);
+        print_error("Map should not be a directory and should have .cub file extension", NULL);
     no_of_lines = map_line_count(argv[1]);
     elements_to_null(map, no_of_lines);
     set_initial_map(argv[1], map);
