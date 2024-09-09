@@ -12,28 +12,28 @@
 
 #include "../includes/cub3d.h"
 
-// static void print_all(t_map *map)
-// {
-//     ft_putendl_fd(map->no, 1);
-//     ft_putendl_fd(map->so, 1);
-//     ft_putendl_fd(map->ea, 1);
-//     ft_putendl_fd(map->we, 1);
-//     int i = 0;
-//     while (i < 3)
-//     {
-//         ft_printf("%d ", map->f[i]);
-//         i++;
-//     }
-//     ft_printf("\n");
-//     i = 0;
-//     while (i < 3)
-//     {
-//         ft_printf("%d ", map->c[i]);
-//         i++;
-//     }
-//     ft_printf("\n");
-//     print_2d(map->map);
-// }
+static void print_all(t_map *map)
+{
+    ft_putendl_fd(map->no, 1);
+    ft_putendl_fd(map->so, 1);
+    ft_putendl_fd(map->ea, 1);
+    ft_putendl_fd(map->we, 1);
+    int i = 0;
+    while (i < 3)
+    {
+        ft_printf("%d ", map->f[i]);
+        i++;
+    }
+    ft_printf("\n");
+    i = 0;
+    while (i < 3)
+    {
+        ft_printf("%d ", map->c[i]);
+        i++;
+    }
+    ft_printf("\n");
+    print_2d(map->map);
+}
 
 int main(int argc, char **argv)
 {
@@ -44,13 +44,14 @@ int main(int argc, char **argv)
     else
     {
         parse(argv, &map);
+        print_all(&map);
         validate(&map);
         
-        // print_all(&map);
-        // free_map(&map);
+        print_all(&map);
+        free_map(&map);
     }
-	setup_mlx(&map);
-    free_map(&map);
+	//setup_mlx(&map);
+    //free_map(&map);
     return (0);
 }
 
