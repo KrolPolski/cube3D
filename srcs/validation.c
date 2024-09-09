@@ -84,7 +84,6 @@ static void find_empty_line(t_map *map)
     i = 0;
     while (map->map[i])
     {
-        ft_putendl_fd(map->map[i], 1);
         if (all_whitespace(map->map[i]) && !all_remaining(i, map->map))
             print_error("Empty line within map", map);
         i++;

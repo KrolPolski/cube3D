@@ -44,7 +44,6 @@ int main(int argc, char **argv)
     else
     {
         parse(argv, &map);
-        print_all(&map);
         validate(&map);
         
         print_all(&map);
