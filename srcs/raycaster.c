@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/05 11:43:14 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:38:51 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,10 +204,7 @@ void init_plyr(t_info *info, t_map *map)
 	
 }
 
-void raycaster(mlx_t *mlx, t_map *map, t_images *img)
-{
-	
-}
+
 
 void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 {
@@ -359,6 +356,7 @@ void setup_mlx(t_map *map)
 	info.s_width = 1366;
 	info.s_height = 768;
 	info.map_size_factor = 0.75;
+	info.rend_dist = 10;
 	info.map_width = info.s_width * info.map_size_factor;
 	info.map_height = info.s_height * info.map_size_factor;
 	info.map_visible = true;
@@ -373,7 +371,7 @@ void setup_mlx(t_map *map)
 	//ft_printf("Loading map: \n");
 	//print_2d(map->map);
 	draw_2d_map(info.mlx, info.map, &info);
-	//raycaster(info.mlx, info.map, info.img); 
+	raycaster(info.mlx, info.map, info.img, &info); 
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);

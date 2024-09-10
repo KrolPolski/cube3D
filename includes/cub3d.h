@@ -63,12 +63,19 @@ typedef struct s_info
 	double	p_x;
 	double	p_y;
 	double	p_orient;
+	double  ray_x;
+	double	ray_y;
+	double	ray_orient;
+	double	rend_dist;
 	bool	map_visible;
 	double	map_size_factor;
 	int		map_width;
 	int		map_height;
 
 } t_info;
+
+char	detect_square(t_map *map, double x, double y);
+void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info);
 void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);

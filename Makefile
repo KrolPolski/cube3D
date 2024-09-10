@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/09/02 10:58:32 by rboudwin         ###   ########.fr        #
+#    Updated: 2024/09/10 11:08:57 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC		=	srcs/main.c \
 			srcs/utils.c \
 			srcs/parsing.c \
 			srcs/walls.c \
-			srcs/raycaster.c
+			srcs/raycaster.c \
+			srcs/raycaster2.c
 LIBFT		=	libft/libft.a
 
 MLX42_DIR   = ./MLX42
