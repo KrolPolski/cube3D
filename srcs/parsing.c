@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/06 12:55:47 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:04:24 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,27 +243,60 @@ int  map_line_count(char *arg)
     return (no_of_lines);
 }
 
-// returns map width by finding longest string in the map
-static size_t   map_width(t_map *map)
+// returns map width by returning the length of the longest string in the map
+// static size_t   map_width(t_map *map)
+// {
+//     int     i;
+//     size_t  len;
+
+//     i = 0;
+//     len = 0;
+//     while (map->map[i])
+//     {
+//         if (len < ft_strlen(map->map[i]))
+//             len = ft_strlen(map->map[i]);
+//         i++;
+//     }
+//     return (len);
+// }
+
+static int longest_str_i(t_map *map)
 {
     int     i;
-    size_t  len;
+    int     longest_index;
+    size_t  max_len;
+    size_t  current_len;
 
     i = 0;
-    len = 0;
+    max_len = 0;
+    longest_index = -1;
     while (map->map[i])
     {
-        if (len < ft_strlen(map->map[i]))
-            len = ft_strlen(map->map[i]);
+        current_len = ft_strlen(map->map[i]);
+        if (current_len > max_len)
+        {
+            max_len = current_len;
+            longest_index = i;
+        }
         i++;
     }
-    return (len);
+    return (longest_index);
+}
+
+static size_t   map_width(char *str)
+{
+    int i;
+
+    i = ft_strlen(str) - 1;
+    while (str[i] == ' ')
+            i--;
+    return (i);
 }
 
 // returns the string of spaces to be added any strings in the map that are shorter than the longest string in the map
 static char *get_s2(size_t len, char *s1, t_map *map)
 {
-    size_t  i;
+    int     i;
     char    *str;
 
     i = 0;
@@ -284,31 +317,41 @@ void set_final(t_map *map)
 {
     int     i;
     size_t  width;
+    int     idx;
     char    *s1;
     char    *s2;
     char    *temp;
 
-    width = map_width(map);
+    //width = map_width(map);
+    idx = longest_str_i(map);
+    width = map_width(map->map[idx]);
+    width++;
     i = 0;
     while (map->map[i])
     {
-        if (ft_strlen(map->map[i]) < width)
+        if (i == idx)
+        {
+            s1 = ft_substr(map->map[idx], 0, width);
+            if (!s1)
+                print_error("Memory allocation failure", map);
+        }
+        else if (ft_strlen(map->map[i]) <= width) // is this needed?
         {
             s1 = ft_strdup(map->map[i]);
             if (!s1)
                 print_error("Memory allocation failure", map);
-            s2 = get_s2(width, s1, map);
-            temp = ft_strjoin(s1, s2);
-            if (!temp)
-                print_error("Memory allocation failure", map);
-            free(map->map[i]);
-            map->map[i] = ft_strdup(temp);
-            if (!map->map[i])
-                print_error("Memory allocation failure", map);
-            free(temp);
-            free(s1);
-            free(s2);
         }
+        s2 = get_s2(width, s1, map);
+        temp = ft_strjoin(s1, s2);
+        if (!temp)
+            print_error("Memory allocation failure", map);
+        free(map->map[i]);
+        map->map[i] = ft_strdup(temp);
+        if (!map->map[i])
+            print_error("Memory allocation failure", map);
+        free(temp);
+        free(s1);
+        free(s2);
         i++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/06 11:23:14 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/11 10:14:13 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,16 +118,16 @@ static void get_start_pos(t_map *map)
 // gets the start position for fill_if_valid, copies map, fills if valid, compares maps
 void	check_walls(t_map *map)
 {
-    int     fills;
+    int     fills; // fills not needed any more?
 
     get_start_pos(map);
     copy_map(map);
 	fills = fill_if_valid(map, map->start_i, map->start_j);
-    if (fills == 1)
-    {
-        free_2d(map->copy);
-        print_error("Start position surrounded by walls", map); // is this necessary?
-    }
+    // if (fills == 1)
+    // {
+    //     free_2d(map->copy);
+    //     print_error("Start position surrounded by walls", map); // is this necessary?
+    // }
     compare_maps(map);
     free_2d(map->copy);
 }
