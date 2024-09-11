@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/11 14:11:00 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:18:27 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ static void print_all(t_map *map)
 int main(int argc, char **argv)
 {
     t_map   map;
-    
+
     if (argc != 2)
         ft_putendl_fd("Error\nIncorrect number of arguments", 2);
     else
     {
         parse(argv, &map);
         validate(&map);
-        
-        // print_all(&map);
-        // free_map(&map);
+
+        print_all(&map);
+        free_map(&map);
     }
-	setup_mlx(&map);
-    free_map(&map);
+	// setup_mlx(&map);
+    // free_map(&map);
     return (0);
 }
 

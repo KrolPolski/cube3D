@@ -6,14 +6,14 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/11 14:04:24 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:22:29 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 // determines whether a line is; (0) a non-map element, (1) an empty line, (3) part of map element
-static int identify_line(char *line)
+static int  identify_line(char *line)
 {
     if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "EA", 2) || !ft_strncmp(line, "WE", 2) ||
             !ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1))
@@ -32,22 +32,17 @@ static int  *set(char **str_arr, t_map *map, int *int_arr)
     i = 0;
     while (str_arr[i])
     {
+        int_arr[i] = ft_atoi(str_arr[i]);
         j = 0;
         while (str_arr[i][j])
         {
-            if (ft_isalpha(str_arr[i][j]))
+            if (ft_isalpha(str_arr[i][j]) || (int_arr[i] < 0 || int_arr[i] > 255))
             {
                 free_2d(str_arr);
-                print_error("RGB contains alphabets", map);
+                free(int_arr);
+                print_error("RGB contains alphabets or integer not in correct range", map);
             }
             j++;
-        }
-        int_arr[i] = ft_atoi(str_arr[i]);
-        if (int_arr[i] < 0 || int_arr[i] > 255)
-        {
-            free_2d(str_arr);
-            free(int_arr);
-            print_error("RGB integer not in correct range", map);
         }
         i++;
     }
@@ -62,7 +57,6 @@ static int  *set_color_array(char *str, t_map *map)
     int     len;
 
     str_arr = ft_split(str, ',');
-    // each string in str_arr should not contain spaces
     if (!str_arr)
         print_error("Memory allocation failure", map);
     len = len_2d(str_arr);
@@ -80,7 +74,7 @@ static int  *set_color_array(char *str, t_map *map)
 }
 
 // checks that all necessary elements are present in map struct
-static void all_elements_present(t_map *map) // change this to specifics?
+static void all_elements_present(t_map *map)
 {
     if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
         print_error("Not all elements present", map);
@@ -112,6 +106,17 @@ static char *set_texture(char **arr, t_map *map)
     return (res);
 }
 
+static char *determine_then_set(char **arr, char *name, char *str, t_map *map)
+{
+    if (!ft_strncmp(arr[0], name, 2))
+    {
+        if (str)
+            print_error("More than one NO element in file", map);
+        str = set_texture(arr, map);
+    }
+    return (str);
+}
+
 static void set_elements(char *line, t_map *map)
 {
     char    **arr;
@@ -121,31 +126,11 @@ static void set_elements(char *line, t_map *map)
         print_error("Element information should not contain spaces", map);
     if (!arr)
         print_error("Memory allocation failure", map);
-    if (!ft_strncmp(arr[0], "NO", 2))
-    {
-        if (map->no)
-            print_error("More than one NO element in file", map);
-        map->no = set_texture(arr, map);
-    }
-    if (!ft_strncmp(arr[0], "SO", 2))
-    {
-        if (map->so)
-            print_error("More than one SO element in file", map);
-        map->so = set_texture(arr, map);
-    }
-    if (!ft_strncmp(arr[0], "EA", 2))
-    {
-        if (map->ea)
-            print_error("More than one EA element in file", map);
-        map->ea = set_texture(arr, map);
-    }
-    if (!ft_strncmp(arr[0], "WE", 2))
-    {
-        if (map->we)
-            print_error("More than one WE element in file", map);
-        map->we = set_texture(arr, map);
-    }
-    if (!ft_strncmp(arr[0], "F", 1)) // do these too
+    map->no = determine_then_set(arr, "NO", map->no, map);
+    map->so = determine_then_set(arr, "SO", map->so, map);
+    map->ea = determine_then_set(arr, "EA", map->ea, map);
+    map->we = determine_then_set(arr, "WE", map->we, map);
+    if (!ft_strncmp(arr[0], "F", 1))
     {
         if (map->f)
             print_error("More than one F element in file", map);
@@ -187,7 +172,7 @@ static int file_to_map(t_map *map, int i, char *line)
 }
 
 // adds information to map struct from input file
-void set_initial_map(char *arg, t_map *map)
+static void set_initial_map(char *arg, t_map *map)
 {
     int     fd;
     char    *line;
@@ -215,7 +200,7 @@ void set_initial_map(char *arg, t_map *map)
 }
 
 // returns the number of lines in the map element of the input file
-int  map_line_count(char *arg)
+static int  map_line_count(char *arg)
 {
     int     fd;
     char    *line;
@@ -290,6 +275,7 @@ static size_t   map_width(char *str)
     i = ft_strlen(str) - 1;
     while (str[i] == ' ')
             i--;
+    i++;
     return (i);
 }
 
@@ -312,20 +298,34 @@ static char *get_s2(size_t len, char *s1, t_map *map)
     return (str);
 }
 
+static void add_s2(int width, char *s1, t_map *map, int i)
+{
+    char    *s2;
+    char    *temp;
+    
+    s2 = get_s2(width, s1, map);
+    temp = ft_strjoin(s1, s2);
+    if (!temp)
+        print_error("Memory allocation failure", map);
+    free(map->map[i]);
+    map->map[i] = ft_strdup(temp);
+    if (!map->map[i])
+        print_error("Memory allocation failure", map);
+    free(temp);
+    free(s1);
+    free(s2);
+}
+
 // sets the final map->map 2d array
-void set_final(t_map *map)
+static void set_final(t_map *map)
 {
     int     i;
     size_t  width;
     int     idx;
     char    *s1;
-    char    *s2;
-    char    *temp;
 
-    //width = map_width(map);
     idx = longest_str_i(map);
     width = map_width(map->map[idx]);
-    width++;
     i = 0;
     while (map->map[i])
     {
@@ -341,17 +341,7 @@ void set_final(t_map *map)
             if (!s1)
                 print_error("Memory allocation failure", map);
         }
-        s2 = get_s2(width, s1, map);
-        temp = ft_strjoin(s1, s2);
-        if (!temp)
-            print_error("Memory allocation failure", map);
-        free(map->map[i]);
-        map->map[i] = ft_strdup(temp);
-        if (!map->map[i])
-            print_error("Memory allocation failure", map);
-        free(temp);
-        free(s1);
-        free(s2);
+        add_s2(width, s1, map, i);
         i++;
     }
 }
