@@ -6,12 +6,43 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/11 14:16:28 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:35:36 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
+{
+    double delta_x;
+    double delta_y;
+    double previous_position;
+    double len;
+    
+    //we will know x but not y
+    previous_position = info->ray_x;
+    if (info->ray_orient > M_PI_2 || info->ray_orient < 3 * M_PI_2)
+        info->verti_vec[0] = floorf(info->ray_x);
+    else
+        info->verti_vec[0] = ceilf(info->ray_x);
+    delta_x = info->verti_vec[0] - previous_position;
+    
+    printf("So our first vertical intersection is at x: %f\n", info->verti_vec[0]);
+    printf("Delta X: %f\n", delta_x);
+   //protecting from undefined results, need to adjust this
+    if ((info->ray_orient > 0.3 && info->ray_orient < 0.3) ||
+            (info->ray_orient > (M_PI - 0.3) && info->ray_orient < (M_PI + 0.3)))
+        delta_y = 0;
+    else        
+        delta_y = delta_x * tan(info->ray_orient);
+    printf("Delta y: %f\n", delta_y);
+    info->verti_vec[1] = info->ray_y + delta_y;
+    printf("So we will use the following vector (x,y): (%f, %f)\n", info->verti_vec[0], info->verti_vec[1]);
+    len = sqrt(pow(delta_x, 2) + pow(delta_y, 2));
+    printf("The length is %f\n", len);
+    return len;
+    //this doesn't work because sometimes delta_x or y is 0.
+}
 double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
 {
     double delta_x;
@@ -27,11 +58,11 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
         info->horiz_vec[1] = ceilf(info->ray_y);
     delta_y = info->horiz_vec[1] - previous_position;
     
-    printf("So our first horizontal intersection is at y: %f\n", info->ray_y);
+    printf("So our first horizontal intersection is at y: %f\n", info->horiz_vec[0]);
     printf("Delta Y: %f\n", delta_y);
    //protecting from undefined results
-    if ((info->ray_orient > M_PI_2 - 0.1 && info->ray_orient < M_PI_2 + 0.1) ||
-            (info->ray_orient > (M_PI * 1.5 - 0.1) && info->ray_orient < (M_PI * 1.5 + 0.1)))
+    if ((info->ray_orient > M_PI_2 - 0.3 && info->ray_orient < M_PI_2 + 0.3) ||
+            (info->ray_orient > (M_PI * 1.5 - 0.3) && info->ray_orient < (M_PI * 1.5 + 0.3)))
         delta_x = 0;
     else        
         delta_x = delta_y * tan(info->ray_orient);
@@ -71,6 +102,15 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
     printf("Initial ray start position is x: %f y:%f\n", info->ray_x, info->ray_y);
     
     horiz_len = find_first_horizontal(mlx, map, info);
+    verti_len = find_first_vertical(mlx, map, info);
+    printf("We have received both lengths, they are:\n");
+    printf("horiz_len: %f \n", horiz_len);
+    printf("verti_len: %f \n", verti_len);
+    if (horiz_len < verti_len)
+        ray_len = horiz_len;
+    else
+        ray_len = verti_len;
+    printf("So the distance to the closest intersection is '%f\n'", ray_len);
     /*
         So we know our current position, and angle.
         we know our dx dy from the grid square. but depending on the angle we don't know which one comes first. so
