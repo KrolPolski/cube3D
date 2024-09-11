@@ -66,6 +66,8 @@ typedef struct s_info
 	double  ray_x;
 	double	ray_y;
 	double	ray_orient;
+	double	horiz_vec[2];
+	double	verti_vec[2];
 	double	rend_dist;
 	bool	map_visible;
 	double	map_size_factor;
