@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/10 11:38:51 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:49:55 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_movehook(void *param)
 		if (info->p_orient >= 2 * M_PI)
 			info->p_orient -= 2 * M_PI;
 	}
-	//ray_caster(info->mlx, info->map, info->img);
+	raycaster(info->mlx, info->map, info->img, info);
 	if (info->img->plyr->enabled)
 		draw_2d_player(info->mlx, info->map, info);
 }
