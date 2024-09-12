@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:55:51 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:54:48 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,24 @@
 
 typedef struct s_map
 {
-	char			**map;
-	int				start_i;
-	int				start_j;
-	char			**copy;
-	char			*no;
-	char			*so;
-	char			*ea;
-	char			*we;
-	char			*floor;
-	char			*ceiling;
-	int				*f;
-	int				*c;
-	int				x_len;
-	int				y_len;
-	int				sq_w;
-	int				sq_h;
-	int				sq;
-}					t_map;
+	char	**map;
+	int		start_i;
+	int		start_j;
+	char	**copy;
+	char	*no;
+	char	*so;
+	char	*ea;
+	char	*we;
+	char	*floor;
+	char	*ceiling;
+	int		*f;
+	int		*c;
+	int		x_len;
+	int		y_len;
+	int		sq_w;
+	int		sq_h;
+	int		sq;
+}			t_map;
 
 typedef struct s_images
 {
@@ -66,42 +66,42 @@ enum				e_dir
 
 typedef struct s_info
 {
-	int				s_width;
-	int				s_height;
-	mlx_t			*mlx;
-	t_map			*map;
-	t_images		*img;
-	double			p_x;
-	double			p_y;
-	double			p_orient;
-	bool			map_visible;
-	double			map_size_factor;
-	int				map_width;
-	int				map_height;
+	int			s_width;
+	int			s_height;
+	mlx_t		*mlx;
+	t_map		*map;
+	t_images	*img;
+	double		p_x;
+	double		p_y;
+	double		p_orient;
+	bool		map_visible;
+	double		map_size_factor;
+	int			map_width;
+	int			map_height;
 
-}					t_info;
+}				t_info;
 
-void				draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
-void				ft_single_press_hook(mlx_key_data_t keydata, void *param);
-int					get_rgba(int r, int g, int b, int a);
-int					invalid_file_extension(char *arg, char *ext);
-char				*ft_strchr_rev(const char *s, int c);
-char				*ft_strdup_mod(const char *s1);
-void				free_2d(char **arr);
-void				print_2d(char **arr);
-void				parse(char **argv, t_map *map);
-int					file_to_map(t_map *map, int i, char *line);
-int					*set_color(char *str, char **arr, t_map *map);
-void				set_final(t_map *map);
-int					identify_line(char *line);
-void				validate(t_map *map);
-void				copy_map(t_map *map);
-void				check_chars(t_map *map);
-int					all_whitespace(char *line);
-void				free_map(t_map *map);
-void				print_error(char *str, t_map *map);
-size_t				len_2d(char **arr);
-void				check_walls(t_map *map);
-void				setup_mlx(t_map *map);
+void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
+void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
+int		get_rgba(int r, int g, int b, int a);
+int		invalid_file_extension(char *arg, char *ext);
+char	*ft_strchr_rev(const char *s, int c);
+char	*ft_strdup_mod(const char *s1);
+void	free_2d(char **arr);
+void	print_2d(char **arr);
+void	parse(char **argv, t_map *map);
+int		file_to_map(t_map *map, int i, char *line);
+int		*set_color(char *str, char **arr, t_map *map);
+void	set_final(t_map *map);
+int		identify_line(char *line);
+void	validate(t_map *map);
+void	copy_map(t_map *map);
+void	check_chars(t_map *map);
+int		all_whitespace(char *line);
+void	free_map(t_map *map);
+void	print_error(char *str, t_map *map);
+size_t	len_2d(char **arr);
+void	check_walls(t_map *map);
+void	setup_mlx(t_map *map);
 
 #endif
