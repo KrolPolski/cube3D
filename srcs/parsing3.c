@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:11:02 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:16:27 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:17:15 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	*set(char **str_arr, t_map *map, int *int_arr)
 			{
 				free_2d(str_arr);
 				free(int_arr);
-				print_error("RGB contains alphabets or integer not in correct range", map);
+				print_error("RGB contains alphabets or wrong integer", map);
 			}
 			j++;
 		}

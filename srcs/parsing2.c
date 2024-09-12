@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:03:02 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:23:39 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:45:50 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*determine_then_set(char **arr, char *name, char *str, t_map *map)
 	if (!ft_strncmp(arr[0], name, 2))
 	{
 		if (str)
-			print_error("More than one NO element in file", map);
+			print_error("More than one of the same element in file", map);
 		str = set_texture(arr, map);
 	}
 	return (str);
@@ -75,12 +75,11 @@ static void	set_elements(char *line, t_map *map)
 }
 
 // intializes one line to map struct
-int file_to_map(t_map *map, int i, char *line)
+int	file_to_map(t_map *map, int i, char *line)
 {
 	static int	flag;
 
-	if (identify_line(line) == 2 || (i && identify_line(line) == 1))
-		// to add also empty lines within the map
+	if (identify_line(line) == 2 || (i && identify_line(line) == 1)) // to add also empty lines within the map
 	{
 		flag = 1;
 		map->map[i] = ft_strdup_mod(line);

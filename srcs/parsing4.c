@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:12:32 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:14:29 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:25:21 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,11 @@ void	set_final(t_map *map)
 	while (map->map[i])
 	{
 		if (i == idx)
-		{
 			s1 = ft_substr(map->map[idx], 0, width);
-			if (!s1)
-				print_error("Memory allocation failure", map);
-		}
-		else if (ft_strlen(map->map[i]) <= width) // is this needed?
-		{
+		else
 			s1 = ft_strdup(map->map[i]);
-			if (!s1)
-				print_error("Memory allocation failure", map);
-		}
+        if (!s1)
+			print_error("Memory allocation failure", map);
 		add_s2(width, s1, map, i);
 		i++;
 	}

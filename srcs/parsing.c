@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:23:30 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:14:20 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	parse(char **argv, t_map *map)
 	int	no_of_lines;
 
 	if (invalid_file_extension(argv[1], ".cub"))
-		print_error("Map should not be a directory and should have .cub file extension", NULL);
+		print_error("Map should be a file and have .cub extension", NULL);
 	no_of_lines = map_line_count(argv[1]);
 	elements_to_null(map, no_of_lines);
 	set_initial_map(argv[1], map);
