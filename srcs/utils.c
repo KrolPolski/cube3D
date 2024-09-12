@@ -17,21 +17,21 @@ void	free_map(t_map *map)
 	if (map->c)
 		free(map->c);
 	if (map->f)
-    	free(map->f);
+		free(map->f);
 	if (map->ceiling)
 		free(map->ceiling);
 	if (map->floor)
-    	free(map->floor);
+		free(map->floor);
 	if (map->no)
-    	free(map->no);
+		free(map->no);
 	if (map->so)
-    	free(map->so);
+		free(map->so);
 	if (map->ea)
-    	free(map->ea);
+		free(map->ea);
 	if (map->we)
-    	free(map->we);
+		free(map->we);
 	if (map->map[0])
-    	free_2d(map->map);
+		free_2d(map->map);
 }
 
 // modified ft_strdup to not include newline character in duplication
@@ -61,30 +61,30 @@ char	*ft_strdup_mod(const char *s1)
 	return (res);
 }
 
-void free_2d(char **arr)
+void	free_2d(char **arr)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (arr[i])
-    {
+	i = 0;
+	while (arr[i])
+	{
 		if (arr[i])
-        	free(arr[i]);
-        i++;
-    }
-    free(arr);
+			free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
-void print_2d(char **arr)
+void	print_2d(char **arr)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (arr[i])
-    {
-        ft_putendl_fd(arr[i], 1);
-        i++;
-    }
+	i = 0;
+	while (arr[i])
+	{
+		ft_putendl_fd(arr[i], 1);
+		i++;
+	}
 }
 
 static int	is_it_space(char *s, int i)
@@ -125,12 +125,12 @@ void	print_error(char *str, t_map *map)
 // the number of strings contained in a 2d array
 size_t	len_2d(char **arr)
 {
-	size_t len;
+	size_t	len;
 
-    len = 0;
-    while (arr[len])
-        len++;
-    len--;
+	len = 0;
+	while (arr[len])
+		len++;
+	len--;
 	return (len);
 }
 
@@ -141,13 +141,13 @@ char	*ft_strchr_rev(const char *s, int c)
 	str = (char *)s;
 	while (*str != '\0')
 		str++;
-    while (str >= s)
+	while (str >= s)
 	{
 		if (*str == (char)c)
 			return (str);
 		str--;
 	}
-	if (c  == '\0')
+	if (c == '\0')
 		return (str);
 	return (NULL);
 }

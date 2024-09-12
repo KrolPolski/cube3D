@@ -12,102 +12,104 @@
 
 #include "../includes/cub3d.h"
 
-int  invalid_file_extension(char *arg, char *ext)
+int	invalid_file_extension(char *arg, char *ext)
 {
-    char    *str;
-    int     i;
+	char	*str;
+	int		i;
 
-    str = ft_strchr_rev(arg, '.');
-    if (str == NULL || ft_strncmp(str, ext, 5))
-        return (1);
-    return (0);
+	str = ft_strchr_rev(arg, '.');
+	if (str == NULL || ft_strncmp(str, ext, 5))
+		return (1);
+	return (0);
 }
 
-static void valid_chars(char c, t_map *map)
+static void	valid_chars(char c, t_map *map)
 {
-    if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W' && c != ' ')
-        print_error("Invalid map character(s)", map);
+	if (c != '1' && c != '0' && c != 'N' && c != 'S' && c != 'E' && c != 'W'
+		&& c != ' ')
+		print_error("Invalid map character(s)", map);
 }
 
-static int start_positions(char c, int player_count, t_map *map)
+static int	start_positions(char c, int player_count, t_map *map)
 {
-    if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-    {
-        player_count++;
-        if (player_count > 1)
-            print_error("More than one start position", map);
-    }
-    return (player_count);
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	{
+		player_count++;
+		if (player_count > 1)
+			print_error("More than one start position", map);
+	}
+	return (player_count);
 }
 
 // determines whether or not the map element contains all valid characters
-static void check_chars(t_map *map)
+static void	check_chars(t_map *map)
 {
-    int i;
-    int j;
-    int player_count;
+	int	i;
+	int	j;
+	int	player_count;
 
-    i = 0;
-    player_count = 0;
-    while (map->map[i])
-    {
-        j = 0;
-        while (map->map[i][j])
-        {
-            player_count = start_positions(map->map[i][j], player_count, map);
-            valid_chars(map->map[i][j], map);
-            j++;
-        }
-        i++;
-    }
-    if (player_count == 0)
-        print_error("No start position", map);
+	i = 0;
+	player_count = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			player_count = start_positions(map->map[i][j], player_count, map);
+			valid_chars(map->map[i][j], map);
+			j++;
+		}
+		i++;
+	}
+	if (player_count == 0)
+		print_error("No start position", map);
 }
 
 // checks if all remaining lines are whitespace
-static int  all_remaining(int i, char **arr)
+static int	all_remaining(int i, char **arr)
 {
-    while (arr[i])
-    {
-        if (!all_whitespace(arr[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+	while (arr[i])
+	{
+		if (!all_whitespace(arr[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 // determines if there are any empty lines within the map element
-static void find_empty_line(t_map *map)
+static void	find_empty_line(t_map *map)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (map->map[i])
-    {
-        if (all_whitespace(map->map[i]) && !all_remaining(i, map->map))
-            print_error("Empty line within map", map);
-        i++;
-    }
+	i = 0;
+	while (map->map[i])
+	{
+		if (all_whitespace(map->map[i]) && !all_remaining(i, map->map))
+			print_error("Empty line within map", map);
+		i++;
+	}
 }
 
-static void check_textures(char *texture, t_map *map)
+static void	check_textures(char *texture, t_map *map)
 {
-    int fd;
-    
-    if (invalid_file_extension(texture, ".png"))
-        print_error("Texture should not be a directory and should have .png file extension", map);
-    fd = open(texture, O_RDONLY);
-    if (fd == -1)
-        print_error(NULL, NULL);
+	int	fd;
+
+	if (invalid_file_extension(texture, ".png"))
+		print_error("Texture should not be a directory and should have .png file extension",
+			map);
+	fd = open(texture, O_RDONLY);
+	if (fd == -1)
+		print_error(NULL, NULL);
 }
 
-void    validate(t_map *map)
+void	validate(t_map *map)
 {
-    check_textures(map->no, map);
-    check_textures(map->so, map);
-    check_textures(map->ea, map);
-    check_textures(map->we, map);
-    find_empty_line(map);
-    check_chars(map);
-    check_walls(map);
+	check_textures(map->no, map);
+	check_textures(map->so, map);
+	check_textures(map->ea, map);
+	check_textures(map->we, map);
+	find_empty_line(map);
+	check_chars(map);
+	check_walls(map);
 }
