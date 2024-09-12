@@ -6,13 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 11:11:50 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 11:23:49 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// determines whether a line is; (0) a non-map element, (1) an empty line, (3) part of map element
+//determines whether a line is; (0) a non-map element, (1) an empty line, (3) part of map element
 static int	identify_line(char *line)
 {
 	if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2) || !ft_strncmp(line, "EA", 2) || !ft_strncmp(line, "WE", 2)
