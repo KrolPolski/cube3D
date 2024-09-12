@@ -6,11 +6,33 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:25:46 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:26:31 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:55:28 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+// creates a copy of map->map for use in fill
+void	copy_map(t_map *map)
+{
+	int	len;
+	int	i;
+
+	len = 0;
+	len = len_2d(map->map);
+	map->copy = malloc(len * sizeof(char *) + 1);
+	if (!map->copy)
+		print_error("Memory allocation failure", map);
+	i = 0;
+	while (map->map[i])
+	{
+		map->copy[i] = ft_strdup(map->map[i]);
+		if (!map->copy[i])
+			print_error("Memory allocation failure", map);
+		i++;
+	}
+	map->copy[i] = NULL;
+}
 
 void	free_map(t_map *map)
 {

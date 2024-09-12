@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 11:25:46 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:55:16 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,6 @@ static void	compare_maps(t_map *map)
 		}
 		i++;
 	}
-}
-
-// creates a copy of map->map for use in fill
-static void	copy_map(t_map *map)
-{
-	int	len;
-	int	i;
-
-	len = 0;
-	len = len_2d(map->map);
-	map->copy = malloc(len * sizeof(char *) + 1);
-	if (!map->copy)
-		print_error("Memory allocation failure", map);
-	i = 0;
-	while (map->map[i])
-	{
-		map->copy[i] = ft_strdup(map->map[i]);
-		if (!map->copy[i])
-			print_error("Memory allocation failure", map);
-		i++;
-	}
-	map->copy[i] = NULL;
 }
 
 static void	get_start_pos(t_map *map)

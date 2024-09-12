@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:19:11 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:55:51 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int					*set_color(char *str, char **arr, t_map *map);
 void				set_final(t_map *map);
 int					identify_line(char *line);
 void				validate(t_map *map);
+void				copy_map(t_map *map);
+void				check_chars(t_map *map);
 int					all_whitespace(char *line);
 void				free_map(t_map *map);
 void				print_error(char *str, t_map *map);
