@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 12:05:42 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:19:11 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_info
 	int				map_height;
 
 }					t_info;
+
 void				draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
 void				ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int					get_rgba(int r, int g, int b, int a);
@@ -89,6 +90,10 @@ char				*ft_strdup_mod(const char *s1);
 void				free_2d(char **arr);
 void				print_2d(char **arr);
 void				parse(char **argv, t_map *map);
+int					file_to_map(t_map *map, int i, char *line);
+int					*set_color(char *str, char **arr, t_map *map);
+void				set_final(t_map *map);
+int					identify_line(char *line);
 void				validate(t_map *map);
 int					all_whitespace(char *line);
 void				free_map(t_map *map);
