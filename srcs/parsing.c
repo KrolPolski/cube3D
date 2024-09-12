@@ -6,24 +6,11 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:18:53 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:23:30 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-// determines whether a line is; (0) a non-map element, (1) an empty line,(3) part of map element
-int	identify_line(char *line)
-{
-	if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2)
-		|| !ft_strncmp(line, "EA", 2) || !ft_strncmp(line, "WE", 2)
-		|| !ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1))
-		return (0);
-	else if (!ft_strncmp(line, "\n", 1) || all_whitespace(line))
-		return (1);
-	else
-		return (2);
-}
 
 // returns the number of lines in the map element of the input file
 static int	map_line_count(char *arg)

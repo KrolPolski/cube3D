@@ -6,86 +6,11 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/11 15:14:28 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:25:39 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	free_map(t_map *map)
-{
-	if (map->c)
-		free(map->c);
-	if (map->f)
-		free(map->f);
-	if (map->ceiling)
-		free(map->ceiling);
-	if (map->floor)
-		free(map->floor);
-	if (map->no)
-		free(map->no);
-	if (map->so)
-		free(map->so);
-	if (map->ea)
-		free(map->ea);
-	if (map->we)
-		free(map->we);
-	if (map->map[0])
-		free_2d(map->map);
-}
-
-// modified ft_strdup to not include newline character in duplication
-char	*ft_strdup_mod(const char *s1)
-{
-	size_t	len;
-	size_t	i;
-	size_t	j;
-	char	*res;
-
-	len = ft_strlen(s1);
-	res = (char *)malloc(sizeof(char) * (len + 1));
-	if (res == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i])
-	{
-		if (s1[i] != '\n')
-		{
-			res[j] = s1[i];
-			j++;
-		}
-		i++;
-	}
-	res[j] = '\0';
-	return (res);
-}
-
-void	free_2d(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		if (arr[i])
-			free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-void	print_2d(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		ft_putendl_fd(arr[i], 1);
-		i++;
-	}
-}
 
 static int	is_it_space(char *s, int i)
 {
