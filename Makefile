@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/09/02 10:58:32 by rboudwin         ###   ########.fr        #
+#    Updated: 2024/09/12 13:32:14 by tparratt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,13 @@ NAME		=	cub3d
 
 SRC		=	srcs/main.c \
 			srcs/validation.c \
+			srcs/validation2.c \
 			srcs/utils.c \
+			srcs/utils2.c \
 			srcs/parsing.c \
+			srcs/parsing2.c \
+			srcs/parsing3.c \
+			srcs/parsing4.c \
 			srcs/walls.c \
 			srcs/raycaster.c
 LIBFT		=	libft/libft.a
