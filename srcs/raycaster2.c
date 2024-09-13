@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/11 14:35:36 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:41:35 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,28 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
     return len;
     //this doesn't work because sometimes delta_x or y is 0.
 }
+double  find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
+{
+    double delta_y;
+    double delta_x;
+    double x_candidate;
+    double y_candidate;
+    
+    delta_y = 1.0;
+    delta_x = 1.0 / tan(info->ray_orient);
+    x_candidate = info->horiz_vec[0] + delta_x;
+    y_candidate = info->horiz_vec[1] + delta_y;
+    if (x_candidate >= 0 && y_candidate >= 0 && x_candidate < map->x_len && y_candidate < map->y_len)
+    {
+        info->horiz_vec[0] = x_candidate;
+        info->horiz_vec[1] = y_candidate;
+        printf("new horiz_vec: %f, %f\n", info->horiz_vec[0], info->horiz_vec[1]);
+        len += sqrt(pow(delta_x, 2) + pow(delta_y, 2));
+        return len;
+    }
+    return (len);
+    
+}
 
  void check_radian_overflow(t_info *info)
  {
@@ -93,6 +115,7 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
     double ray_y_len;
     double horiz_len;
     double verti_len;
+    double len_parking;
     info->ray_x = info->p_x;
     info->ray_y = info->p_y;
     info->ray_orient = info->p_orient - (M_PI / 6);
@@ -110,12 +133,14 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
         ray_len = horiz_len;
     else
         ray_len = verti_len;
-    printf("So the distance to the closest intersection is '%f\n'", ray_len);
-    /*
-        So we know our current position, and angle.
-        we know our dx dy from the grid square. but depending on the angle we don't know which one comes first. so
-        we need to increment .01 each time probably, until we hit the first intersection
-    */
-    //check horizontal intersections
-    //check vertical intersections
+    printf("So the distance to the closest intersection is '%f'\n", ray_len);
+    while (detect_square(map, info->horiz_vec[0], info->horiz_vec[1]) != '1')
+    {
+        len_parking = horiz_len;
+        horiz_len = find_next_horizontal(mlx, map, info, horiz_len);
+        char ret;
+        ret = detect_square(map, info->horiz_vec[0], info->horiz_vec[1]);
+        printf("detect_square returned %c\n", ret);
+    }
+    printf("So horiz_len to a wall is %f\n", horiz_len);
 }   

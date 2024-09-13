@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/11 11:49:55 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:36:04 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,18 @@ char	detect_square(t_map *map, double x, double y)
  
 	rel_x = (int)floor(x);
 	rel_y = (int)floor(y);
-
-	sq = map->map[rel_y][rel_x];
-	return (sq);
+	if (rel_x < map->x_len && rel_y < map->y_len &&
+		rel_x >= 0 && rel_y >= 0)
+	{
+		sq = map->map[rel_y][rel_x];
+		return (sq);
+	}
+	else
+	{
+		ft_putstr_fd("Went out of bounds\n", 2);
+		return('1');
+		//exit might be forbidden
+	}
 }
 
 void	move_forward(t_info *info)
