@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/16 12:19:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:26:38 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
     printf("So our first vertical intersection is at x: %f\n", info->verti_vec[0]);
     printf("Delta X: %f\n", delta_x);
    //protecting from undefined results, need to adjust this
-    if ((info->ray_orient > -EPSILON && info->ray_orient < EPSILON) ||
+    if ((info->ray_orient > (M_PI * 2) -EPSILON && info->ray_orient < EPSILON) ||
             (info->ray_orient > (M_PI - EPSILON) && info->ray_orient < (M_PI + EPSILON)))
         delta_y = 0;
     else        
@@ -94,16 +94,16 @@ double  find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
     
     delta_y = 1.0;
     delta_x = 1.0 / tan(info->ray_orient);
-    x_candidate = info->horiz_vec[0] + delta_x;
-    y_candidate = info->horiz_vec[1] + delta_y;
-    if (x_candidate >= 0 && y_candidate >= 0 && x_candidate < map->x_len && y_candidate < map->y_len)
+    info->horiz_vec[0] = info->horiz_vec[0] + delta_x;
+    info->horiz_vec[1] = info->horiz_vec[1] + delta_y;
+    /*if (x_candidate >= 0 && y_candidate >= 0 && x_candidate < map->x_len && y_candidate < map->y_len)
     {
         info->horiz_vec[0] = x_candidate;
         info->horiz_vec[1] = y_candidate;
         printf("new horiz_vec: %f, %f\n", info->horiz_vec[0], info->horiz_vec[1]);
         len += sqrt(pow(delta_x, 2) + pow(delta_y, 2));
         return len;
-    }
+    }*/
     return (len);
     
 }
@@ -151,8 +151,7 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
     {
         len_parking = horiz_len;
         horiz_len = find_next_horizontal(mlx, map, info, horiz_len);
-        
-        ret = detect_square(map, info->horiz_vec[0], info->horiz_vec[1]);
+        //ret = detect_square(map, info->horiz_vec[0], info->horiz_vec[1]);
         //printf("detect_square returned '%c'\n", ret);
     }
     printf("So horiz_len to a wall is %f\n", horiz_len);
