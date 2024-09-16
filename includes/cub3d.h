@@ -76,6 +76,7 @@ typedef struct s_info
 
 } t_info;
 
+# define EPSILON 1e-6
 char	detect_square(t_map *map, double x, double y);
 void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info);
 void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);

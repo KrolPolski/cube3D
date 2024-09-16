@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/11 15:36:04 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:09:09 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ char	detect_square(t_map *map, double x, double y)
 		rel_x >= 0 && rel_y >= 0)
 	{
 		sq = map->map[rel_y][rel_x];
-		return (sq);
+		if (sq == ' ')
+			return('1');
+		//if (ft_strchr("NESW", sq))
+		//	return('0');
+		else
+			return (sq);
 	}
 	else
 	{
