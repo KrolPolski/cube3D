@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/16 15:30:11 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/23 08:13:57 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,9 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img)
     int color;
     float angle;
     unsigned int column_height;
+    int proj_plane_dist;
+
+    proj_plane_dist = info->s_width / tan(M_PI / 6);
     
     color = get_rgba(0, 0, 255, 255);
     //check to see if we hit the max render distance already
@@ -159,8 +162,10 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img)
         return ;
     top_pixel = 0;
     pixels = 0;
-    column_height = info->s_height / ray_len;
+    column_height = (info->s_height / ray_len);
     top_pixel = info->s_height / 2 - column_height / 2;
+    if (top_pixel < 0)
+        top_pixel = 0;
     while (pixels < column_height)
     {
         mlx_put_pixel(img->world, i, top_pixel + pixels, color);
@@ -185,18 +190,21 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
     mlx_delete_image(mlx, img->world);
     img->world = mlx_new_image(mlx, info->s_width, info->s_height);
     mlx_image_to_window(mlx, img->world, 0, 0);
+    i = 0;
     while (i < info->s_width)
     {
         check_radian_overflow(info);
         ray_len = 0;
-        printf("first ray_orient is %f\n", info->ray_orient);
-        printf("Initial ray start position is x: %f y:%f\n", info->ray_x, info->ray_y);
+        info->ray_x = info->p_x;
+        info->ray_y = info->p_y;
+       // printf("first ray_orient is %f\n", info->ray_orient);
+      //  printf("Initial ray start position is x: %f y:%f\n", info->ray_x, info->ray_y);
         
         horiz_len = find_first_horizontal(mlx, map, info);
         verti_len = find_first_vertical(mlx, map, info);
-        printf("We have received both lengths, they are:\n");
-        printf("horiz_len: %f \n", horiz_len);
-        printf("verti_len: %f \n", verti_len);
+       // printf("We have received both lengths, they are:\n");
+       // printf("horiz_len: %f \n", horiz_len);
+     //   printf("verti_len: %f \n", verti_len);
         if (horiz_len < verti_len)
             ray_len = horiz_len;
         else
@@ -222,6 +230,6 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
         printf("And the shorter of these two distances to a wall is %f\n", ray_len);
         cast_wall(ray_len, i, info, img);
         i++;
-        info->ray_orient += (M_PI / 3) * (1 / info->s_width);
+        info->ray_orient += (M_PI / 3.0) * (1.0 / (double)info->s_width);
     }
 }   
