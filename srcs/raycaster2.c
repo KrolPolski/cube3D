@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/23 11:48:29 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:55:51 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
     
     //we will know x but not y
     previous_position = info->ray_x;
-    if (info->ray_orient > M_PI_2 && info->ray_orient < 3 * M_PI_2)
+    if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2)
         info->verti_vec[0] = floorf(info->ray_x);
     else
         info->verti_vec[0] = ceilf(info->ray_x);
-    if (info->ray_orient > M_PI_2 && info->ray_orient < 3 * M_PI_2) {
+    if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2) {
     // Ray moving left
         delta_x = -fabs(info->verti_vec[0] - info->ray_x);
      } else 
@@ -151,7 +151,7 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img)
     unsigned int column_height;
     int proj_plane_dist;
 
-    proj_plane_dist = info->s_width / tan(M_PI / 6);
+    proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
     
     color = get_rgba(0, 0, 255, 255);
     //check to see if we hit the max render distance already
