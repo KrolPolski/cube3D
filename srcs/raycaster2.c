@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/23 08:13:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:48:29 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
     printf("So our first vertical intersection is at x: %f\n", info->verti_vec[0]);
     printf("Delta X: %f\n", delta_x);
    //protecting from undefined results, need to adjust this
-    if ((fabs(info->ray_orient) < EPSILON) ||(fabs(info->ray_orient) - M_PI) < EPSILON)
+    if (fabs(sin(info->ray_orient) < EPSILON))
         delta_y = 0;
     else        
     {
         if (info->ray_orient < M_PI)  // Ray moving up
-            delta_y = fabs(delta_x) * tan(info->ray_orient);
+            delta_y = fabs(delta_x) / tan(info->ray_orient);
         else  // Ray moving down
-            delta_y = -fabs(delta_x) * tan(info->ray_orient);}
+            delta_y = -fabs(delta_x) / tan(info->ray_orient);}
     printf("Delta y: %f\n", delta_y);
     info->verti_vec[1] = info->ray_y + delta_y;
     printf("So we will use the following vector (x,y): (%f, %f)\n", info->verti_vec[0], info->verti_vec[1]);
@@ -57,8 +57,7 @@ double find_next_vertical(mlx_t *mlx, t_map *map, t_info(*info), double len)
     double delta_x;
     
     delta_x = 1.0;
-    if ((fabs(info->ray_orient) < EPSILON) ||
-            (fabs(info->ray_orient - M_PI < EPSILON)))
+    if (fabs(sin(info->ray_orient)) < EPSILON)
         delta_y = 0;
     else
     {
@@ -97,11 +96,10 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
     printf("So our first horizontal intersection is at y: %f\n", info->horiz_vec[1]);
     printf("Delta Y: %f\n", delta_y);
    //protecting from undefined results
-    if ((fabs(info->ray_orient - M_PI_2) < EPSILON) ||
-            (fabs(info->ray_orient - (M_PI * 1.5 ) < EPSILON)))
+    if (fabs(cos(info->ray_orient)) < EPSILON)
         delta_x = 0;
     else        
-        delta_x = delta_y * tan(info->ray_orient);
+        delta_x = delta_y / tan(info->ray_orient);
     printf("Delta X: %f\n", delta_x);
     info->horiz_vec[0] = info->ray_x + delta_x;
     printf("So we will use the following vector (x,y): (%f, %f)\n", info->horiz_vec[0], info->horiz_vec[1]);
@@ -118,8 +116,7 @@ double  find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
     double y_candidate;
     
     delta_y = 1.0;
-    if ((fabs(info->ray_orient - M_PI_2) < EPSILON) ||
-            (fabs(info->ray_orient - (M_PI * 1.5) < EPSILON)))
+    if (fabs(cos(info->ray_orient)) < EPSILON)
         delta_x = 0;
     else
     {
@@ -162,7 +159,7 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img)
         return ;
     top_pixel = 0;
     pixels = 0;
-    column_height = (info->s_height / ray_len);
+    column_height = (info->s_height / (ray_len  * cos(info->ray_orient - info->p_orient)));
     top_pixel = info->s_height / 2 - column_height / 2;
     if (top_pixel < 0)
         top_pixel = 0;
