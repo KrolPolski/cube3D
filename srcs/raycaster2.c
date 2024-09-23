@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/23 11:55:51 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:08:02 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
         delta_y = 0;
     else        
     {
-        if (info->ray_orient < M_PI)  // Ray moving up
-            delta_y = fabs(delta_x) / tan(info->ray_orient);
+        if (info->ray_orient > M_PI)  // Ray moving up
+            delta_y = -fabs(delta_x) / tan(info->ray_orient);
         else  // Ray moving down
-            delta_y = -fabs(delta_x) / tan(info->ray_orient);}
+            delta_y = fabs(delta_x) / tan(info->ray_orient);}
     printf("Delta y: %f\n", delta_y);
     info->verti_vec[1] = info->ray_y + delta_y;
     printf("So we will use the following vector (x,y): (%f, %f)\n", info->verti_vec[0], info->verti_vec[1]);
@@ -56,15 +56,18 @@ double find_next_vertical(mlx_t *mlx, t_map *map, t_info(*info), double len)
     double delta_y;
     double delta_x;
     
-    delta_x = 1.0;
+    if (info->ray_orient > M_PI_2 && info->ray_orient < M_PI_2 * 3)
+        delta_x = -1.0;
+    else
+        delta_x = 1.0;
     if (fabs(sin(info->ray_orient)) < EPSILON)
         delta_y = 0;
     else
     {
         if (info->ray_orient > M_PI)  // Ray moving up
-            delta_y = tan(info->ray_orient);
+            delta_y = -fabs(tan(info->ray_orient));
         else  // Ray moving down
-            delta_y = tan(info->ray_orient);
+            delta_y = fabs(tan(info->ray_orient));
     }
     info->verti_vec[0] = info->verti_vec[0] + delta_x;
     info->verti_vec[1] = info->verti_vec[1] + delta_y;
@@ -85,7 +88,7 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
         info->horiz_vec[1] = floorf(info->ray_y);
     else
         info->horiz_vec[1] = ceilf(info->ray_y);
-  if (info->ray_orient > 0 && info->ray_orient < M_PI) {
+  if (info->ray_orient > 0 && info->ray_orient > M_PI) {
     // Ray moving up
     delta_y = -fabs(info->horiz_vec[1] - info->ray_y);
 } else {
@@ -99,7 +102,12 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
     if (fabs(cos(info->ray_orient)) < EPSILON)
         delta_x = 0;
     else        
-        delta_x = delta_y / tan(info->ray_orient);
+    {
+        if (info->ray_orient < M_PI_2 || info->ray_orient > M_PI * 1.5)
+            delta_x = fabs(delta_y / tan(info->ray_orient)); 
+        else 
+            delta_x = -fabs(delta_y / tan(info->ray_orient)); 
+    }
     printf("Delta X: %f\n", delta_x);
     info->horiz_vec[0] = info->ray_x + delta_x;
     printf("So we will use the following vector (x,y): (%f, %f)\n", info->horiz_vec[0], info->horiz_vec[1]);
@@ -115,7 +123,10 @@ double  find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
     double x_candidate;
     double y_candidate;
     
-    delta_y = 1.0;
+    if (info->ray_orient > M_PI)
+        delta_y = -1.0;
+    else
+        delta_y = 1.0;
     if (fabs(cos(info->ray_orient)) < EPSILON)
         delta_x = 0;
     else
