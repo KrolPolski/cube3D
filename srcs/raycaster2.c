@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/23 13:08:02 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:59:59 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,31 @@ double  find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
         return;
  }
 
-void cast_wall(double ray_len, int i, t_info *info, t_images *img)
+int get_wall_color(double ray_orient, enum e_intersect inter)
+{
+    /* North = red
+        South = green
+        East = blue
+        West = yellow
+    */ 
+    if (inter == horizontal)
+    {
+        if (ray_orient >= M_PI)
+            return (get_rgba(0,255,0,255));
+        else
+            return (get_rgba(255,0,0,255));
+    }
+    else if (inter == vertical)
+    {
+        if (ray_orient >= M_PI_2 && ray_orient < (M_PI * 1.5))
+            return (get_rgba(0, 0,255,255));
+        else
+            return (get_rgba(255,255,0,255));
+    }
+    return (get_rgba(244, 244, 244giot, 255));
+}
+
+void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_intersect inter)
 {
     int top_pixel;
     int pixels;
@@ -162,9 +186,10 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img)
     unsigned int column_height;
     int proj_plane_dist;
 
+    printf("Inside cast_wall, inter is %d\n", inter);
     proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
     
-    color = get_rgba(0, 0, 255, 255);
+    color = get_wall_color(info->ray_orient, inter);
     //check to see if we hit the max render distance already
     if (ray_len > info->rend_dist)
         return ;
@@ -193,6 +218,7 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
     info->ray_y = info->p_y;
     char ret;
     int i;
+    enum e_intersect inter;
     
     info->ray_orient = info->p_orient - (M_PI / 6);
     mlx_delete_image(mlx, img->world);
@@ -230,13 +256,19 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
             verti_len = find_next_vertical(mlx, map, info, verti_len);
         }
         if (horiz_len < verti_len)
+        {
             ray_len = horiz_len;
+            inter = horizontal;
+        }
         else
+        {
             ray_len = verti_len;
+            inter = vertical;
+        }
         printf("So horiz_len to a wall is %f\n", horiz_len);
         printf("and verti_len to a wall is %f\n", verti_len);
         printf("And the shorter of these two distances to a wall is %f\n", ray_len);
-        cast_wall(ray_len, i, info, img);
+        cast_wall(ray_len, i, info, img, inter);
         i++;
         info->ray_orient += (M_PI / 3.0) * (1.0 / (double)info->s_width);
     }

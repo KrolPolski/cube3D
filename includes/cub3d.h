@@ -53,6 +53,12 @@ enum e_dir
 	error,
 };
 
+enum e_intersect
+{
+	horizontal,
+	vertical
+};
+
 typedef struct s_info
 {
 	int s_width;
