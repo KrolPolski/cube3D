@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/26 10:59:59 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:00:42 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int get_wall_color(double ray_orient, enum e_intersect inter)
         else
             return (get_rgba(255,255,0,255));
     }
-    return (get_rgba(244, 244, 244giot, 255));
+    return (get_rgba(244, 244, 244, 255));
 }
 
 void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_intersect inter)
