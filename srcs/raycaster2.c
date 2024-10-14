@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/14 13:06:49 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:07:21 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
     //we will know x but not y
     previous_position = info->ray_x;
     if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2)
-        info->verti_vec[0] = floorf(info->ray_x);
+        info->verti_vec[0] = floorf(info->ray_x) - 0.00001;
     else
         info->verti_vec[0] = ceilf(info->ray_x);
     if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2) {
@@ -32,10 +32,10 @@ double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
          {
     // Ray moving right
     delta_x = fabs(info->verti_vec[0] - info->ray_x);}   
-    printf("So our first vertical intersection is at x: %f\n", info->verti_vec[0]);
-    printf("Delta X: %f\n", delta_x);
+    //printf("So our first vertical intersection is at x: %f\n", info->verti_vec[0]);
+   // printf("Delta X: %f\n", delta_x);
    //protecting from undefined results, need to adjust this
-    if (fabs(sin(info->ray_orient) < EPSILON))
+    if (fabs(sin(info->ray_orient)) < EPSILON)
         delta_y = 0;
     else        
     {
@@ -43,11 +43,11 @@ double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
             delta_y = -fabs(delta_x * tan(info->ray_orient));
         else  // Ray moving down
             delta_y = fabs(delta_x * tan(info->ray_orient));}
-    printf("Delta y: %f\n", delta_y);
+  //  printf("Delta y: %f\n", delta_y);
     info->verti_vec[1] = info->ray_y + delta_y;
-    printf("So we will use the following vector (x,y): (%f, %f)\n", info->verti_vec[0], info->verti_vec[1]);
+ //   printf("So we will use the following vector (x,y): (%f, %f)\n", info->verti_vec[0], info->verti_vec[1]);
     len = sqrt(pow(delta_x, 2) + pow(delta_y, 2));
-    printf("The length is %f\n", len);
+ //   printf("The length is %f\n", len);
     return len;
     //this doesn't work because sometimes delta_x or y is 0.
 }
@@ -57,7 +57,7 @@ double find_next_vertical(mlx_t *mlx, t_map *map, t_info(*info), double len)
     double delta_x;
     
     if (info->ray_orient > M_PI_2 && info->ray_orient < M_PI_2 * 3)
-        delta_x = -1.001;
+        delta_x = -1.0;//0001;
     else
         delta_x = 1.0;
     if (fabs(sin(info->ray_orient)) < EPSILON)
@@ -65,13 +65,13 @@ double find_next_vertical(mlx_t *mlx, t_map *map, t_info(*info), double len)
     else
     {
         if (info->ray_orient > M_PI)  // Ray moving up
-            delta_y = fabs(delta_x * tan(info->ray_orient));
+            delta_y = -fabs(delta_x * tan(info->ray_orient));
         else  // Ray moving down
             delta_y = fabs(delta_x * tan(info->ray_orient));
     }
     info->verti_vec[0] = info->verti_vec[0] + delta_x;
     info->verti_vec[1] = info->verti_vec[1] + delta_y;
-    printf("new verti_vec: %f, %f\n", info->verti_vec[0], info->verti_vec[1]);
+    //printf("new verti_vec: %f, %f\n", info->verti_vec[0], info->verti_vec[1]);
     len += sqrt(pow(delta_x, 2) + pow(delta_y, 2));
     return len;
 }
@@ -85,7 +85,7 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
     //we will know y but not x
     previous_position = info->ray_y;
     if (info->ray_orient > M_PI)
-        info->horiz_vec[1] = floorf(info->ray_y);
+        info->horiz_vec[1] = floorf(info->ray_y) - 0.00001;
     else
         info->horiz_vec[1] = ceilf(info->ray_y);
   if (info->ray_orient > M_PI) {
@@ -96,8 +96,8 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
     delta_y = fabs(info->horiz_vec[1] - info->ray_y);
 }
     
-    printf("So our first horizontal intersection is at y: %f\n", info->horiz_vec[1]);
-    printf("Delta Y: %f\n", delta_y);
+  //  printf("So our first horizontal intersection is at y: %f\n", info->horiz_vec[1]);
+ //   printf("Delta Y: %f\n", delta_y);
    //protecting from undefined results
     if (fabs(cos(info->ray_orient)) < EPSILON)
         delta_x = 0;
@@ -108,11 +108,11 @@ double find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
         else 
             delta_x = -fabs(delta_y / tan(info->ray_orient)); 
     }
-    printf("Delta X: %f\n", delta_x);
+   // printf("Delta X: %f\n", delta_x);
     info->horiz_vec[0] = info->ray_x + delta_x;
-    printf("So we will use the following vector (x,y): (%f, %f)\n", info->horiz_vec[0], info->horiz_vec[1]);
+  //  printf("So we will use the following vector (x,y): (%f, %f)\n", info->horiz_vec[0], info->horiz_vec[1]);
     len = sqrt(pow(delta_x, 2) + pow(delta_y, 2));
-    printf("The length is %f\n", len);
+  //  printf("The length is %f\n", len);
     return len;
     //this doesn't work because sometimes delta_x or y is 0.
 }
@@ -124,7 +124,7 @@ double  find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
     double y_candidate;
     
     if (info->ray_orient > M_PI)
-        delta_y = -1.0;
+        delta_y = -1.0;//0001;
     else
         delta_y = 1.0;
     if (fabs(cos(info->ray_orient)) < EPSILON)
@@ -138,7 +138,7 @@ double  find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
     }
     info->horiz_vec[0] = info->horiz_vec[0] + delta_x;
     info->horiz_vec[1] = info->horiz_vec[1] + delta_y;
-    printf("new horiz_vec: %f, %f\n", info->horiz_vec[0], info->horiz_vec[1]);
+   // printf("new horiz_vec: %f, %f\n", info->horiz_vec[0], info->horiz_vec[1]);
     len += sqrt(pow(delta_x, 2) + pow(delta_y, 2));
     return len;
 }
@@ -186,7 +186,7 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     unsigned int column_height;
     int proj_plane_dist;
 
-    printf("Inside cast_wall, inter is %d\n", inter);
+    //printf("Inside cast_wall, inter is %d\n", inter);
     proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
     
     color = get_wall_color(info->ray_orient, inter);
@@ -199,7 +199,7 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     top_pixel = info->s_height / 2 - column_height / 2;
     if (top_pixel < 0)
         top_pixel = 0;
-    printf("We are trying to draw a column at x: %d\n", i);
+    //printf("We are trying to draw a column at x: %d\n", i);
     while (pixels < column_height - 1)
     {
         if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0 || i > info->s_width || i < 0)
@@ -249,7 +249,7 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
             ray_len = horiz_len;
         else
             ray_len = verti_len;
-        printf("So the distance to the closest intersection is '%f'\n", ray_len);
+        //printf("So the distance to the closest intersection is '%f'\n", ray_len);
         while (detect_square(map, info->horiz_vec[0], info->horiz_vec[1]) != '1')
         {
             horiz_len = find_next_horizontal(mlx, map, info, horiz_len);
@@ -271,9 +271,9 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
             ray_len = verti_len;
             inter = vertical;
         }
-        printf("So horiz_len to a wall is %f\n", horiz_len);
-        printf("and verti_len to a wall is %f\n", verti_len);
-        printf("And the shorter of these two distances to a wall is %f\n", ray_len);
+       // printf("So horiz_len to a wall is %f\n", horiz_len);
+       // printf("and verti_len to a wall is %f\n", verti_len);
+       // printf("And the shorter of these two distances to a wall is %f\n", ray_len);
         cast_wall(ray_len, i, info, img, inter);
         i++;
         info->ray_orient += (M_PI / 3.0) * (1.0 / (double)info->s_width);
