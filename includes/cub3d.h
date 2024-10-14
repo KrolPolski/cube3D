@@ -64,23 +64,38 @@ enum				e_dir
 	error,
 };
 
+enum e_intersect
+{
+	horizontal,
+	vertical
+};
+
 typedef struct s_info
 {
-	int			s_width;
-	int			s_height;
-	mlx_t		*mlx;
-	t_map		*map;
-	t_images	*img;
-	double		p_x;
-	double		p_y;
-	double		p_orient;
-	bool		map_visible;
-	double		map_size_factor;
-	int			map_width;
-	int			map_height;
+	int s_width;
+	int s_height;
+	mlx_t *mlx;
+	t_map *map;
+	t_images *img;
+	double	p_x;
+	double	p_y;
+	double	p_orient;
+	double  ray_x;
+	double	ray_y;
+	double	ray_orient;
+	double	horiz_vec[2];
+	double	verti_vec[2];
+	double	rend_dist;
+	bool	map_visible;
+	double	map_size_factor;
+	int		map_width;
+	int		map_height;
 
-}				t_info;
+} t_info;
 
+# define EPSILON 1e-5
+char	detect_square(t_map *map, double x, double y);
+void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info);
 void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
