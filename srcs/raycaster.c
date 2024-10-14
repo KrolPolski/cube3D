@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/09/23 13:15:41 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:15:43 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,7 +370,7 @@ void setup_mlx(t_map *map)
 	info.s_width = 1366;
 	info.s_height = 768;
 	info.map_size_factor = 0.75;
-	info.rend_dist = 10;
+	info.rend_dist = 15;
 	info.map_width = info.s_width * info.map_size_factor;
 	info.map_height = info.s_height * info.map_size_factor;
 	info.map_visible = true;
