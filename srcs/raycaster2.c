@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/14 12:39:53 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:06:49 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ double find_next_vertical(mlx_t *mlx, t_map *map, t_info(*info), double len)
     double delta_x;
     
     if (info->ray_orient > M_PI_2 && info->ray_orient < M_PI_2 * 3)
-        delta_x = -1.0;
+        delta_x = -1.001;
     else
         delta_x = 1.0;
     if (fabs(sin(info->ray_orient)) < EPSILON)
