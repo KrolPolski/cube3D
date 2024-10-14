@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 14:54:48 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:27:48 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_images
 	mlx_texture_t	*we;
 	mlx_image_t		*fg;
 	mlx_image_t		*world;
+	mlx_image_t		*background;
 	mlx_image_t		*bg;
 	mlx_image_t		*plyr;
 	mlx_image_t		*map;
