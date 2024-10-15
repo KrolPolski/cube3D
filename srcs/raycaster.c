@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/14 18:03:53 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:16:18 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,8 +411,8 @@ void setup_mlx(t_map *map)
 	//ft_printf("Loading map: \n");
 	//print_2d(map->map);
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
-	raycaster(info.mlx, info.map, info.img, &info); 
 	draw_2d_map(info.mlx, info.map, &info);
+	raycaster(info.mlx, info.map, info.img, &info); 
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
