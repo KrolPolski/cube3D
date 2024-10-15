@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/15 16:43:29 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:17:17 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,14 +349,16 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 	}
 	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
 	// Update the window with the modified image
-	mlx_image_to_window(mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
+	//mlx_image_to_window(mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
+	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
 }
 
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
 	//ft_printf("Drawing 2d map\n");
-	mlx_image_to_window(info->mlx, info->img->map, info->map_width / 8, info->map_height / 8);
+	//mlx_image_to_window(info->mlx, info->img->map, info->map_width / 8, info->map_height / 8);
+	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
 	
 	
 	map->x_len = 0;
