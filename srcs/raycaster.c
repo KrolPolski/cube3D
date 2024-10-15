@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/15 13:43:22 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:22:50 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,9 @@ void init_img(t_info *info)
 	//ft_printf("width is %d and height is %d\n", info->s_width, info->s_height);
 	//ft_printf("mlx pointer is %p\n", info->mlx);
 	// need to add error checking on these
+	//info->img->no = NULL;
 	info->img->no = mlx_load_png(info->map->no);
+	//printf("img->no pointer is %p\n", info->img->no);
 	info->img->ea = mlx_load_png(info->map->ea);
 	info->img->so = mlx_load_png(info->map->so);
 	info->img->ea = mlx_load_png(info->map->ea);
