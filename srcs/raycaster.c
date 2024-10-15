@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/15 11:46:01 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:04:04 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,23 @@ void init_plyr(t_info *info, t_map *map)
 	
 }
 
+void	map_background(mlx_t *mlx, t_map *map, t_info *info)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < info->map_height)
+    {
+		j = 0;
+        while (j < info->map_width)
+        {
+            mlx_put_pixel(info->img->map, j, i, get_rgba(map->c[0], map->c[1], map->c[2], 0));
+			j++;
+        }
+		i++;
+    }
+}
 
 
 void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
@@ -234,6 +251,7 @@ void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	px_y = 0;
 	//ft_printf("inside draw_squares\n");
 	print_2d(map->map);
+	map_background(mlx, map, info);
 	while (map->map[y])
 	{
 		//ft_printf("inside first while loop\n");
