@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/14 15:15:43 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:46:01 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,6 +360,32 @@ void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 	draw_2d_player(mlx, map, info);
 }
 
+void    floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
+{
+    int i;
+    int j;
+    
+    img->background = mlx_new_image(mlx, info->s_width, info->s_height);
+    mlx_image_to_window(mlx, img->background, 0, 0);
+    
+    i = 0;
+    while (i < info->s_height)
+    {
+        j = 0;
+        while (j < info->s_width)
+        {
+            if (i < info->s_height / 2)
+                mlx_put_pixel(img->background, j, i, get_rgba(map->c[0], map->c[1], map->c[2], 255));
+            else
+                mlx_put_pixel(img->background, j, i, get_rgba(map->f[0], map->f[1], map->f[2], 255));
+            
+            j++;
+        }
+        i++;
+    }
+}
+
+
 void setup_mlx(t_map *map)
 {
 	t_info info;
@@ -369,7 +395,7 @@ void setup_mlx(t_map *map)
 	info.img = &img;
 	info.s_width = 1366;
 	info.s_height = 768;
-	info.map_size_factor = 0.75;
+	info.map_size_factor = 0.25;
 	info.rend_dist = 15;
 	info.map_width = info.s_width * info.map_size_factor;
 	info.map_height = info.s_height * info.map_size_factor;
@@ -384,6 +410,7 @@ void setup_mlx(t_map *map)
 	int i = 0;
 	//ft_printf("Loading map: \n");
 	//print_2d(map->map);
+	floor_and_ceiling(info.mlx, info.img, &info, info.map);
 	draw_2d_map(info.mlx, info.map, &info);
 	raycaster(info.mlx, info.map, info.img, &info); 
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
