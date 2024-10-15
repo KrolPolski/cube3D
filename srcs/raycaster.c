@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/15 16:04:04 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:43:29 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	detect_square(t_map *map, double x, double y)
 	}
 	else
 	{
-		ft_putstr_fd("Went out of bounds\n", 2);
+		//ft_putstr_fd("Went out of bounds\n", 2);
 		return('1');
 		//exit might be forbidden
 	}
@@ -52,7 +52,7 @@ void	move_forward(t_info *info)
 	{
 		info->p_x += (cos(info->p_orient)) / 20;
 		info->p_y += (sin(info->p_orient)) / 20;
-		printf("p_orient is %f\n", info->p_orient);
+		//printf("p_orient is %f\n", info->p_orient);
 	}
 }
 
@@ -323,34 +323,35 @@ void draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
 		i++;
 	}
 }
+
 void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 {
-	/* we need to convert p_pos to pixels. map->sq can be a multiple, probably.
-	*/
 	int px_x;
 	int px_y;
 	int i;
 	int k;
-	
-	mlx_delete_image(mlx, info->img->plyr);
-	info->img->plyr = mlx_new_image(info->mlx, info->map_width, info->map_height);
-	mlx_image_to_window(info->mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
-	i = 0;
-	k = 0;
+
 	px_x = info->p_x * map->sq - 5;
 	px_y = info->p_y * map->sq - 5;
+	i = 0;
+	k = 0;
+	// Clear previous player drawing instead of using mlx_delete_image
+	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width * info->img->plyr->height * BPP);
 	while (k < 10)
 	{
 		while (i < 10)
 		{
-			mlx_put_pixel(info->img->plyr, px_x + i, px_y + k, get_rgba(255,0,0,255));
+			mlx_put_pixel(info->img->plyr, px_x + i, px_y + k, get_rgba(255, 0, 0, 255));
 			i++;
 		}
 		i = 0;
 		k++;
 	}
 	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
+	// Update the window with the modified image
+	mlx_image_to_window(mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
 }
+
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
@@ -413,7 +414,7 @@ void setup_mlx(t_map *map)
 	info.img = &img;
 	info.s_width = 1366;
 	info.s_height = 768;
-	info.map_size_factor = 0.25;
+	info.map_size_factor = 0.3;
 	info.rend_dist = 15;
 	info.map_width = info.s_width * info.map_size_factor;
 	info.map_height = info.s_height * info.map_size_factor;
