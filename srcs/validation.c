@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 14:19:32 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:47:22 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	check_textures(char *texture, t_map *map)
 {
 	int	fd;
 
-	if (invalid_file_extension(texture, ".png"))
+	if (invalid_file_extension(texture, ".png", ".PNG"))
 		print_error("Texture should be a file and have .png extension", map);
 	fd = open(texture, O_RDONLY);
 	if (fd == -1)

@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/14 17:27:48 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:48:43 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info);
 void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
-int		invalid_file_extension(char *arg, char *ext);
+int		invalid_file_extension(char *arg, char *lower, char *upper);
 char	*ft_strchr_rev(const char *s, int c);
 char	*ft_strdup_mod(const char *s1);
 void	free_2d(char **arr);
