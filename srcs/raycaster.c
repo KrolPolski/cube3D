@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/15 17:17:17 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:52:18 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,28 @@ void init_img(t_info *info)
 	//ft_printf("Inside init_img\n");
 	//ft_printf("width is %d and height is %d\n", info->s_width, info->s_height);
 	//ft_printf("mlx pointer is %p\n", info->mlx);
+	// need to add error checking on these
+	//info->img->no = NULL;
+	info->img->txt_no = mlx_load_png(info->map->no);
+	//printf("img->no pointer is %p\n", info->img->no);
+	info->img->txt_ea = mlx_load_png(info->map->ea);
+	info->img->txt_so = mlx_load_png(info->map->so);
+	info->img->txt_we = mlx_load_png(info->map->we);
+	if (!info->img->txt_no || !info->img->txt_ea || !info->img->txt_so || !info->img->txt_no)
+	{
+		ft_putstr_fd("Unable to load texture\n", 2);
+		exit(1);
+	}
+	else
+	{
+		ft_putstr_fd("We must have suceeded in loading textures\n", 1);
+		printf("txt_no: %p txt_ea: %p txt_so: %p txt_we: %p", info->img->txt_no, info->img->txt_ea, info->img->txt_so, info->img->txt_we);
+		//exit(0);
+	}
+	info->img->no = mlx_texture_to_image(info->mlx, info->img->txt_no);
+	info->img->ea = mlx_texture_to_image(info->mlx, info->img->txt_ea);
+	info->img->so = mlx_texture_to_image(info->mlx, info->img->txt_so);
+	info->img->we = mlx_texture_to_image(info->mlx, info->img->txt_we);
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	if (!info->img->bg)
 		ft_putstr_fd("Image initialization error", 2);

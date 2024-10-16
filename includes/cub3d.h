@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/15 12:48:43 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/16 09:56:16 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,14 @@ typedef struct s_map
 
 typedef struct s_images
 {
-	mlx_texture_t	*no;
-	mlx_texture_t	*so;
-	mlx_texture_t	*ea;
-	mlx_texture_t	*we;
+	mlx_texture_t	*txt_no;
+	mlx_texture_t	*txt_so;
+	mlx_texture_t	*txt_ea;
+	mlx_texture_t	*txt_we;
+	mlx_image_t		*no;
+	mlx_image_t		*ea;
+	mlx_image_t		*so;
+	mlx_image_t		*we;
 	mlx_image_t		*fg;
 	mlx_image_t		*world;
 	mlx_image_t		*background;
