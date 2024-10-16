@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 14:23:49 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:31:19 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 	t_info	*info;
 
 	info = (t_info *)param;
-	if	(keydata.key == MLX_KEY_M
-			&& keydata.action == MLX_PRESS)
+	if (keydata.key == MLX_KEY_M
+		&& keydata.action == MLX_PRESS)
 	{
 		if (info->map_visible)
 		{
@@ -153,15 +153,16 @@ void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 		}
 	}
 }
-void init_img(t_info *info)
+
+void	init_img(t_info *info)
 {
-	
 	// need to add error checking on these
 	info->img->txt_no = mlx_load_png(info->map->no);
 	info->img->txt_ea = mlx_load_png(info->map->ea);
 	info->img->txt_so = mlx_load_png(info->map->so);
 	info->img->txt_we = mlx_load_png(info->map->we);
-	if (!info->img->txt_no || !info->img->txt_ea || !info->img->txt_so || !info->img->txt_no)
+	if (!info->img->txt_no || !info->img->txt_ea
+		|| !info->img->txt_so || !info->img->txt_no)
 	{
 		ft_putstr_fd("Unable to load texture\n", 2);
 		exit(1);
@@ -169,7 +170,9 @@ void init_img(t_info *info)
 	else
 	{
 		ft_putstr_fd("We must have suceeded in loading textures\n", 1);
-		printf("txt_no: %p txt_ea: %p txt_so: %p txt_we: %p", info->img->txt_no, info->img->txt_ea, info->img->txt_so, info->img->txt_we);
+		printf("txt_no: %p txt_ea: %p txt_so: %p txt_we: %p",
+			info->img->txt_no, info->img->txt_ea, info->img->txt_so,
+			info->img->txt_we);
 	}
 	info->img->no = mlx_texture_to_image(info->mlx, info->img->txt_no);
 	info->img->ea = mlx_texture_to_image(info->mlx, info->img->txt_ea);
@@ -180,8 +183,10 @@ void init_img(t_info *info)
 		ft_putstr_fd("Image initialization error", 2);
 	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	info->img->map = mlx_new_image(info->mlx, info->map_width, info->map_height);
-	info->img->plyr = mlx_new_image(info->mlx, info->map_width, info->map_height);
+	info->img->map = mlx_new_image(info->mlx, info->map_width,
+			info->map_height);
+	info->img->plyr = mlx_new_image(info->mlx, info->map_width,
+			info->map_height);
 	ft_memset(info->img->bg->pixels, 180, info->img->bg->width
 		* info->img->bg->height * BPP);
 	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
@@ -190,11 +195,12 @@ void init_img(t_info *info)
 		* info->img->map->height * BPP);
 }
 
-void init_plyr(t_info *info, t_map *map)
+void	init_plyr(t_info *info, t_map *map)
 {
-	int y;
-	int x;
-	int found;
+	int	y;
+	int	x;
+	int	found;
+
 	found = 0;
 	y = 0;
 	x = 0;
@@ -215,7 +221,7 @@ void init_plyr(t_info *info, t_map *map)
 			y++;
 		}
 		else
-			break;
+			break ;
 	}
 	if (!found)
 		ft_putstr_fd("Error: No starting position found\n", 2);
@@ -232,9 +238,9 @@ void init_plyr(t_info *info, t_map *map)
 	else if (map->map[y][x] == 'W')
 		info->p_orient = M_PI;
 	else
-	 	ft_putstr_fd("Could not set player orientation\n", 2);
-	printf("Our starting position is y: %f, x: %f, orientation is %f\n", info->p_y, info->p_x, info->p_orient);
-	
+		ft_putstr_fd("Could not set player orientation\n", 2);
+	printf("Our starting position is y: %f, x: %f, orientation is %f\n",
+		info->p_y, info->p_x, info->p_orient);
 }
 
 void	map_background(mlx_t *mlx, t_map *map, t_info *info)
@@ -244,28 +250,30 @@ void	map_background(mlx_t *mlx, t_map *map, t_info *info)
 
 	i = 0;
 	while (i < info->map_height)
-    {
+	{
 		j = 0;
-        while (j < info->map_width)
-        {
-            mlx_put_pixel(info->img->map, j, i, get_rgba(map->c[0], map->c[1], map->c[2], 0));
+		while (j < info->map_width)
+		{
+			mlx_put_pixel(info->img->map, j, i, get_rgba(map->c[0],
+					map->c[1], map->c[2], 0));
 			j++;
-        }
+		}
 		i++;
-    }
+	}
 }
 
-
-void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
+void	draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 {
-	int x;
-	int y;
-	int px_x;
-	int px_y;
+	int	x;
+	int	y;
+	int	px_x;
+	int	px_y;
+	int i;
+	int k;
 	x = 0;
 	y = 0;
-	int i = 0;
-	int k = 0;
+	i = 0;
+	k = 0;
 	px_x = 0;
 	px_y = 0;
 	//ft_printf("inside draw_squares\n");
