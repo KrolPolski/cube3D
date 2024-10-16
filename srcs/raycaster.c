@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 15:25:29 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:33:57 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,9 +322,9 @@ void	draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	}
 }
 
+/* start by drawing three rays, one at 0, one at -30, one at + 30 */
 void	draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
 {
-	//start by drawing three rays, one at 0, one at -30, one at + 30;
 	int	i;
 	int	ray_x;
 	int	ray_y;
@@ -372,8 +372,7 @@ void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
 }
 
-
-void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
+void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
 	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
 	map->x_len = 0;
@@ -393,37 +392,37 @@ void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 	draw_2d_player(mlx, map, info);
 }
 
-void    floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
+void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 {
-    int i;
-    int j;
-    
-    img->background = mlx_new_image(mlx, info->s_width, info->s_height);
-    mlx_image_to_window(mlx, img->background, 0, 0);
-    
-    i = 0;
-    while (i < info->s_height)
-    {
-        j = 0;
-        while (j < info->s_width)
-        {
-            if (i < info->s_height / 2)
-                mlx_put_pixel(img->background, j, i, get_rgba(map->c[0], map->c[1], map->c[2], 255));
-            else
-                mlx_put_pixel(img->background, j, i, get_rgba(map->f[0], map->f[1], map->f[2], 255));
-            
-            j++;
-        }
-        i++;
-    }
+	int	i;
+	int	j;
+
+	img->background = mlx_new_image(mlx, info->s_width, info->s_height);
+	mlx_image_to_window(mlx, img->background, 0, 0);
+	i = 0;
+	while (i < info->s_height)
+	{
+		j = 0;
+		while (j < info->s_width)
+		{
+			if (i < info->s_height / 2)
+				mlx_put_pixel(img->background, j, i,
+					get_rgba(map->c[0], map->c[1], map->c[2], 255));
+			else
+				mlx_put_pixel(img->background, j, i,
+					get_rgba(map->f[0], map->f[1], map->f[2], 255));
+			j++;
+		}
+		i++;
+	}
 }
 
-
-void setup_mlx(t_map *map)
+void	setup_mlx(t_map *map)
 {
-	t_info info;
-	t_images img;
-	
+	t_info		info;
+	t_images	img;
+	int			i;
+
 	info.map = map;
 	info.img = &img;
 	info.s_width = 1366;
@@ -440,10 +439,10 @@ void setup_mlx(t_map *map)
 	}
 	init_img(&info);
 	init_plyr(&info, info.map);
-	int i = 0;
+	i = 0;
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
 	draw_2d_map(info.mlx, info.map, &info);
-	raycaster(info.mlx, info.map, info.img, &info); 
+	raycaster(info.mlx, info.map, info.img, &info);
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
