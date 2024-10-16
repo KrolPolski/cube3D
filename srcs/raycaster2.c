@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 10:21:41 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:47:15 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ unsigned int find_x_percent(double ray_len, t_info *info, t_images *img, enum e_
     unsigned int int_percent;
     if (inter == vertical)
     {
-        x_fraction = modf(info->verti_vec[0], &zero);
+        x_fraction = modf(info->verti_vec[1], &zero);
     }
         
     else
@@ -296,7 +296,7 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
         pixels++;
         if (pixels % pixels_per_texel == 0)
         {
-            y++;
+           y += 1;
            color = mlx_get_pixel(texture_img, texel, y);
         }
     }
