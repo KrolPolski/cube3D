@@ -6,11 +6,26 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/15 14:38:12 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:21:41 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+/**
+ * In MLX42 Colors are as follows:
+ * 0000 0000 A (1st byte) -> uint8_t because it's 8 bits
+ * 0000 0000 R (2nd byte)
+ * 0000 0000 G (3rd byte)
+ * 0000 0000 B (4th byte)
+ **/
+int32_t mlx_get_pixel(mlx_image_t* image, uint32_t x, uint32_t y) {
+  if (x > image->width || y > image->height)
+    return 0xFF000000;
+  uint8_t* pixelstart = image->pixels + (y * image->width + x) * BPP;
+  return get_rgba(*(pixelstart), *(pixelstart + 1),
+    * (pixelstart + 2), *(pixelstart + 3));
+}
 
 double find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
 {
@@ -176,7 +191,7 @@ int get_wall_color(double ray_orient, enum e_intersect inter)
     }
     return (get_rgba(244, 244, 244, 255));
 }
-mlx_texture_t *get_wall_texture(t_images *img, double ray_orient, enum e_intersect inter)
+mlx_image_t *get_wall_texture(t_images *img, double ray_orient, enum e_intersect inter)
 {
     /* North = red
         South = green
@@ -197,12 +212,14 @@ mlx_texture_t *get_wall_texture(t_images *img, double ray_orient, enum e_interse
         else
             return (img->we);
     }
-    return (get_rgba(244, 244, 244, 255));
+    //add error correction
+    return (NULL);
+    //return (get_rgba(244, 244, 244, 255));
 }
 unsigned int find_x_percent(double ray_len, t_info *info, t_images *img, enum e_intersect inter)
 {
     double x_fraction;
-    int zero = 0;
+    double zero = 0;
     double percent;
     unsigned int int_percent;
     if (inter == vertical)
@@ -231,15 +248,18 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     unsigned int column_height;
     int proj_plane_dist;
     unsigned int x_percent;
-    mlx_texture_t *texture;
+    mlx_image_t *texture_img;
     unsigned int texel;
     unsigned int pixels_per_texel;
+    int y;
+
+    y = 0;
     
     //printf("Inside cast_wall, inter is %d\n", inter);
     proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
     //this was for solid walls
     color = get_wall_color(info->ray_orient, inter);
-    texture = get_wall_texture(img, info->ray_orient, inter);
+    texture_img = get_wall_texture(img, info->ray_orient, inter);
     //printf("texture pointer is %p\n", texture);
     //printf("texture.height is %d\n", texture->height);
     x_percent = find_x_percent(ray_len, info, img, inter);
@@ -254,16 +274,16 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     top_pixel = info->s_height / 2 - column_height / 2;
     if (top_pixel < 0)
         top_pixel = 0;
-    texel = texture->width * x_percent / 100;
+    texel = texture_img->width * x_percent / 100;
     printf("texel is %d\n", texel);
     
     //printf("texture->height is now %d\n", texture->height);
-    pixels_per_texel = column_height / texture->height;
+    pixels_per_texel = column_height / texture_img->height;
     //printf("pixels_per_texel is %d\n", pixels_per_texel);
    // printf("column_height is %d and texture->height is %d\n", column_height, texture->height);
    // exit(0);
     //printf("We are trying to draw a column at x: %d\n", i);
-    color = texture->pixels[0];
+    color = mlx_get_pixel(texture_img, texel, 0);
     while (pixels < column_height - 1)
     {
         if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0 || i > info->s_width || i < 0)
@@ -272,13 +292,12 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
             break;
         }
         // this needs to be changed to allow other texture sizes
-        if (texel < 64 * 64)
-            color = texture->pixels[texel];
         mlx_put_pixel(img->world, i, top_pixel + pixels, color);
         pixels++;
         if (pixels % pixels_per_texel == 0)
         {
-           texel += texture->width;
+            y++;
+           color = mlx_get_pixel(texture_img, texel, y);
         }
     }
     
