@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 10:47:15 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:29:03 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,9 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     mlx_image_t *texture_img;
     unsigned int texel;
     unsigned int pixels_per_texel;
+    unsigned int leftovers;
     int y;
+    
 
     y = 0;
     
@@ -275,15 +277,20 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     if (top_pixel < 0)
         top_pixel = 0;
     texel = texture_img->width * x_percent / 100;
-    printf("texel is %d\n", texel);
+    //printf("texel is %d\n", texel);
     
     //printf("texture->height is now %d\n", texture->height);
-    pixels_per_texel = column_height / texture_img->height;
+    pixels_per_texel = round((double)column_height / (double)texture_img->height);
     //printf("pixels_per_texel is %d\n", pixels_per_texel);
    // printf("column_height is %d and texture->height is %d\n", column_height, texture->height);
    // exit(0);
     //printf("We are trying to draw a column at x: %d\n", i);
     color = mlx_get_pixel(texture_img, texel, 0);
+    leftovers = column_height % pixels_per_texel;
+    int texel_y_int;
+    //texel_y = 0;    
+    double texel_step = (double)texture_img->height / (double)column_height;
+    double texel_y = 0;  // Start at the top of the texture
     while (pixels < column_height - 1)
     {
         if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0 || i > info->s_width || i < 0)
@@ -294,11 +301,15 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
         // this needs to be changed to allow other texture sizes
         mlx_put_pixel(img->world, i, top_pixel + pixels, color);
         pixels++;
-        if (pixels % pixels_per_texel == 0)
+        texel_y_int = (int)texel_y;  // Cast to int to get the current texel
+        color = mlx_get_pixel(texture_img, texel, texel_y_int);
+        texel_y += texel_step;
+       /* if ((pixels % pixels_per_texel == 0) && (pixels > leftovers / 2))
         {
            y += 1;
-           color = mlx_get_pixel(texture_img, texel, y);
-        }
+           if (y < texture_img->height)
+                color = mlx_get_pixel(texture_img, texel, y);
+        }*/
     }
     
 }
