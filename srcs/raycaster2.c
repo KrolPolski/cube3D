@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 10:34:15 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:39:50 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,12 +207,12 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
             printf("tried to draw out of bounds\n");
             break;
         }
-        if (i >= 0 && i < 0 + info->map_width && (top_pixel + pixels) >= 0 && (top_pixel + pixels) < 0 + info->map_height)
-        {
-            //skip if the pixel is inside the mini-map area
-            pixels++;
-            continue ;
-        }
+        // if (i >= 0 && i < 0 + info->map_width && (top_pixel + pixels) >= 0 && (top_pixel + pixels) < 0 + info->map_height)
+        // {
+        //     //skip if the pixel is inside the mini-map area
+        //     pixels++;
+        //     continue ;
+        // }
         mlx_put_pixel(img->world, i, top_pixel + pixels, color);
         pixels++;
     }
@@ -233,8 +233,9 @@ void raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
     enum e_intersect inter;
     
     info->ray_orient = info->p_orient - (M_PI / 6);
-    mlx_delete_image(mlx, img->world);
-    img->world = mlx_new_image(mlx, info->s_width, info->s_height);
+    ft_memset(img->world->pixels, 0, img->world->width * img->world->height * BPP); // memset instead of delete and creating new world?
+    // mlx_delete_image(mlx, img->world);
+    // img->world = mlx_new_image(mlx, info->s_width, info->s_height);
     mlx_image_to_window(mlx, img->world, 0, 0);
     i = 0;
     while (i < info->s_width)

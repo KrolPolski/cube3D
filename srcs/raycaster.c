@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 10:23:48 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:46:03 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,15 @@ void	ft_movehook(void *param)
 			info->p_orient -= 2 * M_PI;
 	}
 	raycaster(info->mlx, info->map, info->img, info);
-	if (info->img->plyr->enabled)
-		draw_2d_player(info->mlx, info->map, info);
+	if (info->img->map->enabled)
+	{
+		draw_2d_map(info->mlx, info->map, info);
+		//draw_2d_player(info->mlx, info->map, info);
+	}
+	// mlx_set_instance_depth(info->img->bg->instances, 0);
+	// mlx_set_instance_depth(info->img->world->instances, 1);
+	// mlx_set_instance_depth(info->img->map->instances, 2);
+	// mlx_set_instance_depth(info->img->plyr->instances, 3);
 }
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 {
@@ -250,7 +257,7 @@ void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	px_x = 0;
 	px_y = 0;
 	//ft_printf("inside draw_squares\n");
-	print_2d(map->map);
+	//print_2d(map->map);
 	map_background(mlx, map, info);
 	while (map->map[y])
 	{
@@ -266,7 +273,7 @@ void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 				{
 					while (i < map->sq)
 					{
-						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(0, 0, 0, 255));
+						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(0, 0, 0, 128));
 						i++;
 					}
 					
@@ -283,7 +290,7 @@ void draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 				{
 					while (i < map->sq)
 					{
-						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(200, 200, 200, 255));
+						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(200, 200, 200, 128));
 						i++;
 					}
 					
@@ -337,6 +344,8 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 	k = 0;
 	// Clear previous player drawing instead of using mlx_delete_image
 	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width * info->img->plyr->height * BPP);
+	//mlx_image_to_window(mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
+	mlx_image_to_window(mlx, info->img->plyr, 0, 0);
 	while (k < 10)
 	{
 		while (i < 10)
@@ -348,9 +357,6 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 		k++;
 	}
 	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
-	// Update the window with the modified image
-	//mlx_image_to_window(mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
-	mlx_image_to_window(mlx, info->img->plyr, 0, 0);
 }
 
 
@@ -359,8 +365,6 @@ void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 	//ft_printf("Drawing 2d map\n");
 	//mlx_image_to_window(info->mlx, info->img->map, info->map_width / 8, info->map_height / 8);
 	mlx_image_to_window(info->mlx, info->img->map, 0, 0);
-	
-	
 	map->x_len = 0;
 	map->y_len = 0;
 	//ft_printf("map->map[0] is '%s'\n", map->map[0]);
@@ -386,9 +390,6 @@ void    floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
     int i;
     int j;
     
-    img->background = mlx_new_image(mlx, info->s_width, info->s_height);
-    mlx_image_to_window(mlx, img->background, 0, 0);
-    
     i = 0;
     while (i < info->s_height)
     {
@@ -396,10 +397,9 @@ void    floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
         while (j < info->s_width)
         {
             if (i < info->s_height / 2)
-                mlx_put_pixel(img->background, j, i, get_rgba(map->c[0], map->c[1], map->c[2], 255));
+                mlx_put_pixel(img->bg, j, i, get_rgba(map->c[0], map->c[1], map->c[2], 255));
             else
-                mlx_put_pixel(img->background, j, i, get_rgba(map->f[0], map->f[1], map->f[2], 255));
-            
+                mlx_put_pixel(img->bg, j, i, get_rgba(map->f[0], map->f[1], map->f[2], 255));
             j++;
         }
         i++;
@@ -433,7 +433,7 @@ void setup_mlx(t_map *map)
 	//print_2d(map->map);
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
 	draw_2d_map(info.mlx, info.map, &info);
-	raycaster(info.mlx, info.map, info.img, &info); 
+	raycaster(info.mlx, info.map, info.img, &info);
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
