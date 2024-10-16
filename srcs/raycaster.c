@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/15 17:17:17 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:23:48 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,7 @@ void draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
 	int ray_x;
 	int ray_y;
 	
-	while (i < 30)
+	while (i < 30) // 30 needs to be changed to avoid rays going out of the map
 	{
 		ray_x = px_x + round(i * cos(info->p_orient - M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient - M_PI / 6));
@@ -350,7 +350,7 @@ void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
 	// Update the window with the modified image
 	//mlx_image_to_window(mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
-	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
+	mlx_image_to_window(mlx, info->img->plyr, 0, 0);
 }
 
 
@@ -358,7 +358,7 @@ void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
 	//ft_printf("Drawing 2d map\n");
 	//mlx_image_to_window(info->mlx, info->img->map, info->map_width / 8, info->map_height / 8);
-	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
+	mlx_image_to_window(info->mlx, info->img->map, 0, 0);
 	
 	
 	map->x_len = 0;

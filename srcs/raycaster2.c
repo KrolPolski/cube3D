@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/14 15:07:21 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:34:15 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,12 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
         {
             printf("tried to draw out of bounds\n");
             break;
+        }
+        if (i >= 0 && i < 0 + info->map_width && (top_pixel + pixels) >= 0 && (top_pixel + pixels) < 0 + info->map_height)
+        {
+            //skip if the pixel is inside the mini-map area
+            pixels++;
+            continue ;
         }
         mlx_put_pixel(img->world, i, top_pixel + pixels, color);
         pixels++;
