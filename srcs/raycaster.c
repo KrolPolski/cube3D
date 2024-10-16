@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 10:52:18 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:23:49 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,41 +24,38 @@ char	detect_square(t_map *map, double x, double y)
 	char	sq;
 	int		rel_x;
 	int		rel_y;
- 
+
 	rel_x = (int)floor(x);
 	rel_y = (int)floor(y);
-	if (rel_x < map->x_len && rel_y < map->y_len &&
-		rel_x >= 0 && rel_y >= 0)
+	if (rel_x < map->x_len && rel_y < map->y_len
+		&& rel_x >= 0 && rel_y >= 0)
 	{
 		sq = map->map[rel_y][rel_x];
 		if (sq == ' ')
-			return('1');
-		//if (ft_strchr("NESW", sq))
-		//	return('0');
+			return ('1');
 		else
 			return (sq);
 	}
 	else
 	{
-		//ft_putstr_fd("Went out of bounds\n", 2);
-		return('1');
-		//exit might be forbidden
+		return ('1');
 	}
 }
 
 void	move_forward(t_info *info)
 {
-	if (detect_square(info->map, info->p_x + (cos(info->p_orient)) / 5, info->p_y + (sin(info->p_orient)) / 5) != '1')
+	if (detect_square(info->map, info->p_x + (cos(info->p_orient)) / 5,
+			info->p_y + (sin(info->p_orient)) / 5) != '1')
 	{
 		info->p_x += (cos(info->p_orient)) / 20;
 		info->p_y += (sin(info->p_orient)) / 20;
-		//printf("p_orient is %f\n", info->p_orient);
 	}
 }
 
 void	move_backward(t_info *info)
 {
-	if (detect_square(info->map, info->p_x - cos(info->p_orient) / 5, info->p_y - sin(info->p_orient) / 5) != '1')
+	if (detect_square(info->map, info->p_x - cos(info->p_orient) / 5,
+			info->p_y - sin(info->p_orient) / 5) != '1')
 	{
 		info->p_x -= (cos(info->p_orient)) / 20;
 		info->p_y -= (sin(info->p_orient)) / 20;
@@ -67,7 +64,8 @@ void	move_backward(t_info *info)
 
 void	move_left(t_info *info)
 {
-	if (detect_square(info->map, info->p_x + cos(info->p_orient - M_PI_2) / 5, info->p_y + sin(info->p_orient - M_PI_2)/5) != '1')
+	if (detect_square(info->map, info->p_x + cos(info->p_orient - M_PI_2) / 5,
+			info->p_y + sin(info->p_orient - M_PI_2) / 5) != '1')
 	{
 		info->p_x += cos(info->p_orient - M_PI_2) / 20;
 		info->p_y += sin(info->p_orient - M_PI_2) / 20;
@@ -76,7 +74,8 @@ void	move_left(t_info *info)
 
 void	move_right(t_info *info)
 {
-if (detect_square(info->map, info->p_x + cos(info->p_orient + M_PI_2) / 5, info->p_y + sin(info->p_orient + M_PI_2)/5) != '1')
+	if (detect_square(info->map, info->p_x + cos(info->p_orient + M_PI_2) / 5,
+			info->p_y + sin(info->p_orient + M_PI_2) / 5) != '1')
 	{
 		info->p_x += cos(info->p_orient + M_PI_2) / 20;
 		info->p_y += sin(info->p_orient + M_PI_2) / 20;
@@ -85,22 +84,24 @@ if (detect_square(info->map, info->p_x + cos(info->p_orient + M_PI_2) / 5, info-
 
 void	ft_movehook(void *param)
 {
-	t_info *info;
+	t_info	*info;
 
 	info = (t_info *)param;
-	//printf("Inside ft_movehook\n");
 	if (mlx_is_key_down(info->mlx, MLX_KEY_ESCAPE))
-		{printf("escape press detected\n");
-		mlx_close_window(info->mlx);}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_W) || mlx_is_key_down(info->mlx, MLX_KEY_UP))
+	{
+		printf("escape press detected\n");
+		mlx_close_window(info->mlx);
+	}
+	if (mlx_is_key_down(info->mlx, MLX_KEY_W)
+		|| mlx_is_key_down(info->mlx, MLX_KEY_UP))
 	{
 		move_forward(info);
 	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_S) || mlx_is_key_down(info->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(info->mlx, MLX_KEY_S)
+		|| mlx_is_key_down(info->mlx, MLX_KEY_DOWN))
 	{
 		move_backward(info);
 	}
-
 	if (mlx_is_key_down(info->mlx, MLX_KEY_A))
 	{
 		move_left(info);
@@ -125,13 +126,14 @@ void	ft_movehook(void *param)
 	if (info->img->plyr->enabled)
 		draw_2d_player(info->mlx, info->map, info);
 }
+
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 {
 	t_info	*info;
 
 	info = (t_info *)param;
-	if	(((keydata.key == MLX_KEY_M)
-			&& keydata.action == MLX_PRESS))
+	if	(keydata.key == MLX_KEY_M
+			&& keydata.action == MLX_PRESS)
 	{
 		if (info->map_visible)
 		{
@@ -153,13 +155,9 @@ void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 }
 void init_img(t_info *info)
 {
-	//ft_printf("Inside init_img\n");
-	//ft_printf("width is %d and height is %d\n", info->s_width, info->s_height);
-	//ft_printf("mlx pointer is %p\n", info->mlx);
+	
 	// need to add error checking on these
-	//info->img->no = NULL;
 	info->img->txt_no = mlx_load_png(info->map->no);
-	//printf("img->no pointer is %p\n", info->img->no);
 	info->img->txt_ea = mlx_load_png(info->map->ea);
 	info->img->txt_so = mlx_load_png(info->map->so);
 	info->img->txt_we = mlx_load_png(info->map->we);
@@ -172,7 +170,6 @@ void init_img(t_info *info)
 	{
 		ft_putstr_fd("We must have suceeded in loading textures\n", 1);
 		printf("txt_no: %p txt_ea: %p txt_so: %p txt_we: %p", info->img->txt_no, info->img->txt_ea, info->img->txt_so, info->img->txt_we);
-		//exit(0);
 	}
 	info->img->no = mlx_texture_to_image(info->mlx, info->img->txt_no);
 	info->img->ea = mlx_texture_to_image(info->mlx, info->img->txt_ea);
