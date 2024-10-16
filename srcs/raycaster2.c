@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 13:29:03 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:42:05 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,8 +274,7 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     pixels = 0;
     column_height = (info->s_height / (ray_len * cos(info->ray_orient - info->p_orient)));
     top_pixel = info->s_height / 2 - column_height / 2;
-    if (top_pixel < 0)
-        top_pixel = 0;
+   
     texel = texture_img->width * x_percent / 100;
     //printf("texel is %d\n", texel);
     
@@ -291,6 +290,12 @@ void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_inters
     //texel_y = 0;    
     double texel_step = (double)texture_img->height / (double)column_height;
     double texel_y = 0;  // Start at the top of the texture
+     if (top_pixel < 0)
+    {
+        texel_y = -(top_pixel * texel_step);
+        top_pixel = 0;
+        
+    }
     while (pixels < column_height - 1)
     {
         if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0 || i > info->s_width || i < 0)
