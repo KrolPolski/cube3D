@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 16:28:50 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:36:37 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,9 @@ void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
 	unsigned int	pixels_per_texel;
 	unsigned int	leftovers;
 	int				y;
+	int				texel_y_int;
+	double			texel_step;
+	double			texel_y;
 
 	y = 0;
 	proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
@@ -225,71 +228,74 @@ void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
 		return ;
 	top_pixel = 0;
 	pixels = 0;
-	column_height = (info->s_height / (ray_len * cos(info->ray_orient - info->p_orient)));
-    top_pixel = info->s_height / 2 - column_height / 2;
-   
-    texel = texture_img->width * x_percent / 100;
-    pixels_per_texel = round((double)column_height / (double)texture_img->height);
-    color = mlx_get_pixel(texture_img, texel, 0);
-    leftovers = column_height % pixels_per_texel;
-    int texel_y_int;
-    double texel_step = (double)texture_img->height / (double)column_height;
-    double texel_y = 0;
-     if (top_pixel < 0)
-    {
-        texel_y = -(top_pixel * texel_step);
-        top_pixel = 0;
-    }
-    while (pixels < column_height - 1)
-    {
-        if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0 || i > info->s_width || i < 0)
-        {
-            break;
-        }
-        mlx_put_pixel(img->world, i, top_pixel + pixels, color);
-        pixels++;
-        texel_y_int = (int)texel_y;
-        color = mlx_get_pixel(texture_img, texel, texel_y_int);
-        texel_y += texel_step;
-    }
+	column_height = (info->s_height / (ray_len
+				* cos(info->ray_orient - info->p_orient)));
+	top_pixel = info->s_height / 2 - column_height / 2;
+	texel = texture_img->width * x_percent / 100;
+	pixels_per_texel = round((double)column_height
+				/ (double)texture_img->height);
+	color = mlx_get_pixel(texture_img, texel, 0);
+	leftovers = column_height % pixels_per_texel;
+	texel_step = (double)texture_img->height / (double)column_height;
+	texel_y = 0;
+	if (top_pixel < 0)
+	{
+		texel_y = -(top_pixel * texel_step);
+		top_pixel = 0;
+	}
+	while (pixels < column_height - 1)
+	{
+		if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0
+			|| i > info->s_width || i < 0)
+		{
+			break ;
+		}
+		mlx_put_pixel(img->world, i, top_pixel + pixels, color);
+		pixels++;
+		texel_y_int = (int)texel_y;
+		color = mlx_get_pixel(texture_img, texel, texel_y_int);
+		texel_y += texel_step;
+	}
 }
 
 void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
 {
-	double	ray_len;
-	double	ray_x_len;
-	double	ray_y_len;
-	double	horiz_len;
-	double	verti_len;
-	double	len_parking;
-    char ret;
-    int i;
-    enum e_intersect inter;
-    
+	double				ray_len;
+	double				ray_x_len;
+	double				ray_y_len;
+	double				horiz_len;
+	double				verti_len;
+	double				len_parking;
+	char				ret;
+	int					i;
+	enum e_intersect	inter;
+
 	info->ray_x = info->p_x;
-    info->ray_y = info->p_y;
-    info->ray_orient = info->p_orient - (M_PI / 6);
-    mlx_delete_image(mlx, img->world);
-    img->world = mlx_new_image(mlx, info->s_width, info->s_height);
-    mlx_image_to_window(mlx, img->world, 0, 0);
-    i = 0;
-    while (i < info->s_width)
-    {
-        check_radian_overflow(info);
-        ray_len = 0;
-        info->ray_x = info->p_x;
-        info->ray_y = info->p_y;
-        horiz_len = find_first_horizontal(mlx, map, info);
-        verti_len = find_first_vertical(mlx, map, info);
-        if (horiz_len < verti_len)
-            ray_len = horiz_len;
-        else
-            ray_len = verti_len;
-        while (detect_square(map, info->horiz_vec[0], info->horiz_vec[1]) != '1')
-        {
-            horiz_len = find_next_horizontal(mlx, map, info, horiz_len);
-        }
-		while (detect_square(map, info->verti_vec[0], info->verti_vec[1]) != '1')
+	info->ray_y = info->p_y;
+	info->ray_orient = info->p_orient - (M_PI / 6);
+	mlx_delete_image(mlx, img->world);
+	img->world = mlx_new_image(mlx, info->s_width, info->s_height);
+	mlx_image_to_window(mlx, img->world, 0, 0);
+	i = 0;
+	while (i < info->s_width)
+	{
+		check_radian_overflow(info);
+		ray_len = 0;
+		info->ray_x = info->p_x;
+		info->ray_y = info->p_y;
+		horiz_len = find_first_horizontal(mlx, map, info);
+		verti_len = find_first_vertical(mlx, map, info);
+		if (horiz_len < verti_len)
+			ray_len = horiz_len;
+		else
+			ray_len = verti_len;
+		while (detect_square(map, info->horiz_vec[0],
+				info->horiz_vec[1]) != '1')
+		{
+			horiz_len = find_next_horizontal(mlx, map, info, horiz_len);
+		}
+		while (detect_square(map, info->verti_vec[0],
+				info->verti_vec[1]) != '1')
 		{
 			verti_len = find_next_vertical(mlx, map, info, verti_len);
 		}
