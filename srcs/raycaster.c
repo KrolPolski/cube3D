@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 14:31:19 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:25:29 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,6 @@ void	init_plyr(t_info *info, t_map *map)
 	}
 	if (!found)
 		ft_putstr_fd("Error: No starting position found\n", 2);
-	//ft_printf("We have found the starting position at y: %d x: %d\n", y, x);
 	info->p_x = x + 0.5;
 	info->p_y = y + 0.5;
 	info->p_orient = 42;
@@ -268,142 +267,128 @@ void	draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	int	y;
 	int	px_x;
 	int	px_y;
-	int i;
-	int k;
+	int	i;
+	int	k;
+
 	x = 0;
 	y = 0;
 	i = 0;
 	k = 0;
 	px_x = 0;
 	px_y = 0;
-	//ft_printf("inside draw_squares\n");
 	print_2d(map->map);
 	map_background(mlx, map, info);
 	while (map->map[y])
 	{
-		//ft_printf("inside first while loop\n");
-		while(map->map[y][x] != '\0')
+		while (map->map[y][x] != '\0')
 		{
-			//ft_printf("inside second while loop\n");
-			//ft_printf("%c", map->map[y][x]);
 			if (map->map[y][x] == '0' || ft_strchr("NESW", map->map[y][x]))
 			{
-			//	ft_printf("found a 0\n");
 				while (k < map->sq)
 				{
 					while (i < map->sq)
 					{
-						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(0, 0, 0, 255));
+						mlx_put_pixel(info->img->map, px_x + i, px_y + k,
+							get_rgba(0, 0, 0, 255));
 						i++;
 					}
-					
 					i = 0;
 					k++;
 				}
 				k = 0;
-				
 			}
 			else if (map->map[y][x] == '1')
 			{
-				//ft_printf("found a 0\n");
 				while (k < map->sq)
 				{
 					while (i < map->sq)
 					{
-						mlx_put_pixel(info->img->map, px_x + i, px_y + k, get_rgba(200, 200, 200, 255));
+						mlx_put_pixel(info->img->map, px_x + i, px_y + k,
+							get_rgba(200, 200, 200, 255));
 						i++;
 					}
-					
 					i = 0;
 					k++;
 				}
 				k = 0;
-				
 			}
 			x++;
 			px_x += map->sq;
 		}
 		px_y += map->sq;
-		
-	px_x = 0;
-	x = 0;
-	y++;
+		px_x = 0;
+		x = 0;
+		y++;
 	}
-	
 }
-void draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
+
+void	draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
 {
 	//start by drawing three rays, one at 0, one at -30, one at + 30;
-	int i;
+	int	i;
+	int	ray_x;
+	int	ray_y;
+
 	i = 0;
-	int ray_x;
-	int ray_y;
-	
 	while (i < 30)
 	{
 		ray_x = px_x + round(i * cos(info->p_orient - M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient - M_PI / 6));
-		mlx_put_pixel(info->img->plyr, ray_x, ray_y, get_rgba(255, 255, 0, 255));
+		mlx_put_pixel(info->img->plyr, ray_x, ray_y,
+			get_rgba(255, 255, 0, 255));
 		ray_x = px_x + round(i * cos(info->p_orient + M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient + M_PI / 6));
-		mlx_put_pixel(info->img->plyr, ray_x, ray_y, get_rgba(255, 255, 0, 255));
+		mlx_put_pixel(info->img->plyr, ray_x, ray_y,
+			get_rgba(255, 255, 0, 255));
 		i++;
 	}
 }
 
-void draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
+void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 {
-	int px_x;
-	int px_y;
-	int i;
-	int k;
+	int	px_x;
+	int	px_y;
+	int	i;
+	int	k;
 
 	px_x = info->p_x * map->sq - 5;
 	px_y = info->p_y * map->sq - 5;
 	i = 0;
 	k = 0;
-	// Clear previous player drawing instead of using mlx_delete_image
-	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width * info->img->plyr->height * BPP);
+	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width
+		* info->img->plyr->height * BPP);
 	while (k < 10)
 	{
 		while (i < 10)
 		{
-			mlx_put_pixel(info->img->plyr, px_x + i, px_y + k, get_rgba(255, 0, 0, 255));
+			mlx_put_pixel(info->img->plyr, px_x + i, px_y + k,
+				get_rgba(255, 0, 0, 255));
 			i++;
 		}
 		i = 0;
 		k++;
 	}
 	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
-	// Update the window with the modified image
-	//mlx_image_to_window(mlx, info->img->plyr, info->map_width / 8, info->map_height / 8);
 	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
 }
 
 
 void draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
-	//ft_printf("Drawing 2d map\n");
-	//mlx_image_to_window(info->mlx, info->img->map, info->map_width / 8, info->map_height / 8);
 	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
-	
-	
 	map->x_len = 0;
 	map->y_len = 0;
-	//ft_printf("map->map[0] is '%s'\n", map->map[0]);
 	map->x_len = ft_strlen(map->map[0]);
 	while (map->map[map->y_len])
 	{
 		map->y_len++;
 	}
-	//ft_printf("Map is %d wide and %d tall\n", map->x_len, map->y_len);
 	map->sq_w = info->map_width / map->x_len;
 	map->sq_h = info->map_height / map->y_len;
 	if (map->sq_w <= map->sq_h)
 		map->sq = map->sq_w;
 	else
 		map->sq = map->sq_h;
-	//printf("Sq_w: %d\n Sq_h: %d\n sq: %d\n", map->sq_w, map->sq_h, map->sq);
 	draw_squares(mlx, map, info);
 	draw_2d_player(mlx, map, info);
 }
@@ -444,7 +429,7 @@ void setup_mlx(t_map *map)
 	info.s_width = 1366;
 	info.s_height = 768;
 	info.map_size_factor = 0.3;
-	info.rend_dist = 15;
+	info.rend_dist = 25;
 	info.map_width = info.s_width * info.map_size_factor;
 	info.map_height = info.s_height * info.map_size_factor;
 	info.map_visible = true;
@@ -456,8 +441,6 @@ void setup_mlx(t_map *map)
 	init_img(&info);
 	init_plyr(&info, info.map);
 	int i = 0;
-	//ft_printf("Loading map: \n");
-	//print_2d(map->map);
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
 	draw_2d_map(info.mlx, info.map, &info);
 	raycaster(info.mlx, info.map, info.img, &info); 
