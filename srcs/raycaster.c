@@ -181,18 +181,16 @@ void	init_img(t_info *info)
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	if (!info->img->bg)
 		ft_putstr_fd("Image initialization error", 2);
-	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
+	//info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->map = mlx_new_image(info->mlx, info->map_width,
 			info->map_height);
 	info->img->plyr = mlx_new_image(info->mlx, info->map_width,
 			info->map_height);
-	ft_memset(info->img->bg->pixels, 180, info->img->bg->width
-		* info->img->bg->height * BPP);
-	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
-	mlx_image_to_window(info->mlx, info->img->world, 0, 0);
-	ft_memset(info->img->map->pixels, 255, info->img->map->width
-		* info->img->map->height * BPP);
+	//ft_memset(info->img->bg->pixels, 180, info->img->bg->width * info->img->bg->height * BPP);
+	//mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
+	//mlx_image_to_window(info->mlx, info->img->world, 0, 0);
+	//ft_memset(info->img->map->pixels, 255, info->img->map->width * info->img->map->height * BPP);
 }
 
 void	init_plyr(t_info *info, t_map *map)
@@ -397,8 +395,8 @@ void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 	int	i;
 	int	j;
 
-	img->background = mlx_new_image(mlx, info->s_width, info->s_height);
-	mlx_image_to_window(mlx, img->background, 0, 0);
+	img->bg = mlx_new_image(mlx, info->s_width, info->s_height);
+	mlx_image_to_window(mlx, img->bg, 0, 0);
 	i = 0;
 	while (i < info->s_height)
 	{
@@ -406,10 +404,10 @@ void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 		while (j < info->s_width)
 		{
 			if (i < info->s_height / 2)
-				mlx_put_pixel(img->background, j, i,
+				mlx_put_pixel(img->bg, j, i,
 					get_rgba(map->c[0], map->c[1], map->c[2], 255));
 			else
-				mlx_put_pixel(img->background, j, i,
+				mlx_put_pixel(img->bg, j, i,
 					get_rgba(map->f[0], map->f[1], map->f[2], 255));
 			j++;
 		}
