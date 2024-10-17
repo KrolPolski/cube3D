@@ -125,6 +125,15 @@ void	ft_movehook(void *param)
 	raycaster(info->mlx, info->map, info->img, info);
 	if (info->img->plyr->enabled)
 		draw_2d_map(info->mlx, info->map, info);
+
+	static int i = 0;
+
+	if (info->img->world->instances[i].z)
+		ft_printf("world z = %d\n", info->img->world->instances[i].z);
+	if (info->img->map->instances[i].z)
+		ft_printf("map z = %d\n", info->img->map->instances[i].z);
+
+	i++;
 }
 
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
@@ -274,7 +283,7 @@ void	draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	k = 0;
 	px_x = 0;
 	px_y = 0;
-	print_2d(map->map);
+	//print_2d(map->map);
 	map_background(mlx, map, info);
 	while (map->map[y])
 	{
@@ -441,8 +450,8 @@ void	setup_mlx(t_map *map)
 	init_plyr(&info, info.map);
 	i = 0;
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
-	draw_2d_map(info.mlx, info.map, &info);
-	raycaster(info.mlx, info.map, info.img, &info);
+	//draw_2d_map(info.mlx, info.map, &info);
+	//raycaster(info.mlx, info.map, info.img, &info);
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
