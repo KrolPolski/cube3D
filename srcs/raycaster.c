@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/17 11:42:05 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:19:45 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,7 +370,7 @@ void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 		k++;
 	}
 	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
-	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
+	
 }
 
 void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
@@ -391,6 +391,7 @@ void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 		map->sq = map->sq_h;
 	draw_squares(mlx, map, info);
 	draw_2d_player(mlx, map, info);
+	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
 }
 
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
