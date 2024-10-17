@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 15:33:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:19:45 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 void	init_img(t_info *info)
 {
 	// need to add error checking on these
+	// also need to free all textures if we are going to fail
 	info->img->txt_no = mlx_load_png(info->map->no);
 	info->img->txt_ea = mlx_load_png(info->map->ea);
 	info->img->txt_so = mlx_load_png(info->map->so);
@@ -369,7 +370,7 @@ void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 		k++;
 	}
 	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
-	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
+	
 }
 
 void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
@@ -390,6 +391,7 @@ void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 		map->sq = map->sq_h;
 	draw_squares(mlx, map, info);
 	draw_2d_player(mlx, map, info);
+	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
 }
 
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
@@ -416,6 +418,20 @@ void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 		i++;
 	}
 }
+
+void	cleanup_images(mlx_t *mlx, t_images *img)
+{
+	mlx_delete_image(mlx, img->no);
+	mlx_delete_image(mlx, img->ea);
+	mlx_delete_image(mlx, img->so);
+	mlx_delete_image(mlx, img->we);
+	mlx_delete_texture(img->txt_no);
+	mlx_delete_texture(img->txt_ea);
+	mlx_delete_texture(img->txt_so);
+	mlx_delete_texture(img->txt_we);
+	
+	
+} 
 
 void	setup_mlx(t_map *map)
 {
@@ -446,5 +462,6 @@ void	setup_mlx(t_map *map)
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
+	cleanup_images(info.mlx, info.img);
 	mlx_terminate(info.mlx);
 }
