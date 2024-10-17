@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/17 15:47:18 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:57:44 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,12 +335,14 @@ void	draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
 	{
 		ray_x = px_x + round(i * cos(info->p_orient - M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient - M_PI / 6));
-		mlx_put_pixel(info->img->plyr, ray_x, ray_y,
-			get_rgba(255, 255, 0, 255));
+		if (ray_x >= 0 && ray_y >= 0)
+			mlx_put_pixel(info->img->plyr, ray_x, ray_y,
+				get_rgba(255, 255, 0, 255));
 		ray_x = px_x + round(i * cos(info->p_orient + M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient + M_PI / 6));
-		mlx_put_pixel(info->img->plyr, ray_x, ray_y,
-			get_rgba(255, 255, 0, 255));
+		if (ray_x >= 0 && ray_y >= 0)
+			mlx_put_pixel(info->img->plyr, ray_x, ray_y,
+				get_rgba(255, 255, 0, 255));
 		i++;
 	}
 }
