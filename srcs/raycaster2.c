@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/16 16:36:37 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:46:46 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,9 +273,10 @@ void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
 	info->ray_x = info->p_x;
 	info->ray_y = info->p_y;
 	info->ray_orient = info->p_orient - (M_PI / 6);
-	mlx_delete_image(mlx, img->world);
-	img->world = mlx_new_image(mlx, info->s_width, info->s_height);
-	mlx_image_to_window(mlx, img->world, 0, 0);
+	ft_memset(img->world->pixels, 0, img->world->height * img->world->width * BPP);
+	//mlx_delete_image(mlx, img->world);
+	//img->world = mlx_new_image(mlx, info->s_width, info->s_height);
+	//mlx_image_to_window(mlx, img->world, 0, 0);
 	i = 0;
 	while (i < info->s_width)
 	{

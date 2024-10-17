@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/17 14:19:45 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:47:18 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -452,11 +452,13 @@ void	setup_mlx(t_map *map)
 	if (!info.mlx)
 	{
 		ft_putstr_fd("MLX initialization error\n", 2);
+		exit(1);
 	}
 	init_img(&info);
 	init_plyr(&info, info.map);
 	i = 0;
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
+	mlx_image_to_window(info.mlx, info.img->world, 0, 0);
 	draw_2d_map(info.mlx, info.map, &info);
 	raycaster(info.mlx, info.map, info.img, &info);
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
