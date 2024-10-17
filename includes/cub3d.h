@@ -54,7 +54,6 @@ typedef struct s_images
 	mlx_image_t		*we;
 	mlx_image_t		*fg;
 	mlx_image_t		*world;
-	mlx_image_t		*background;
 	mlx_image_t		*bg;
 	mlx_image_t		*plyr;
 	mlx_image_t		*map;
