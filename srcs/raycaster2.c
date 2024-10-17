@@ -339,8 +339,10 @@ void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
 	info->ray_x = info->p_x;
 	info->ray_y = info->p_y;
 	info->ray_orient = info->p_orient - (M_PI / 6);
-	mlx_delete_image(mlx, img->world);
-	img->world = mlx_new_image(mlx, info->s_width, info->s_height);
+	//mlx_delete_image(mlx, img->world);
+	//img->world = mlx_new_image(mlx, info->s_width, info->s_height);
+	ft_memset(info->img->world->pixels, 0, info->img->world->width
+		* info->img->world->height * BPP);
 	mlx_image_to_window(mlx, img->world, 0, 0);
 	i = 0;
 	while (i < info->s_width)
