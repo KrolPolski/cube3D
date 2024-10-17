@@ -124,7 +124,7 @@ void	ft_movehook(void *param)
 	}
 	raycaster(info->mlx, info->map, info->img, info);
 	if (info->img->plyr->enabled)
-		draw_2d_player(info->mlx, info->map, info);
+		draw_2d_map(info->mlx, info->map, info);
 }
 
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
