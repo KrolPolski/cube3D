@@ -343,7 +343,6 @@ void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
 	//img->world = mlx_new_image(mlx, info->s_width, info->s_height);
 	ft_memset(info->img->world->pixels, 0, info->img->world->width
 		* info->img->world->height * BPP);
-	mlx_image_to_window(mlx, img->world, 0, 0);
 	i = 0;
 	while (i < info->s_width)
 	{
@@ -381,4 +380,5 @@ void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
 		i++;
 		info->ray_orient += (M_PI / 3.0) * (1.0 / (double)info->s_width);
 	}
+	mlx_image_to_window(mlx, img->world, 0, 0);
 }

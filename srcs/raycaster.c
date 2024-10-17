@@ -372,7 +372,8 @@ void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 
 void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
-	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
+	ft_memset(info->img->map->pixels, 0, info->img->map->width
+		* info->img->map->height * BPP);
 	map->x_len = 0;
 	map->y_len = 0;
 	map->x_len = ft_strlen(map->map[0]);
@@ -387,6 +388,7 @@ void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 	else
 		map->sq = map->sq_h;
 	draw_squares(mlx, map, info);
+	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
 	draw_2d_player(mlx, map, info);
 }
 
