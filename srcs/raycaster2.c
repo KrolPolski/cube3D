@@ -201,7 +201,7 @@ unsigned int	find_x_percent(double ray_len, t_info *info, t_images *img,
 	return (int_percent);
 }
 
-void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
+/*void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
 	enum e_intersect inter)
 {
 	int				top_pixel;
@@ -256,6 +256,72 @@ void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
 		color = mlx_get_pixel(texture_img, texel, texel_y_int);
 		texel_y += texel_step;
 	}
+}*/
+
+int get_wall_color(double ray_orient, enum e_intersect inter)
+{
+    /* North = red
+        South = green
+        East = blue
+        West = yellow
+    */ 
+    if (inter == horizontal)
+    {
+        if (ray_orient >= M_PI)
+            return (get_rgba(0,255,0,255));
+        else
+            return (get_rgba(255,0,0,255));
+    }
+    else if (inter == vertical)
+    {
+        if (ray_orient >= M_PI_2 && ray_orient < (M_PI * 1.5))
+            return (get_rgba(0, 0,255,255));
+        else
+            return (get_rgba(255,255,0,255));
+    }
+    return (get_rgba(244, 244, 244, 255));
+}
+
+void cast_wall(double ray_len, int i, t_info *info, t_images *img, enum e_intersect inter)
+{
+    int top_pixel;
+    int pixels;
+    int color;
+    float angle;
+    unsigned int column_height;
+    int proj_plane_dist;
+
+    //printf("Inside cast_wall, inter is %d\n", inter);
+    proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
+    
+    color = get_wall_color(info->ray_orient, inter);
+    //check to see if we hit the max render distance already
+    if (ray_len > info->rend_dist)
+        return ;
+    top_pixel = 0;
+    pixels = 0;
+    column_height = (info->s_height / (ray_len  * cos(info->ray_orient - info->p_orient)));
+    top_pixel = info->s_height / 2 - column_height / 2;
+    if (top_pixel < 0)
+        top_pixel = 0;
+    //printf("We are trying to draw a column at x: %d\n", i);
+    while (pixels < column_height - 1)
+    {
+        if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0 || i > info->s_width || i < 0)
+        {
+            printf("tried to draw out of bounds\n");
+            break;
+        }
+        // if (i >= 0 && i < 0 + info->map_width && (top_pixel + pixels) >= 0 && (top_pixel + pixels) < 0 + info->map_height)
+        // {
+        //     //skip if the pixel is inside the mini-map area
+        //     pixels++;
+        //     continue ;
+        // }
+        mlx_put_pixel(img->world, i, top_pixel + pixels, color);
+        pixels++;
+    }
+    
 }
 
 void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
