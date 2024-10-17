@@ -435,6 +435,17 @@ void	cleanup_images(mlx_t *mlx, t_images *img)
 	
 } 
 
+void handle_resize(int32_t width, int32_t height, void *param)
+{
+    t_info *info = (t_info *)param;
+    info->s_width = width;
+    info->s_height = height;
+    mlx_resize_image(info->img->background, width, height);
+	mlx_resize_image(info->img->world, width, height);
+	mlx_resize_image(info->img->plyr, width, height);
+	mlx_resize_image(info->img->map, width * info->map_size_factor, height * info->map_size_factor);
+}
+
 void	setup_mlx(t_map *map)
 {
 	t_info		info;
@@ -463,6 +474,7 @@ void	setup_mlx(t_map *map)
 	mlx_image_to_window(info.mlx, info.img->world, 0, 0);
 	draw_2d_map(info.mlx, info.map, &info);
 	raycaster(info.mlx, info.map, info.img, &info);
+	mlx_resize_hook(info.mlx, handle_resize, &info);
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
