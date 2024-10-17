@@ -123,20 +123,17 @@ void	ft_movehook(void *param)
 			info->p_orient -= 2 * M_PI;
 	}
 
-	if (info->img->plyr->enabled)
+	if (info->img->map->enabled)
 		draw_2d_map(info->mlx, info->map, info);
 	raycaster(info->mlx, info->map, info->img, info);
 
-	static int i = 0;
+	/*static int i = 0;
 
-	//int temp = info->img->map->instances[i].z;
-	//mlx_set_instance_depth(info->img->map->instances, info->img->plyr->instances[i].z);
-	//mlx_set_instance_depth(info->img->plyr->instances, temp);
 	ft_printf("world z = %d\n", info->img->world->instances[i].z);
 	ft_printf("map z = %d\n", info->img->map->instances[i].z);
 	ft_printf("plyr z = %d\n", info->img->plyr->instances[i].z);
 
-	i++;
+	i++;*/
 }
 
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
@@ -387,7 +384,7 @@ void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 
 void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
-	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
+	mlx_image_to_window(info->mlx, info->img->map, info->map_origin, info->map_origin);
 	map->x_len = 0;
 	map->y_len = 0;
 	map->x_len = ft_strlen(map->map[0]);
@@ -403,7 +400,7 @@ void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 		map->sq = map->sq_h;
 	draw_squares(mlx, map, info);
 	draw_2d_player(mlx, map, info);
-	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
+	mlx_image_to_window(mlx, info->img->plyr, info->map_origin, info->map_origin);
 }
 
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
@@ -459,6 +456,7 @@ void	setup_mlx(t_map *map)
 	info.rend_dist = 25;
 	info.map_width = info.s_width * info.map_size_factor;
 	info.map_height = info.s_height * info.map_size_factor;
+	info.map_origin = 10;
 	info.map_visible = true;
 	info.mlx = mlx_init(info.s_width, info.s_height, "cub3d", true);
 	if (!info.mlx)

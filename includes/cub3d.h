@@ -95,6 +95,7 @@ typedef struct s_info
 	double	map_size_factor;
 	int		map_width;
 	int		map_height;
+	int		map_origin;
 
 } t_info;
 
