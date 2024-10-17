@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/17 15:46:46 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:44:37 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,21 +228,34 @@ void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
 		return ;
 	top_pixel = 0;
 	pixels = 0;
-	column_height = (info->s_height / (ray_len
-				* cos(info->ray_orient - info->p_orient)));
+	double angle_diff = cos(info->ray_orient - info->p_orient);
+	//avoiding divide by zero
+	if (fabs(angle_diff) > EPSILON)
+		column_height = (info->s_height / (ray_len
+			* angle_diff));
+	else
+		column_height = info->s_height / ray_len;
 	top_pixel = info->s_height / 2 - column_height / 2;
 	texel = texture_img->width * x_percent / 100;
-	pixels_per_texel = round((double)column_height
+	if (texture_img->height != 0)
+		pixels_per_texel = round((double)column_height
 				/ (double)texture_img->height);
+	else
+		return ;
 	color = mlx_get_pixel(texture_img, texel, 0);
-	leftovers = column_height % pixels_per_texel;
-	texel_step = (double)texture_img->height / (double)column_height;
+	//avoiding divide by zero
+	if (column_height > EPSILON)
+		texel_step = (double)texture_img->height / (double)column_height;
+	else
+		return ;
 	texel_y = 0;
 	if (top_pixel < 0)
 	{
 		texel_y = -(top_pixel * texel_step);
 		top_pixel = 0;
 	}
+	if (column_height > info->s_height)
+		column_height = info->s_height;
 	while (pixels < column_height - 1)
 	{
 		if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0

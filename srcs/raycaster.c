@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/17 15:57:44 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:48:58 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,15 @@ void	init_img(t_info *info)
 	info->img->ea = mlx_texture_to_image(info->mlx, info->img->txt_ea);
 	info->img->so = mlx_texture_to_image(info->mlx, info->img->txt_so);
 	info->img->we = mlx_texture_to_image(info->mlx, info->img->txt_we);
+	//add safeguards for large textures
+	if (info->img->no->height > 256 || info->img->no->width > 256)
+		mlx_resize_image(info->img->no, 256, 256);
+	if (info->img->ea->height > 256 || info->img->ea->width > 256)
+		mlx_resize_image(info->img->ea, 256, 256);
+	if (info->img->so->height > 256 || info->img->so->width > 256)
+		mlx_resize_image(info->img->so, 256, 256);
+	if (info->img->we->height > 256 || info->img->we->width > 256)
+		mlx_resize_image(info->img->we, 256, 256);
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	if (!info->img->bg)
 		ft_putstr_fd("Image initialization error", 2);
