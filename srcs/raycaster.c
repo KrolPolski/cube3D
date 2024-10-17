@@ -122,10 +122,13 @@ void	ft_movehook(void *param)
 		if (info->p_orient >= 2 * M_PI)
 			info->p_orient -= 2 * M_PI;
 	}
-	raycaster(info->mlx, info->map, info->img, info);
+	
 	if (info->img->plyr->enabled)
+	{
 		draw_2d_map(info->mlx, info->map, info);
-
+	}
+	raycaster(info->mlx, info->map, info->img, info);
+	
 	static int i = 0;
 
 	if (info->img->world->instances[i].z)
@@ -397,7 +400,7 @@ void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 	else
 		map->sq = map->sq_h;
 	draw_squares(mlx, map, info);
-	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
+	mlx_image_to_window(info->mlx, info->img->map, 20, 20); // if this comes after 2d player world get rendered over map
 	draw_2d_player(mlx, map, info);
 }
 
