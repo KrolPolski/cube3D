@@ -122,9 +122,21 @@ void	ft_movehook(void *param)
 		if (info->p_orient >= 2 * M_PI)
 			info->p_orient -= 2 * M_PI;
 	}
-	raycaster(info->mlx, info->map, info->img, info);
+
 	if (info->img->plyr->enabled)
-		draw_2d_player(info->mlx, info->map, info);
+		draw_2d_map(info->mlx, info->map, info);
+	raycaster(info->mlx, info->map, info->img, info);
+
+	static int i = 0;
+
+	//int temp = info->img->map->instances[i].z;
+	//mlx_set_instance_depth(info->img->map->instances, info->img->plyr->instances[i].z);
+	//mlx_set_instance_depth(info->img->plyr->instances, temp);
+	ft_printf("world z = %d\n", info->img->world->instances[i].z);
+	ft_printf("map z = %d\n", info->img->map->instances[i].z);
+	ft_printf("plyr z = %d\n", info->img->plyr->instances[i].z);
+
+	i++;
 }
 
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
