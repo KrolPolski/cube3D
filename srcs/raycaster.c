@@ -123,7 +123,7 @@ void	ft_movehook(void *param)
 			info->p_orient -= 2 * M_PI;
 	}
 	
-	if (info->img->plyr->enabled)
+	if (info->img->map->enabled)
 	{
 		draw_2d_map(info->mlx, info->map, info);
 	}
@@ -131,10 +131,12 @@ void	ft_movehook(void *param)
 	
 	static int i = 0;
 
-	if (info->img->world->instances[i].z)
-		ft_printf("world z = %d\n", info->img->world->instances[i].z);
-	if (info->img->map->instances[i].z)
-		ft_printf("map z = %d\n", info->img->map->instances[i].z);
+	//int temp = info->img->map->instances[i].z;
+	//mlx_set_instance_depth(info->img->map->instances, info->img->plyr->instances[i].z);
+	//mlx_set_instance_depth(info->img->plyr->instances, temp);
+	ft_printf("world z = %d\n", info->img->world->instances[i].z);
+	ft_printf("map z = %d\n", info->img->map->instances[i].z);
+	ft_printf("plyr z = %d\n", info->img->plyr->instances[i].z);
 
 	i++;
 }
@@ -400,6 +402,7 @@ void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 	else
 		map->sq = map->sq_h;
 	draw_squares(mlx, map, info);
+
 	mlx_image_to_window(info->mlx, info->img->map, 20, 20); // if this comes after 2d player world get rendered over map
 	draw_2d_player(mlx, map, info);
 }
