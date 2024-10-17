@@ -124,4 +124,6 @@ size_t	len_2d(char **arr);
 void	check_walls(t_map *map);
 void	setup_mlx(t_map *map);
 
+void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info);
+
 #endif
