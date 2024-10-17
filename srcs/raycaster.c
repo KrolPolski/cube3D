@@ -435,7 +435,7 @@ void	cleanup_images(mlx_t *mlx, t_images *img)
 	
 } 
 
-void handle_resize(int32_t width, int32_t height, void *param)
+void handle_resize(int width, int height, void *param)
 {
     t_info	*info;
 
@@ -448,12 +448,6 @@ void handle_resize(int32_t width, int32_t height, void *param)
     mlx_resize_image(info->img->world, width, height);
     mlx_resize_image(info->img->map, info->map_width, info->map_height);
     mlx_resize_image(info->img->plyr, info->map_width, info->map_height);
-    info->map->sq_w = info->map_width / info->map->x_len;
-    info->map->sq_h = info->map_height / info->map->y_len;
-    if (info->map->sq_w <= info->map->sq_h)
-        info->map->sq = info->map->sq_w;
-    else
-        info->map->sq = info->map->sq_h;
     draw_2d_map(info->mlx, info->map, info);
 }
 
