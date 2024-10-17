@@ -437,14 +437,26 @@ void	cleanup_images(mlx_t *mlx, t_images *img)
 
 void handle_resize(int32_t width, int32_t height, void *param)
 {
-    t_info *info = (t_info *)param;
+    t_info	*info;
+
+	info = (t_info *)param;
     info->s_width = width;
     info->s_height = height;
+	info->map_width = width * info->map_size_factor;
+    info->map_height = height * info->map_size_factor;
     mlx_resize_image(info->img->background, width, height);
-	mlx_resize_image(info->img->world, width, height);
-	mlx_resize_image(info->img->plyr, width, height);
-	mlx_resize_image(info->img->map, width * info->map_size_factor, height * info->map_size_factor);
+    mlx_resize_image(info->img->world, width, height);
+    mlx_resize_image(info->img->map, info->map_width, info->map_height);
+    mlx_resize_image(info->img->plyr, info->map_width, info->map_height);
+    info->map->sq_w = info->map_width / info->map->x_len;
+    info->map->sq_h = info->map_height / info->map->y_len;
+    if (info->map->sq_w <= info->map->sq_h)
+        info->map->sq = info->map->sq_w;
+    else
+        info->map->sq = info->map->sq_h;
+    draw_2d_map(info->mlx, info->map, info);
 }
+
 
 void	setup_mlx(t_map *map)
 {
@@ -467,17 +479,17 @@ void	setup_mlx(t_map *map)
 		ft_putstr_fd("MLX initialization error\n", 2);
 		exit(1);
 	}
+	mlx_resize_hook(info.mlx, handle_resize, &info);
 	init_img(&info);
 	init_plyr(&info, info.map);
-	i = 0;
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
 	mlx_image_to_window(info.mlx, info.img->world, 0, 0);
 	draw_2d_map(info.mlx, info.map, &info);
 	raycaster(info.mlx, info.map, info.img, &info);
-	mlx_resize_hook(info.mlx, handle_resize, &info);
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);
 	cleanup_images(info.mlx, info.img);
 	mlx_terminate(info.mlx);
 }
+
