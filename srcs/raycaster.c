@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 13:44:22 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:24:27 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	check_img_failure(mlx_image_t *background)
 
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 {
-	int	i;
-	int	j;
+	unsigned int	i;
+	unsigned int	j;
 
 	img->background = mlx_new_image(mlx, info->s_width, info->s_height);
 	check_img_failure(img->background);

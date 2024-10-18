@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:25:30 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 13:49:04 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:24:40 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	setup_mlx(t_map *map)
 {
 	t_info		info;
 	t_images	img;
-	int			i;
 
 	init_screen_size(&info, &img, map);
 	info.mlx = mlx_init(info.s_width, info.s_height, "cub3d", true);
@@ -72,7 +71,7 @@ void	setup_mlx(t_map *map)
 	floor_and_ceiling(info.mlx, info.img, &info, info.map);
 	mlx_image_to_window(info.mlx, info.img->world, 0, 0);
 	draw_2d_map(info.mlx, info.map, &info);
-	raycaster(info.mlx, info.map, info.img, &info);
+	raycaster(info.map, info.img, &info);
 	mlx_key_hook(info.mlx, ft_single_press_hook, &info);
 	mlx_loop_hook(info.mlx, ft_movehook, &info);
 	mlx_loop(info.mlx);

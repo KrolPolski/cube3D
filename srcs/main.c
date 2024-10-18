@@ -6,13 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 13:40:13 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:13:49 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	print_all(t_map *map)
+/*static void	print_all(t_map *map)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ static void	print_all(t_map *map)
 	}
 	ft_printf("\n");
 	print_2d(map->map);
-}
+}*/
 
 int	main(int argc, char **argv)
 {

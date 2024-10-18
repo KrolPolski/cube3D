@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 13:32:19 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:28:55 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ enum e_intersect
 
 typedef struct s_info
 {
-	int s_width;
-	int s_height;
+	unsigned int s_width;
+	unsigned int s_height;
 	mlx_t *mlx;
 	t_map *map;
 	t_images *img;
@@ -100,8 +100,7 @@ typedef struct s_info
 
 # define EPSILON 1e-5
 char	detect_square(t_map *map, double x, double y);
-void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info);
-void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
+void	raycaster(t_map *map, t_images *img, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
 int		invalid_file_extension(char *arg, char *lower, char *upper);
@@ -128,7 +127,7 @@ void	init_img(t_info *info);
 void	init_plyr(t_info *info, t_map *map);
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map);
 void	ft_movehook(void *param);
-void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
+void	draw_2d_player(t_map *map, t_info *info);
 void	move_forward(t_info *info);
 void	move_backward(t_info *info);
 void	move_left(t_info *info);

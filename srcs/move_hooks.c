@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:30:44 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 13:37:46 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:29:14 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	ft_movehook(void *param)
 	if (mlx_is_key_down(info->mlx, MLX_KEY_D))
 		move_right(info);
 	check_rotation(info);
-	raycaster(info->mlx, info->map, info->img, info);
+	raycaster(info->map, info->img, info);
 	if (info->img->plyr->enabled)
-		draw_2d_player(info->mlx, info->map, info);
+		draw_2d_player(info->map, info);
 }
 
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)

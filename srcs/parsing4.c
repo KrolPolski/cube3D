@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:12:32 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 14:25:21 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:16:31 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // returns the string of spaces to be added any strings in the map that are shorter than the longest string in the map
 static char	*get_s2(size_t len, char *s1, t_map *map)
 {
-	int		i;
-	char	*str;
+	unsigned int	i;
+	char			*str;
 
 	i = 0;
 	str = malloc((len - ft_strlen(s1)) * sizeof(char) + 1);

@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/10/18 13:32:57 by rboudwin         ###   ########.fr        #
+#    Updated: 2024/10/18 14:15:07 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ CC			=	cc
 
 RM			=	rm -f
 
-CFLAGS		= #-Wextra -Wall -Werror
+CFLAGS		= 	-Wextra -Wall -Werror
 
 $(NAME):	$(OBJ)
 			make -C ./libft

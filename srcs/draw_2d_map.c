@@ -6,13 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:31:09 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 12:31:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:29:45 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	map_background(mlx_t *mlx, t_map *map, t_info *info)
+void	map_background(t_map *map, t_info *info)
 {
 	int	i;
 	int	j;
@@ -31,7 +31,7 @@ void	map_background(mlx_t *mlx, t_map *map, t_info *info)
 	}
 }
 
-void	draw_squares(mlx_t *mlx, t_map *map, t_info *info)
+void	draw_squares(t_map *map, t_info *info)
 {
 	int	x;
 	int	y;
@@ -47,7 +47,7 @@ void	draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 	px_x = 0;
 	px_y = 0;
 	print_2d(map->map);
-	map_background(mlx, map, info);
+	map_background(map, info);
 	while (map->map[y])
 	{
 		while (map->map[y][x] != '\0')
@@ -93,7 +93,7 @@ void	draw_squares(mlx_t *mlx, t_map *map, t_info *info)
 }
 
 /* start by drawing three rays, one at 0, one at -30, one at + 30 */
-void	draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
+void	draw_fov(t_info *info, int px_x, int px_y)
 {
 	int	i;
 	int	ray_x;
@@ -104,19 +104,19 @@ void	draw_fov(mlx_t *mlx, t_map *map, t_info *info, int px_x, int px_y)
 	{
 		ray_x = px_x + round(i * cos(info->p_orient - M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient - M_PI / 6));
-		if (ray_x >= 0 && ray_y >= 0 && ray_x < info->img->plyr->width && ray_y < info->img->plyr->height)
+		if (ray_x >= 0 && ray_y >= 0 && ray_x < (int)info->img->plyr->width && ray_y < (int)info->img->plyr->height)
 			mlx_put_pixel(info->img->plyr, ray_x, ray_y,
 				get_rgba(255, 255, 0, 255));
 		ray_x = px_x + round(i * cos(info->p_orient + M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient + M_PI / 6));
-		if (ray_x >= 0 && ray_y >= 0 && ray_x < info->img->plyr->width && ray_y < info->img->plyr->height)
+		if (ray_x >= 0 && ray_y >= 0 && ray_x < (int)info->img->plyr->width && ray_y < (int)info->img->plyr->height)
 			mlx_put_pixel(info->img->plyr, ray_x, ray_y,
 				get_rgba(255, 255, 0, 255));
 		i++;
 	}
 }
 
-void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
+void	draw_2d_player(t_map *map, t_info *info)
 {
 	int	px_x;
 	int	px_y;
@@ -140,7 +140,7 @@ void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info)
 		i = 0;
 		k++;
 	}
-	draw_fov(mlx, map, info, px_x + 5, px_y + 5);
+	draw_fov(info, px_x + 5, px_y + 5);
 	
 }
 
@@ -160,7 +160,7 @@ void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 		map->sq = map->sq_w;
 	else
 		map->sq = map->sq_h;
-	draw_squares(mlx, map, info);
-	draw_2d_player(mlx, map, info);
+	draw_squares(map, info);
+	draw_2d_player(map, info);
 	mlx_image_to_window(mlx, info->img->plyr, 20, 20);
 }

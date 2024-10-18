@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:27:40 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 13:29:16 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:30:12 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_found(int found)
 	}
 }
 
-void	find_start_position(t_info *info, t_map *map, int *x, int *y)
+void	find_start_position(t_map *map, int *x, int *y)
 {
 	int	found;
 
@@ -55,7 +55,7 @@ void	init_plyr(t_info *info, t_map *map)
 	int	y;
 	int	x;
 
-	find_start_position(info, map, &x, &y);
+	find_start_position(map, &x, &y);
 	info->p_x = x + 0.5;
 	info->p_y = y + 0.5;
 	info->p_orient = 42;

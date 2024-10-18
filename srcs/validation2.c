@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:30:49 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/15 13:06:37 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:15:42 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int invalid_file_extension(char *arg, char *lower, char *upper)
 
     str = ft_strchr_rev(arg, '.');
     if (str == NULL)
-        return (1);
+		return (1);
 	if (ft_strncmp(str, lower, ft_strlen(lower)) != 0 && ft_strncmp(str, upper, ft_strlen(upper)) != 0)
-        return (1);
+		return (1);
 	return (0);
 }
 
