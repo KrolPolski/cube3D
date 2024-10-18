@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:58 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 14:03:13 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:13:49 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	print_all(t_map *map)
+/*static void	print_all(t_map *map)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ static void	print_all(t_map *map)
 	}
 	ft_printf("\n");
 	print_2d(map->map);
-}
+}*/
 
 int	main(int argc, char **argv)
 {
@@ -47,8 +47,6 @@ int	main(int argc, char **argv)
 	{
 		parse(argv, &map);
 		validate(&map);
-		// print_all(&map);
-		// free_map(&map);
 	}
 	setup_mlx(&map);
 	free_map(&map);

@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/17 15:46:46 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:23:40 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 			*(pixelstart + 2), *(pixelstart + 3)));
 }
 
-double	find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
+double	find_first_vertical(t_info *info)
 {
 	double	delta_x;
 	double	delta_y;
@@ -64,7 +64,7 @@ double	find_first_vertical(mlx_t *mlx, t_map *map, t_info *info)
 	return (len);
 }
 
-double	find_next_vertical(mlx_t *mlx, t_map *map, t_info(*info), double len)
+double	find_next_vertical(t_info(*info), double len)
 {
 	double	delta_y;
 	double	delta_x;
@@ -88,7 +88,7 @@ double	find_next_vertical(mlx_t *mlx, t_map *map, t_info(*info), double len)
 	return (len);
 }
 
-double	find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
+double	find_first_horizontal(t_info *info)
 {
 	double	delta_x;
 	double	delta_y;
@@ -122,12 +122,10 @@ double	find_first_horizontal(mlx_t *mlx, t_map *map, t_info *info)
 	return (len);
 }
 
-double	find_next_horizontal(mlx_t *mlx, t_map *map, t_info *info, double len)
+double	find_next_horizontal(t_info *info, double len)
 {
 	double	delta_y;
 	double	delta_x;
-	double	x_candidate;
-	double	y_candidate;
 
 	if (info->ray_orient > M_PI)
 		delta_y = -1.0;
@@ -179,8 +177,7 @@ mlx_image_t	*get_wall_texture(t_images *img, double ray_orient,
 	return (NULL);
 }
 
-unsigned int	find_x_percent(double ray_len, t_info *info, t_images *img,
-	enum e_intersect inter)
+unsigned int	find_x_percent(t_info *info, enum e_intersect inter)
 {
 	double			x_fraction;
 	double			zero;
@@ -201,20 +198,18 @@ unsigned int	find_x_percent(double ray_len, t_info *info, t_images *img,
 	return (int_percent);
 }
 
-void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
+void	cast_wall(double ray_len, unsigned int i, t_info *info, t_images *img,
 	enum e_intersect inter)
 {
 	int				top_pixel;
-	int				pixels;
+	unsigned int	pixels;
 	int				color;
-	float			angle;
 	unsigned int	column_height;
 	int				proj_plane_dist;
 	unsigned int	x_percent;
 	mlx_image_t		*texture_img;
 	unsigned int	texel;
 	unsigned int	pixels_per_texel;
-	unsigned int	leftovers;
 	int				y;
 	int				texel_y_int;
 	double			texel_step;
@@ -223,26 +218,39 @@ void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
 	y = 0;
 	proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
 	texture_img = get_wall_texture(img, info->ray_orient, inter);
-	x_percent = find_x_percent(ray_len, info, img, inter);
+	x_percent = find_x_percent(info, inter);
 	if (ray_len > info->rend_dist)
 		return ;
 	top_pixel = 0;
 	pixels = 0;
-	column_height = (info->s_height / (ray_len
-				* cos(info->ray_orient - info->p_orient)));
+	double angle_diff = cos(info->ray_orient - info->p_orient);
+	//avoiding divide by zero
+	if (fabs(angle_diff) > EPSILON)
+		column_height = (info->s_height / (ray_len
+			* angle_diff));
+	else
+		column_height = info->s_height / ray_len;
 	top_pixel = info->s_height / 2 - column_height / 2;
 	texel = texture_img->width * x_percent / 100;
-	pixels_per_texel = round((double)column_height
+	if (texture_img->height != 0)
+		pixels_per_texel = round((double)column_height
 				/ (double)texture_img->height);
+	else
+		return ;
 	color = mlx_get_pixel(texture_img, texel, 0);
-	leftovers = column_height % pixels_per_texel;
-	texel_step = (double)texture_img->height / (double)column_height;
+	//avoiding divide by zero
+	if (column_height > EPSILON)
+		texel_step = (double)texture_img->height / (double)column_height;
+	else
+		return ;
 	texel_y = 0;
 	if (top_pixel < 0)
 	{
 		texel_y = -(top_pixel * texel_step);
 		top_pixel = 0;
 	}
+	if (column_height > info->s_height)
+		column_height = info->s_height;
 	while (pixels < column_height - 1)
 	{
 		if (top_pixel + pixels > info->s_height - 1 || top_pixel + pixels < 0
@@ -258,16 +266,12 @@ void	cast_wall(double ray_len, int i, t_info *info, t_images *img,
 	}
 }
 
-void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
+void	raycaster(t_map *map, t_images *img, t_info *info)
 {
 	double				ray_len;
-	double				ray_x_len;
-	double				ray_y_len;
 	double				horiz_len;
 	double				verti_len;
-	double				len_parking;
-	char				ret;
-	int					i;
+	unsigned int		i;
 	enum e_intersect	inter;
 
 	info->ray_x = info->p_x;
@@ -284,8 +288,8 @@ void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
 		ray_len = 0;
 		info->ray_x = info->p_x;
 		info->ray_y = info->p_y;
-		horiz_len = find_first_horizontal(mlx, map, info);
-		verti_len = find_first_vertical(mlx, map, info);
+		horiz_len = find_first_horizontal(info);
+		verti_len = find_first_vertical(info);
 		if (horiz_len < verti_len)
 			ray_len = horiz_len;
 		else
@@ -293,12 +297,12 @@ void	raycaster(mlx_t *mlx, t_map *map, t_images *img, t_info *info)
 		while (detect_square(map, info->horiz_vec[0],
 				info->horiz_vec[1]) != '1')
 		{
-			horiz_len = find_next_horizontal(mlx, map, info, horiz_len);
+			horiz_len = find_next_horizontal(info, horiz_len);
 		}
 		while (detect_square(map, info->verti_vec[0],
 				info->verti_vec[1]) != '1')
 		{
-			verti_len = find_next_vertical(mlx, map, info, verti_len);
+			verti_len = find_next_vertical(info, verti_len);
 		}
 		if (horiz_len < verti_len)
 		{
