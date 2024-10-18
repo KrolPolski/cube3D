@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 12:35:55 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:32:19 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,9 @@ void	init_plyr(t_info *info, t_map *map);
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map);
 void	ft_movehook(void *param);
 void	draw_2d_player(mlx_t *mlx, t_map *map, t_info *info);
+void	move_forward(t_info *info);
+void	move_backward(t_info *info);
+void	move_left(t_info *info);
+void	move_right(t_info *info);
 
 #endif

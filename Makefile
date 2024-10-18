@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/10/18 13:28:43 by rboudwin         ###   ########.fr        #
+#    Updated: 2024/10/18 13:32:57 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC		=	srcs/main.c \
 			srcs/setup_mlx.c \
 			srcs/init_images.c \
 			srcs/move_hooks.c \
+			srcs/move_hooks2.c \
 			srcs/draw_2d_map.c \
 			srcs/init_plyr.c
 LIBFT		=	libft/libft.a
