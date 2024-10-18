@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 12:31:37 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:44:22 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ char	detect_square(t_map *map, double x, double y)
 	}
 }
 
+void	check_img_failure(mlx_image_t *background)
+{
+	if (!background)
+	{
+		ft_putstr_fd("Failed to create background image\n", 2);
+		exit(1);
+	}
+}
 
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 {
@@ -49,11 +57,7 @@ void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 	int	j;
 
 	img->background = mlx_new_image(mlx, info->s_width, info->s_height);
-	if (!img->background)
-	{
-		ft_putstr_fd("Failed to create background image\n", 2);
-		exit(1);
-	}
+	check_img_failure(img->background);
 	mlx_image_to_window(mlx, img->background, 0, 0);
 	i = 0;
 	while (i < info->s_height)
@@ -72,6 +76,3 @@ void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 		i++;
 	}
 }
-
-
-
