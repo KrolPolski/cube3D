@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 11:43:00 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:51:59 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,10 +170,10 @@ void	init_img(t_info *info)
 	}
 	else
 	{
-		ft_putstr_fd("We must have suceeded in loading textures\n", 1);
-		printf("txt_no: %p txt_ea: %p txt_so: %p txt_we: %p",
-			info->img->txt_no, info->img->txt_ea, info->img->txt_so,
-			info->img->txt_we);
+		//ft_putstr_fd("We must have suceeded in loading textures\n", 1);
+		//printf("txt_no: %p txt_ea: %p txt_so: %p txt_we: %p",
+		//	info->img->txt_no, info->img->txt_ea, info->img->txt_so,
+		//	info->img->txt_we);
 	}
 	info->img->no = mlx_texture_to_image(info->mlx, info->img->txt_no);
 	info->img->ea = mlx_texture_to_image(info->mlx, info->img->txt_ea);
@@ -189,14 +189,17 @@ void	init_img(t_info *info)
 	if (info->img->we->height > 256 || info->img->we->width > 256)
 		mlx_resize_image(info->img->we, 256, 256);
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	if (!info->img->bg)
-		ft_putstr_fd("Image initialization error", 2);
 	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->map = mlx_new_image(info->mlx, info->map_width,
 			info->map_height);
 	info->img->plyr = mlx_new_image(info->mlx, info->map_width,
 			info->map_height);
+	if (!info->img->bg || !info->img->world || !info->img->map || !info->img->plyr)
+	{
+		ft_putstr_fd("Image initialization error", 2);
+		exit(1);
+	}
 	ft_memset(info->img->bg->pixels, 180, info->img->bg->width
 		* info->img->bg->height * BPP);
 	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
@@ -234,7 +237,10 @@ void	init_plyr(t_info *info, t_map *map)
 			break ;
 	}
 	if (!found)
+	{
 		ft_putstr_fd("Error: No starting position found\n", 2);
+		exit(1);
+	}
 	info->p_x = x + 0.5;
 	info->p_y = y + 0.5;
 	info->p_orient = 42;
@@ -247,9 +253,12 @@ void	init_plyr(t_info *info, t_map *map)
 	else if (map->map[y][x] == 'W')
 		info->p_orient = M_PI;
 	else
+	{
 		ft_putstr_fd("Could not set player orientation\n", 2);
-	printf("Our starting position is y: %f, x: %f, orientation is %f\n",
-		info->p_y, info->p_x, info->p_orient);
+		exit(1);
+	}
+	//printf("Our starting position is y: %f, x: %f, orientation is %f\n",
+	//	info->p_y, info->p_x, info->p_orient);
 }
 
 void	map_background(mlx_t *mlx, t_map *map, t_info *info)
@@ -411,6 +420,11 @@ void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 	int	j;
 
 	img->background = mlx_new_image(mlx, info->s_width, info->s_height);
+	if (!img->background)
+	{
+		ft_putstr_fd("Failed to create background image\n", 2);
+		exit(1);
+	}
 	mlx_image_to_window(mlx, img->background, 0, 0);
 	i = 0;
 	while (i < info->s_height)
