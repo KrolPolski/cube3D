@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:30:30 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:33:55 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,42 +267,34 @@ void	cast_wall(double ray_len, unsigned int i, t_info *info,
 
 double	determine_ray_len(t_info *info, enum e_intersect *inter, t_map *map)
 {
-		double				horiz_len;
-	double				verti_len;
-	double				ray_len;
-		horiz_len = find_first_horizontal(info);
-		verti_len = find_first_vertical(info);
-		if (horiz_len < verti_len)
-			ray_len = horiz_len;
-		else
-			ray_len = verti_len;
-		while (detect_square(map, info->horiz_vec[0],
-				info->horiz_vec[1]) != '1')
-		{
-			horiz_len = find_next_horizontal(info, horiz_len);
-		}
-		while (detect_square(map, info->verti_vec[0],
-				info->verti_vec[1]) != '1')
-		{
-			verti_len = find_next_vertical(info, verti_len);
-		}
-		if (horiz_len < verti_len)
-		{
-			ray_len = horiz_len;
-			*inter = horizontal;
-		}
-		else
-		{
-			ray_len = verti_len;
-			*inter = vertical;
-		}
-		return (ray_len);
+	double	horiz_len;
+	double	verti_len;
+	double	ray_len;
+
+	horiz_len = find_first_horizontal(info);
+	verti_len = find_first_vertical(info);
+	while (detect_square(map, info->horiz_vec[0],
+			info->horiz_vec[1]) != '1')
+		horiz_len = find_next_horizontal(info, horiz_len);
+	while (detect_square(map, info->verti_vec[0],
+			info->verti_vec[1]) != '1')
+		verti_len = find_next_vertical(info, verti_len);
+	if (horiz_len < verti_len)
+	{
+		ray_len = horiz_len;
+		*inter = horizontal;
+	}
+	else
+	{
+		ray_len = verti_len;
+		*inter = vertical;
+	}
+	return (ray_len);
 }
 
 void	raycaster(t_map *map, t_images *img, t_info *info)
 {
 	double				ray_len;
-
 	unsigned int		i;
 	enum e_intersect	inter;
 
