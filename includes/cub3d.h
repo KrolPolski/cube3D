@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/21 16:40:57 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:48:34 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ typedef struct s_cast_wall
 } t_cw;
 
 # define EPSILON 1e-5
+void	cast_wall(double ray_len, unsigned int i, t_info *info,
+		enum e_intersect inter);
+int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);
 char	detect_square(t_map *map, double x, double y);
 void	draw_squares(t_map *map, t_info *info);
 void	map_background(t_map *map, t_info *info);
