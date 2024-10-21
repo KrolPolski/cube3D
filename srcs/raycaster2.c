@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:33:55 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:42:35 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,124 +28,6 @@ int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 	pixelstart = image->pixels + (y * image->width + x) * BPP;
 	return (get_rgba(*(pixelstart), *(pixelstart + 1),
 			*(pixelstart + 2), *(pixelstart + 3)));
-}
-
-void	get_to_vert_sq_edge(t_info *info)
-{
-	if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2)
-		info->verti_vec[0] = floorf(info->ray_x) - 0.00001;
-	else
-		info->verti_vec[0] = ceilf(info->ray_x);
-}
-
-double	find_first_vertical(t_info *info)
-{
-	double	delta_x;
-	double	delta_y;
-	double	previous_position;
-	double	len;
-
-	previous_position = info->ray_x;
-	get_to_vert_sq_edge(info);
-	if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2)
-		delta_x = -fabs(info->verti_vec[0] - info->ray_x);
-	else
-		delta_x = fabs(info->verti_vec[0] - info->ray_x);
-	if (fabs(sin(info->ray_orient)) < EPSILON)
-		delta_y = 0;
-	else
-	{
-		if (info->ray_orient > M_PI)
-			delta_y = -fabs(delta_x * tan(info->ray_orient));
-		else
-			delta_y = fabs(delta_x * tan(info->ray_orient));
-	}
-	info->verti_vec[1] = info->ray_y + delta_y;
-	len = sqrt(pow(delta_x, 2) + pow(delta_y, 2));
-	return (len);
-}
-
-double	find_next_vertical(t_info(*info), double len)
-{
-	double	delta_y;
-	double	delta_x;
-
-	if (info->ray_orient > M_PI_2 && info->ray_orient < M_PI_2 * 3)
-		delta_x = -1.0;
-	else
-		delta_x = 1.0;
-	if (fabs(sin(info->ray_orient)) < EPSILON)
-		delta_y = 0;
-	else
-	{
-		if (info->ray_orient > M_PI)
-			delta_y = -fabs(delta_x * tan(info->ray_orient));
-		else
-			delta_y = fabs(delta_x * tan(info->ray_orient));
-	}
-	info->verti_vec[0] = info->verti_vec[0] + delta_x;
-	info->verti_vec[1] = info->verti_vec[1] + delta_y;
-	len += sqrt(pow(delta_x, 2) + pow(delta_y, 2));
-	return (len);
-}
-
-void	get_to_horiz_sq_edge(t_info *info)
-{
-	if (info->ray_orient > M_PI)
-		info->horiz_vec[1] = floorf(info->ray_y) - 0.00001;
-	else
-		info->horiz_vec[1] = ceilf(info->ray_y);
-}
-
-double	find_first_horizontal(t_info *info)
-{
-	double	delta_x;
-	double	delta_y;
-	double	previous_position;
-	double	len;
-
-	previous_position = info->ray_y;
-	get_to_horiz_sq_edge(info);
-	if (info->ray_orient > M_PI)
-		delta_y = -fabs(info->horiz_vec[1] - info->ray_y);
-	else
-		delta_y = fabs(info->horiz_vec[1] - info->ray_y);
-	if (fabs(cos(info->ray_orient)) < EPSILON)
-		delta_x = 0;
-	else
-	{
-		if (info->ray_orient < M_PI_2 || info->ray_orient > M_PI * 1.5)
-			delta_x = fabs(delta_y / tan(info->ray_orient));
-		else
-			delta_x = -fabs(delta_y / tan(info->ray_orient));
-	}
-	info->horiz_vec[0] = info->ray_x + delta_x;
-	len = sqrt(pow(delta_x, 2) + pow(delta_y, 2));
-	return (len);
-}
-
-double	find_next_horizontal(t_info *info, double len)
-{
-	double	delta_y;
-	double	delta_x;
-
-	if (info->ray_orient > M_PI)
-		delta_y = -1.0;
-	else
-		delta_y = 1.0;
-	if (fabs(cos(info->ray_orient)) < EPSILON)
-		delta_x = 0;
-	else
-	{
-		if (info->ray_orient < M_PI_2 || info->ray_orient > M_PI * 1.5)
-			delta_x = fabs(delta_y / tan(info->ray_orient));
-		else
-			delta_x = -fabs(delta_y / tan(info->ray_orient));
-	}
-	info->horiz_vec[0] = info->horiz_vec[0] + delta_x;
-	info->horiz_vec[1] = info->horiz_vec[1] + delta_y;
-	len += sqrt(pow(delta_x, 2) + pow(delta_y, 2));
-	return (len);
 }
 
 void	check_radian_overflow(t_info *info)

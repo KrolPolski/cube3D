@@ -6,7 +6,7 @@
 #    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/10/21 15:21:46 by rboudwin         ###   ########.fr        #
+#    Updated: 2024/10/21 16:41:33 by rboudwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ SRC		=	srcs/main.c \
 			srcs/move_hooks2.c \
 			srcs/draw_2d_map.c \
 			srcs/draw_squares.c \
-			srcs/init_plyr.c
+			srcs/init_plyr.c \
+			srcs/raycaster_vertical.c \
+			srcs/raycaster_horiz.c 
 LIBFT		=	libft/libft.a
 
 MLX42_DIR   = ./MLX42

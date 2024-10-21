@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/21 15:41:08 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:40:57 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,9 @@ void	move_forward(t_info *info);
 void	move_backward(t_info *info);
 void	move_left(t_info *info);
 void	move_right(t_info *info);
+double	find_first_horizontal(t_info *info);
+double	find_next_horizontal(t_info *info, double len);
+double	find_first_vertical(t_info *info);
+double	find_next_vertical(t_info(*info), double len);
 
 #endif
