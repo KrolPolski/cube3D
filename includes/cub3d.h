@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/21 15:22:10 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:41:08 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,23 @@ typedef struct s_2d_sq
 	int	i;
 	int	k;
 } t_sq;
+
+typedef struct s_cast_wall
+{
+	int				top_pixel;
+	unsigned int	pixels;
+	int				color;
+	unsigned int	column_height;
+	unsigned int	x_percent;
+	mlx_image_t		*texture_img;
+	unsigned int	texel;
+	unsigned int	pixels_per_texel;
+	int				y;
+	int				texel_y_int;
+	double			texel_step;
+	double			texel_y;
+	double 			angle_diff;
+} t_cw;
 
 # define EPSILON 1e-5
 char	detect_square(t_map *map, double x, double y);
