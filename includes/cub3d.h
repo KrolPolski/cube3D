@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 14:28:55 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:22:10 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,20 @@ typedef struct s_info
 
 } t_info;
 
+typedef struct s_2d_sq
+{
+	int	x;
+	int	y;
+	int	px_x;
+	int	px_y;
+	int	i;
+	int	k;
+} t_sq;
+
 # define EPSILON 1e-5
 char	detect_square(t_map *map, double x, double y);
+void	draw_squares(t_map *map, t_info *info);
+void	map_background(t_map *map, t_info *info);
 void	raycaster(t_map *map, t_images *img, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
