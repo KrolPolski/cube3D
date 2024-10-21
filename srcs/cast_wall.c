@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:45:27 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:46:30 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:54:45 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Determines which wall_texture is relevant and returns a pointer to it */
 mlx_image_t	*get_wall_texture(t_images *img, double ray_orient,
 	enum e_intersect inter)
 {
@@ -32,6 +33,8 @@ mlx_image_t	*get_wall_texture(t_images *img, double ray_orient,
 	return (NULL);
 }
 
+/* Determines what x-coordinate we should be loading texture pixel
+information from, as a percentage */
 unsigned int	find_x_percent(t_info *info, enum e_intersect inter)
 {
 	double			x_fraction;
@@ -53,6 +56,7 @@ unsigned int	find_x_percent(t_info *info, enum e_intersect inter)
 	return (int_percent);
 }
 
+/* Draws one column of wall, based on the appropriate texel data*/
 void	draw_wall(t_cw *cw, t_info *info, unsigned int i)
 {
 	if (cw->column_height > info->s_height)
@@ -73,6 +77,8 @@ void	draw_wall(t_cw *cw, t_info *info, unsigned int i)
 	}
 }
 
+/* initializes values required for cast wall and applies 
+fisheye correction and protects from division by zero */
 void	init_cast_wall(t_cw *cw, t_info *info, double ray_len,
 	enum e_intersect inter)
 {
@@ -91,6 +97,7 @@ void	init_cast_wall(t_cw *cw, t_info *info, double ray_len,
 	cw->texel = cw->texture_img->width * cw->x_percent / 100;
 }
 
+/* Casts and draws one column of pixels at a time based on i*/
 void	cast_wall(double ray_len, unsigned int i, t_info *info,
 	enum e_intersect inter)
 {

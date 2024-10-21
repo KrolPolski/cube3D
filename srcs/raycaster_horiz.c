@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:39:49 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:42:09 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:28:39 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Moves horiz_vec to the appropriate grid square border */
 void	get_to_horiz_sq_edge(t_info *info)
 {
 	if (info->ray_orient > M_PI)
@@ -20,6 +21,8 @@ void	get_to_horiz_sq_edge(t_info *info)
 		info->horiz_vec[1] = ceilf(info->ray_y);
 }
 
+/* Detects first horizontal intersection and returns the
+horizontal ray length */
 double	find_first_horizontal(t_info *info)
 {
 	double	delta_x;
@@ -47,6 +50,7 @@ double	find_first_horizontal(t_info *info)
 	return (len);
 }
 
+/* determines ray length to the next horizontal intersection */
 double	find_next_horizontal(t_info *info, double len)
 {
 	double	delta_y;

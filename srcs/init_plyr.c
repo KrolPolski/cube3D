@@ -6,12 +6,14 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:27:40 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 14:30:12 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:23:47 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Prints error message and exits if we can't find a starting position 
+for the player */
 void	check_found(int found)
 {
 	if (!found)
@@ -21,6 +23,7 @@ void	check_found(int found)
 	}
 }
 
+/* Locates starting position for the player */
 void	find_start_position(t_map *map, int *x, int *y)
 {
 	int	found;
@@ -50,6 +53,7 @@ void	find_start_position(t_map *map, int *x, int *y)
 	check_found(found);
 }
 
+/* Determines initial player location and orientation */
 void	init_plyr(t_info *info, t_map *map)
 {
 	int	y;

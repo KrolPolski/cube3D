@@ -6,19 +6,22 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 14:24:27 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:31:53 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <math.h>
 
-// 'Encodes' four individual bytes into an int.
+/* 'Encodes' four individual bytes of RGB color and transparency information
+into an 32 bit int.*/
 int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
+/* Detects whether a given square is a wall or not and returns the map char 
+at a given x and y */
 char	detect_square(t_map *map, double x, double y)
 {
 	char	sq;
@@ -42,6 +45,8 @@ char	detect_square(t_map *map, double x, double y)
 	}
 }
 
+/* checks to see if background image creation failed and
+exits if appropriate */
 void	check_img_failure(mlx_image_t *background)
 {
 	if (!background)
@@ -51,6 +56,7 @@ void	check_img_failure(mlx_image_t *background)
 	}
 }
 
+/* Sets floor and ceiling colors on the background image */
 void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 {
 	unsigned int	i;

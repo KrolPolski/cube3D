@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:20:46 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 15:22:53 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:57:37 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* initializes values required for drawing squares on minimap */
 void	init_2d_squares(t_map *map, t_info *info, t_sq *sq)
 {
 	sq->x = 0;
@@ -24,6 +25,7 @@ void	init_2d_squares(t_map *map, t_info *info, t_sq *sq)
 	map_background(map, info);
 }
 
+/* draws a wall square on minimap */
 void	draw_2d_wall(t_map *map, t_info *info, t_sq *sq)
 {
 	while (sq->k < map->sq)
@@ -40,6 +42,7 @@ void	draw_2d_wall(t_map *map, t_info *info, t_sq *sq)
 	sq->k = 0;
 }
 
+/* draws empty space square on minimap */
 void	draw_2d_open_space(t_map *map, t_info *info, t_sq *sq)
 {
 	while (sq->k < map->sq)
@@ -56,6 +59,7 @@ void	draw_2d_open_space(t_map *map, t_info *info, t_sq *sq)
 	sq->k = 0;
 }
 
+/* Draws each square of the map file onto minimap */
 void	draw_squares(t_map *map, t_info *info)
 {
 	t_sq	sq;

@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:31:09 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 15:22:45 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:56:22 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Draws background color on minimap */
 void	map_background(t_map *map, t_info *info)
 {
 	int	i;
@@ -31,7 +32,7 @@ void	map_background(t_map *map, t_info *info)
 	}
 }
 
-/* start by drawing three rays, one at 0, one at -30, one at + 30 */
+/* draws the field of view markers on minimap */
 void	draw_fov(t_info *info, int px_x, int px_y)
 {
 	int	i;
@@ -57,6 +58,7 @@ void	draw_fov(t_info *info, int px_x, int px_y)
 	}
 }
 
+/* Draws the player position on minimap */
 void	draw_2d_player(t_map *map, t_info *info)
 {
 	int	px_x;
@@ -84,6 +86,7 @@ void	draw_2d_player(t_map *map, t_info *info)
 	draw_fov(info, px_x + 5, px_y + 5);
 }
 
+/* creates img instances and draws minimap */
 void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
 	mlx_image_to_window(info->mlx, info->img->map, 20, 20);

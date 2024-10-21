@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/21 16:48:34 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:21:20 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_images
 	mlx_image_t		*ea;
 	mlx_image_t		*so;
 	mlx_image_t		*we;
-	mlx_image_t		*fg;
 	mlx_image_t		*world;
 	mlx_image_t		*background;
 	mlx_image_t		*bg;

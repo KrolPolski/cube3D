@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:49:12 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:37:56 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
  * 0000 0000 A (1st byte) -> uint8_t because it's 8 bits
  * 0000 0000 R (2nd byte)
  * 0000 0000 G (3rd byte)
- * 0000 0000 B (4th byte)
- */
+ * 0000 0000 B (4th byte) */
+
+/* Returns the color value from a texture image for a given texel x and y */
 int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 {
 	uint8_t	*pixelstart;
@@ -30,6 +31,7 @@ int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y)
 			*(pixelstart + 2), *(pixelstart + 3)));
 }
 
+/* Ensures radian values remain valid between 0 and 2 * M_PI */
 void	check_radian_overflow(t_info *info)
 {
 	if (info->ray_orient > 2 * M_PI)
@@ -40,6 +42,8 @@ void	check_radian_overflow(t_info *info)
 		return ;
 }
 
+/* Determines the shortest ray_len to an intersection and logs whether
+it was a horizontal or vertical intersection */
 double	determine_ray_len(t_info *info, enum e_intersect *inter, t_map *map)
 {
 	double	horiz_len;
@@ -67,6 +71,8 @@ double	determine_ray_len(t_info *info, enum e_intersect *inter, t_map *map)
 	return (ray_len);
 }
 
+/* Master function for the raycaster. Zeros out the world image each time
+the player moves so it can be redrawn appropriately */
 void	raycaster(t_map *map, t_images *img, t_info *info)
 {
 	double				ray_len;

@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:37:24 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:42:17 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:29:36 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* moves verti_vec to the appropriate grid square edge */
 void	get_to_vert_sq_edge(t_info *info)
 {
 	if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2)
@@ -20,6 +21,7 @@ void	get_to_vert_sq_edge(t_info *info)
 		info->verti_vec[0] = ceilf(info->ray_x);
 }
 
+/* Finds the first vertical intersection and returns the vertical ray length */
 double	find_first_vertical(t_info *info)
 {
 	double	delta_x;
@@ -47,6 +49,7 @@ double	find_first_vertical(t_info *info)
 	return (len);
 }
 
+/* returns the ray length to the next vertical intersection */
 double	find_next_vertical(t_info(*info), double len)
 {
 	double	delta_y;
