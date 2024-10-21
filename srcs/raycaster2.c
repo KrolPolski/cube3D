@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 14:23:40 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:45:33 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	cast_wall(double ray_len, unsigned int i, t_info *info, t_images *img,
 	unsigned int	pixels;
 	int				color;
 	unsigned int	column_height;
-	int				proj_plane_dist;
+	//int				proj_plane_dist;
 	unsigned int	x_percent;
 	mlx_image_t		*texture_img;
 	unsigned int	texel;
@@ -216,7 +216,7 @@ void	cast_wall(double ray_len, unsigned int i, t_info *info, t_images *img,
 	double			texel_y;
 
 	y = 0;
-	proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
+	//proj_plane_dist = (info->s_width / 2) / tan(M_PI / 6);
 	texture_img = get_wall_texture(img, info->ray_orient, inter);
 	x_percent = find_x_percent(info, inter);
 	if (ray_len > info->rend_dist)
