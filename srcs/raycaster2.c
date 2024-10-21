@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 15:55:29 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:30:30 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,26 +265,11 @@ void	cast_wall(double ray_len, unsigned int i, t_info *info,
 	draw_wall(&cw, info, i);
 }
 
-void	raycaster(t_map *map, t_images *img, t_info *info)
+double	determine_ray_len(t_info *info, enum e_intersect *inter, t_map *map)
 {
-	double				ray_len;
-	double				horiz_len;
+		double				horiz_len;
 	double				verti_len;
-	unsigned int		i;
-	enum e_intersect	inter;
-
-	info->ray_x = info->p_x;
-	info->ray_y = info->p_y;
-	info->ray_orient = info->p_orient - (M_PI / 6);
-	ft_memset(img->world->pixels, 0, img->world->height * img->world->width
-		* BPP);
-	i = 0;
-	while (i < info->s_width)
-	{
-		check_radian_overflow(info);
-		ray_len = 0;
-		info->ray_x = info->p_x;
-		info->ray_y = info->p_y;
+	double				ray_len;
 		horiz_len = find_first_horizontal(info);
 		verti_len = find_first_vertical(info);
 		if (horiz_len < verti_len)
@@ -304,13 +289,34 @@ void	raycaster(t_map *map, t_images *img, t_info *info)
 		if (horiz_len < verti_len)
 		{
 			ray_len = horiz_len;
-			inter = horizontal;
+			*inter = horizontal;
 		}
 		else
 		{
 			ray_len = verti_len;
-			inter = vertical;
+			*inter = vertical;
 		}
+		return (ray_len);
+}
+
+void	raycaster(t_map *map, t_images *img, t_info *info)
+{
+	double				ray_len;
+
+	unsigned int		i;
+	enum e_intersect	inter;
+
+	info->ray_orient = info->p_orient - (M_PI / 6);
+	ft_memset(img->world->pixels, 0, img->world->height * img->world->width
+		* BPP);
+	i = 0;
+	while (i < info->s_width)
+	{
+		check_radian_overflow(info);
+		ray_len = 0;
+		info->ray_x = info->p_x;
+		info->ray_y = info->p_y;
+		ray_len = determine_ray_len(info, &inter, map);
 		cast_wall(ray_len, i, info, inter);
 		i++;
 		info->ray_orient += (M_PI / 3.0) * (1.0 / (double)info->s_width);
