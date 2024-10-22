@@ -6,34 +6,35 @@
 #    By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/10/22 10:31:07 by tparratt         ###   ########.fr        #
+#    Updated: 2024/10/22 12:03:46 by tparratt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	cub3d
 
-SRC		=	srcs/main.c \
-			srcs/validation.c \
-			srcs/validation2.c \
-			srcs/utils.c \
-			srcs/utils2.c \
+SRC		=	srcs/cast_wall.c \
+			srcs/draw_2d_map.c \
+			srcs/draw_squares.c \
+			srcs/init_plyr.c \
+			srcs/init_images.c \
+			srcs/main.c \
+			srcs/move_hooks.c \
+			srcs/move_hooks2.c \
 			srcs/parsing.c \
 			srcs/parsing2.c \
 			srcs/parsing3.c \
 			srcs/parsing4.c \
-			srcs/walls.c \
 			srcs/raycaster.c \
 			srcs/raycaster2.c \
-			srcs/setup_mlx.c \
-			srcs/init_images.c \
-			srcs/move_hooks.c \
-			srcs/move_hooks2.c \
-			srcs/draw_2d_map.c \
-			srcs/draw_squares.c \
-			srcs/init_plyr.c \
 			srcs/raycaster_vertical.c \
 			srcs/raycaster_horiz.c \
-			srcs/cast_wall.c
+			srcs/setup_mlx.c \
+			srcs/utils.c \
+			srcs/utils2.c \
+			srcs/validation.c \
+			srcs/validation2.c \
+			srcs/walls.c
+			
 LIBFT		=	libft/libft.a
 
 MLX42_DIR   = ./MLX42
