@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:11:02 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 14:17:15 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:10:19 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	*set_color_array(char *str, t_map *map)
 	return (int_arr);
 }
 
+/* adds the color to map struct */
 int	*set_color(char *str, char **arr, t_map *map)
 {
 	int	*res;

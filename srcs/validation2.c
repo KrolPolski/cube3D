@@ -6,12 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:30:49 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 12:38:31 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:22:12 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Returns 1 if the file extension is invalid or doesn't exist */
 int	invalid_file_extension(char *arg, char *lower, char *upper)
 {
 	char	*str;

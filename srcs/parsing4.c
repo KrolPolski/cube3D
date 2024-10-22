@@ -6,14 +6,15 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:12:32 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 12:41:43 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:22:28 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-/*returns the string of spaces to be added 
-to any strings in the map that are shorter than the longest string in the map*/
+/* returns the string of spaces to be added 
+to any strings in the map that are shorter 
+than the longest string in the map */
 static char	*get_s2(size_t len, char *s1, t_map *map)
 {
 	unsigned int	i;
@@ -32,6 +33,7 @@ static char	*get_s2(size_t len, char *s1, t_map *map)
 	return (str);
 }
 
+/* adds spaces to the end of the string if necessary */
 static void	add_s2(int width, char *s1, t_map *map, int i)
 {
 	char	*s2;
@@ -50,6 +52,7 @@ static void	add_s2(int width, char *s1, t_map *map, int i)
 	free(s2);
 }
 
+/* uses the longest string index to find the map width minus any spaces */
 static size_t	map_width(char *str)
 {
 	int	i;
@@ -61,6 +64,7 @@ static size_t	map_width(char *str)
 	return (i);
 }
 
+/* returns the INDEX (not length) of the longest string in the map */
 static int	longest_str_i(t_map *map)
 {
 	int		i;
@@ -84,7 +88,7 @@ static int	longest_str_i(t_map *map)
 	return (longest_index);
 }
 
-// sets the final map->map 2d array
+/* sets the final map->map 2d array */
 void	set_final(t_map *map)
 {
 	int		i;
