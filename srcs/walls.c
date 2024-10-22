@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:55:16 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:43:25 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,17 @@ static size_t	valid_position(t_map *map, size_t i, size_t j)
 }
 
 // recursively fills the space within the map with 'a' characters
-static int	fill_if_valid(t_map *map, int i, int j)
+static void	fill_if_valid(t_map *map, int i, int j)
 {
-	static int	fills;
-
 	if (i < 0 || j < 0)
-		return (fills);
+		return ;
 	else if (!valid_position(map, i, j))
-		return (fills);
-	fills++;
+		return ;
 	map->copy[i][j] = 'a';
-	fills = fill_if_valid(map, i - 1, j);
-	fills = fill_if_valid(map, i + 1, j);
-	fills = fill_if_valid(map, i, j - 1);
-	fills = fill_if_valid(map, i, j + 1);
-	return (fills);
+	fill_if_valid(map, i - 1, j);
+	fill_if_valid(map, i + 1, j);
+	fill_if_valid(map, i, j - 1);
+	fill_if_valid(map, i, j + 1);
 }
 
 static void	compare_maps(t_map *map)
@@ -97,16 +93,9 @@ static void	get_start_pos(t_map *map)
 // gets the start position for fill_if_valid, copies map, fills if valid, compares maps
 void	check_walls(t_map *map)
 {
-	int fills; // fills not needed any more?
 	get_start_pos(map);
 	copy_map(map);
-	fills = fill_if_valid(map, map->start_i, map->start_j);
-	// if (fills == 1)
-	// {
-	//     free_2d(map->copy);
-	//     print_error("Start position surrounded by walls", map);
-		// is this necessary?
-	// }
+	fill_if_valid(map, map->start_i, map->start_j);
 	compare_maps(map);
 	free_2d(map->copy);
 }
