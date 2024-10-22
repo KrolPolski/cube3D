@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:25:46 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:55:28 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:54:18 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	copy_map(t_map *map)
 
 	len = 0;
 	len = len_2d(map->map);
-	map->copy = malloc(len * sizeof(char *) + 1);
+	map->copy = malloc((len + 2) * sizeof(char *));
 	if (!map->copy)
 		print_error("Memory allocation failure", map);
 	i = 0;
-	while (map->map[i])
+	while (i <= len)
 	{
 		map->copy[i] = ft_strdup(map->map[i]);
 		if (!map->copy[i])
