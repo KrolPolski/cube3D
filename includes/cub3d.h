@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 14:28:55 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:21:20 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_images
 	mlx_image_t		*ea;
 	mlx_image_t		*so;
 	mlx_image_t		*we;
-	mlx_image_t		*fg;
 	mlx_image_t		*world;
 	mlx_image_t		*background;
 	mlx_image_t		*bg;
@@ -98,8 +97,40 @@ typedef struct s_info
 
 } t_info;
 
+typedef struct s_2d_sq
+{
+	int	x;
+	int	y;
+	int	px_x;
+	int	px_y;
+	int	i;
+	int	k;
+} t_sq;
+
+typedef struct s_cast_wall
+{
+	int				top_pixel;
+	unsigned int	pixels;
+	int				color;
+	unsigned int	column_height;
+	unsigned int	x_percent;
+	mlx_image_t		*texture_img;
+	unsigned int	texel;
+	unsigned int	pixels_per_texel;
+	int				y;
+	int				texel_y_int;
+	double			texel_step;
+	double			texel_y;
+	double 			angle_diff;
+} t_cw;
+
 # define EPSILON 1e-5
+void	cast_wall(double ray_len, unsigned int i, t_info *info,
+		enum e_intersect inter);
+int32_t	mlx_get_pixel(mlx_image_t *image, uint32_t x, uint32_t y);
 char	detect_square(t_map *map, double x, double y);
+void	draw_squares(t_map *map, t_info *info);
+void	map_background(t_map *map, t_info *info);
 void	raycaster(t_map *map, t_images *img, t_info *info);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);
 int		get_rgba(int r, int g, int b, int a);
@@ -132,5 +163,9 @@ void	move_forward(t_info *info);
 void	move_backward(t_info *info);
 void	move_left(t_info *info);
 void	move_right(t_info *info);
+double	find_first_horizontal(t_info *info);
+double	find_next_horizontal(t_info *info, double len);
+double	find_first_vertical(t_info *info);
+double	find_next_vertical(t_info(*info), double len);
 
 #endif

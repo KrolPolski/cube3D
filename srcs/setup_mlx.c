@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:25:30 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 14:24:40 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:36:46 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Avoids memory leaks of textures and their respective images */
 void	cleanup_images(mlx_t *mlx, t_images *img)
 {
 	mlx_delete_image(mlx, img->no);
@@ -24,6 +25,8 @@ void	cleanup_images(mlx_t *mlx, t_images *img)
 	mlx_delete_texture(img->txt_we);
 }
 
+/* Handles resizing of the window and scales the images to the
+appropriate size */
 void	handle_resize(int width, int height, void *param)
 {
 	t_info	*info;
@@ -40,6 +43,7 @@ void	handle_resize(int width, int height, void *param)
 	draw_2d_map(info->mlx, info->map, info);
 }
 
+/* Initial values set for window and minimap size */
 void	init_screen_size(t_info *info, t_images *img, t_map *map)
 {
 	info->map = map;
@@ -53,6 +57,8 @@ void	init_screen_size(t_info *info, t_images *img, t_map *map)
 	info->map_visible = true;
 }
 
+/*Initializes mlx instance, draws 2d map and initial raycasting. 
+Configures needed hooks and shuts down mlx instance cleanly. */
 void	setup_mlx(t_map *map)
 {
 	t_info		info;

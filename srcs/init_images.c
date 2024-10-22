@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:28:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 13:28:17 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:21:11 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Safeguards against textures that are unreasonably large */
 void	check_texture_size(t_info *info)
 {
 	if (info->img->no->height > 256 || info->img->no->width > 256)
@@ -24,6 +25,7 @@ void	check_texture_size(t_info *info)
 		mlx_resize_image(info->img->we, 256, 256);
 }
 
+/* Loads textures from files and converts them to images */
 void	load_wall_textures(t_info *info)
 {
 	info->img->txt_no = mlx_load_png(info->map->no);
@@ -42,12 +44,12 @@ void	load_wall_textures(t_info *info)
 	info->img->we = mlx_texture_to_image(info->mlx, info->img->txt_we);
 }
 
+/* Initializes all the images we will need */
 void	init_img(t_info *info)
 {
 	load_wall_textures(info);
 	check_texture_size(info);
 	info->img->bg = mlx_new_image(info->mlx, info->s_width, info->s_height);
-	info->img->fg = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->world = mlx_new_image(info->mlx, info->s_width, info->s_height);
 	info->img->map = mlx_new_image(info->mlx, info->map_width,
 			info->map_height);
@@ -59,10 +61,6 @@ void	init_img(t_info *info)
 		ft_putstr_fd("Image initialization error", 2);
 		exit(1);
 	}
-	ft_memset(info->img->bg->pixels, 180, info->img->bg->width
-		* info->img->bg->height * BPP);
 	mlx_image_to_window(info->mlx, info->img->bg, 0, 0);
 	mlx_image_to_window(info->mlx, info->img->world, 0, 0);
-	ft_memset(info->img->map->pixels, 255, info->img->map->width
-		* info->img->map->height * BPP);
 }

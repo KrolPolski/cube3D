@@ -6,12 +6,14 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:30:44 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 14:29:14 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:25:34 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Allows player to rotate field of view by 2 degree increments using the 
+left and right arrow keys */
 void	check_rotation(t_info *info)
 {
 	if (mlx_is_key_down(info->mlx, MLX_KEY_LEFT))
@@ -28,6 +30,7 @@ void	check_rotation(t_info *info)
 	}
 }
 
+/* keyhook to monitor long key presses */
 void	ft_movehook(void *param)
 {
 	t_info	*info;
@@ -51,6 +54,7 @@ void	ft_movehook(void *param)
 		draw_2d_player(info->map, info);
 }
 
+/* Allows the player to toggle the minimap on and off by pressing m */
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param)
 {
 	t_info	*info;

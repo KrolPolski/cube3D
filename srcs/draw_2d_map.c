@@ -6,12 +6,13 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:31:09 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/18 14:29:45 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:56:22 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Draws background color on minimap */
 void	map_background(t_map *map, t_info *info)
 {
 	int	i;
@@ -31,68 +32,7 @@ void	map_background(t_map *map, t_info *info)
 	}
 }
 
-void	draw_squares(t_map *map, t_info *info)
-{
-	int	x;
-	int	y;
-	int	px_x;
-	int	px_y;
-	int	i;
-	int	k;
-
-	x = 0;
-	y = 0;
-	i = 0;
-	k = 0;
-	px_x = 0;
-	px_y = 0;
-	print_2d(map->map);
-	map_background(map, info);
-	while (map->map[y])
-	{
-		while (map->map[y][x] != '\0')
-		{
-			if (map->map[y][x] == '0' || ft_strchr("NESW", map->map[y][x]))
-			{
-				while (k < map->sq)
-				{
-					while (i < map->sq)
-					{
-						mlx_put_pixel(info->img->map, px_x + i, px_y + k,
-							get_rgba(0, 0, 0, 255));
-						i++;
-					}
-					i = 0;
-					k++;
-				}
-				k = 0;
-			}
-			else if (map->map[y][x] == '1')
-			{
-				while (k < map->sq)
-				{
-					while (i < map->sq)
-					{
-						mlx_put_pixel(info->img->map, px_x + i, px_y + k,
-							get_rgba(200, 200, 200, 255));
-						i++;
-					}
-					i = 0;
-					k++;
-				}
-				k = 0;
-			}
-			x++;
-			px_x += map->sq;
-		}
-		px_y += map->sq;
-		px_x = 0;
-		x = 0;
-		y++;
-	}
-}
-
-/* start by drawing three rays, one at 0, one at -30, one at + 30 */
+/* draws the field of view markers on minimap */
 void	draw_fov(t_info *info, int px_x, int px_y)
 {
 	int	i;
@@ -104,18 +44,21 @@ void	draw_fov(t_info *info, int px_x, int px_y)
 	{
 		ray_x = px_x + round(i * cos(info->p_orient - M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient - M_PI / 6));
-		if (ray_x >= 0 && ray_y >= 0 && ray_x < (int)info->img->plyr->width && ray_y < (int)info->img->plyr->height)
+		if (ray_x >= 0 && ray_y >= 0 && ray_x < (int)info->img->plyr->width
+			&& ray_y < (int)info->img->plyr->height)
 			mlx_put_pixel(info->img->plyr, ray_x, ray_y,
 				get_rgba(255, 255, 0, 255));
 		ray_x = px_x + round(i * cos(info->p_orient + M_PI / 6));
 		ray_y = px_y + round(i * sin(info->p_orient + M_PI / 6));
-		if (ray_x >= 0 && ray_y >= 0 && ray_x < (int)info->img->plyr->width && ray_y < (int)info->img->plyr->height)
+		if (ray_x >= 0 && ray_y >= 0 && ray_x < (int)info->img->plyr->width
+			&& ray_y < (int)info->img->plyr->height)
 			mlx_put_pixel(info->img->plyr, ray_x, ray_y,
 				get_rgba(255, 255, 0, 255));
 		i++;
 	}
 }
 
+/* Draws the player position on minimap */
 void	draw_2d_player(t_map *map, t_info *info)
 {
 	int	px_x;
@@ -141,9 +84,9 @@ void	draw_2d_player(t_map *map, t_info *info)
 		k++;
 	}
 	draw_fov(info, px_x + 5, px_y + 5);
-	
 }
 
+/* creates img instances and draws minimap */
 void	draw_2d_map(mlx_t *mlx, t_map *map, t_info *info)
 {	
 	mlx_image_to_window(info->mlx, info->img->map, 20, 20);
