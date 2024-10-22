@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/15 12:47:38 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:09:23 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ static void	elements_to_null(t_map *map, int no_of_lines)
 	map->ceiling = NULL;
 	map->f = NULL;
 	map->c = NULL;
-	map->map = malloc((no_of_lines * sizeof(char *)) + 1);
+	map->map = malloc((no_of_lines + 1) * sizeof(char *));
+	if (map->map == NULL) 
+    	print_error("Memory allocation failed", map);
 	while (i < no_of_lines)
 	{
 		map->map[i] = NULL;

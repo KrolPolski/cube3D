@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/26 15:24:40 by tparratt          #+#    #+#              #
-#    Updated: 2024/10/22 11:43:10 by rboudwin         ###   ########.fr        #
+#    Updated: 2024/10/22 12:03:46 by tparratt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ $(NAME):	$(OBJ)
 			make -C ./libft
 			cmake $(MLX42_DIR) -B $(MLX42_DIR)/build
 			make -C $(MLX42_DIR)/build -j4
-			$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(LIBFT) $(MLX42_LIBS) -fsanitize=address
+			$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(LIBFT) $(MLX42_LIBS)
 
 all:		$(NAME)
 
