@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 11:54:25 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:42:19 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ static void	get_start_pos(t_map *map)
 	}
 }
 
-// gets the start position for fill_if_valid, copies map, fills if valid, compares maps
+/*gets the start position for fill_if_valid, 
+copies map, fills if valid, compares maps*/
 void	check_walls(t_map *map)
 {
 	get_start_pos(map);

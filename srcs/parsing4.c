@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:12:32 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 14:16:31 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:41:43 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// returns the string of spaces to be added any strings in the map that are shorter than the longest string in the map
+/*returns the string of spaces to be added 
+to any strings in the map that are shorter than the longest string in the map*/
 static char	*get_s2(size_t len, char *s1, t_map *map)
 {
 	unsigned int	i;
@@ -100,7 +101,7 @@ void	set_final(t_map *map)
 			s1 = ft_substr(map->map[idx], 0, width);
 		else
 			s1 = ft_strdup(map->map[i]);
-        if (!s1)
+		if (!s1)
 			print_error("Memory allocation failure", map);
 		add_s2(width, s1, map, i);
 		i++;

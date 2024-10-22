@@ -6,13 +6,14 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:03:02 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 11:04:26 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:43:50 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// determines whether a line is; (0) a non-map element, (1) an empty line,(2) part of map element
+/*determines whether a line is; 
+(0) a non-map element, (1) an empty line,(2) part of map element*/
 int	identify_line(char *line)
 {
 	if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2)
@@ -79,7 +80,7 @@ int	file_to_map(t_map *map, int i, char *line)
 {
 	static int	flag;
 
-	if (identify_line(line) == 2 || (i && identify_line(line) == 1)) // to add also empty lines within the map
+	if (identify_line(line) == 2 || (i && identify_line(line) == 1))
 	{
 		flag = 1;
 		map->map[i] = ft_strdup_mod(line);

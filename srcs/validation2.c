@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   validation2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:30:49 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 14:15:42 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:38:31 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int invalid_file_extension(char *arg, char *lower, char *upper)
+int	invalid_file_extension(char *arg, char *lower, char *upper)
 {
-    char *str;
+	char	*str;
 
-    str = ft_strchr_rev(arg, '.');
-    if (str == NULL)
+	str = ft_strchr_rev(arg, '.');
+	if (str == NULL)
 		return (1);
-	if (ft_strncmp(str, lower, ft_strlen(lower)) != 0 && ft_strncmp(str, upper, ft_strlen(upper)) != 0)
+	if (ft_strncmp(str, lower, ft_strlen(lower)) != 0
+		&& ft_strncmp(str, upper, ft_strlen(upper)) != 0)
 		return (1);
 	return (0);
 }
