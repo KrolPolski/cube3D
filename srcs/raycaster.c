@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:56:04 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 17:31:53 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:21:27 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,12 @@ char	detect_square(t_map *map, double x, double y)
 	}
 }
 
-/* checks to see if background image creation failed and
-exits if appropriate */
-void	check_img_failure(mlx_image_t *background)
-{
-	if (!background)
-	{
-		ft_putstr_fd("Failed to create background image\n", 2);
-		exit(1);
-	}
-}
-
 /* Sets floor and ceiling colors on the background image */
-void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
+void	floor_and_ceiling(t_images *img, t_info *info, t_map *map)
 {
 	unsigned int	i;
 	unsigned int	j;
 
-	img->background = mlx_new_image(mlx, info->s_width, info->s_height);
-	check_img_failure(img->background);
-	mlx_image_to_window(mlx, img->background, 0, 0);
 	i = 0;
 	while (i < info->s_height)
 	{
@@ -72,10 +58,10 @@ void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map)
 		while (j < info->s_width)
 		{
 			if (i < info->s_height / 2)
-				mlx_put_pixel(img->background, j, i,
+				mlx_put_pixel(img->bg, j, i,
 					get_rgba(map->c[0], map->c[1], map->c[2], 255));
 			else
-				mlx_put_pixel(img->background, j, i,
+				mlx_put_pixel(img->bg, j, i,
 					get_rgba(map->f[0], map->f[1], map->f[2], 255));
 			j++;
 		}
