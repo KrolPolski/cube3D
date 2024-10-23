@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 09:57:30 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:01:00 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,28 @@ static void	set_initial_map(char *arg, t_map *map)
 }
 
 /* initializes all map struct elements to NULL */
-static void elements_to_null(t_map *map, int no_of_lines)
+static void	elements_to_null(t_map *map, int no_of_lines)
 {
-    ft_memset(map, 0, sizeof(t_map));
-    map->map = malloc((no_of_lines + 1) * sizeof(char *));
-    if (map->map == NULL)
-        print_error("Memory allocation failed", map);
-    ft_memset(map->map, 0, (no_of_lines + 1) * sizeof(char *));
-}
+	int	i;
 
+	i = 0;
+	map->no = NULL;
+	map->so = NULL;
+	map->ea = NULL;
+	map->we = NULL;
+	map->floor = NULL;
+	map->ceiling = NULL;
+	map->f = NULL;
+	map->c = NULL;
+	map->map = malloc((no_of_lines + 1) * sizeof(char *));
+	if (map->map == NULL)
+		print_error("Memory allocation failed", map);
+	while (i < no_of_lines)
+	{
+		map->map[i] = NULL;
+		i++;
+	}
+}
 
 void	parse(char **argv, t_map *map)
 {
