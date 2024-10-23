@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:20:46 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:57:37 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:09:19 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	init_2d_squares(t_map *map, t_info *info, t_sq *sq)
 	sq->k = 0;
 	sq->px_x = 0;
 	sq->px_y = 0;
-	print_2d(map->map);
 	map_background(map, info);
 }
 

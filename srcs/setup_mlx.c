@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_mlx.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:25:30 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/23 11:20:10 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:06:19 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	handle_resize(int width, int height, void *param)
 	info = (t_info *)param;
 	info->s_width = width;
 	info->s_height = height;
+	if (width > 1500)
+		info->high_res = 1;
+	else
+		info->high_res = 0;
 	info->map_width = width * info->map_size_factor;
 	info->map_height = height * info->map_size_factor;
 	mlx_resize_image(info->img->bg, width, height);
@@ -50,6 +54,7 @@ void	init_screen_size(t_info *info, t_images *img, t_map *map)
 	info->img = img;
 	info->s_width = 1366;
 	info->s_height = 768;
+	info->high_res = 0;
 	info->map_size_factor = 0.3;
 	info->rend_dist = 25;
 	info->map_width = info->s_width * info->map_size_factor;
