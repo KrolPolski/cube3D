@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 17:00:25 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:04:33 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	fill_if_valid(t_map *map, int i, int j)
 /* checks that there are no gaps in the walls by comparing the maps */
 static void	compare_maps(t_map *map)
 {
-	print_2d(map->copy);
 	size_t	i;
 	size_t	j;
 
