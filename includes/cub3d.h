@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 11:52:28 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:19:48 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_images
 	mlx_image_t		*so;
 	mlx_image_t		*we;
 	mlx_image_t		*world;
-	mlx_image_t		*background;
 	mlx_image_t		*bg;
 	mlx_image_t		*plyr;
 	mlx_image_t		*map;
@@ -139,7 +138,7 @@ double	find_first_horizontal(t_info *info);
 double	find_first_vertical(t_info *info);
 double	find_next_horizontal(t_info *info, double len);
 double	find_next_vertical(t_info(*info), double len);
-void	floor_and_ceiling(mlx_t *mlx, t_images *img, t_info *info, t_map *map);
+void	floor_and_ceiling(t_images *img, t_info *info, t_map *map);
 void	free_2d(char **arr);
 void	free_map(t_map *map);
 void	ft_single_press_hook(mlx_key_data_t keydata, void *param);

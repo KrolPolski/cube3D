@@ -6,13 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:25:46 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 11:54:18 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:04:26 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// creates a copy of map->map for use in fill
+/* creates a copy of map->map for use in fill */
 void	copy_map(t_map *map)
 {
 	int	len;
@@ -56,7 +56,7 @@ void	free_map(t_map *map)
 		free_2d(map->map);
 }
 
-// modified ft_strdup to not include newline character in duplication
+/* modified ft_strdup to not include newline character in duplication */
 char	*ft_strdup_mod(const char *s1)
 {
 	size_t	len;

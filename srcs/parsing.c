@@ -6,13 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 11:09:23 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:08:41 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// returns the number of lines in the map element of the input file
+/* returns the number of lines in the map element of the input file */
 static int	map_line_count(char *arg)
 {
 	int		fd;
@@ -42,24 +42,7 @@ static int	map_line_count(char *arg)
 	return (no_of_lines);
 }
 
-// returns map width by returning the length of the longest string in the map
-// static size_t   map_width(t_map *map)
-// {
-//     int     i;
-//     size_t  len;
-
-//     i = 0;
-//     len = 0;
-//     while (map->map[i])
-//     {
-//         if (len < ft_strlen(map->map[i]))
-//             len = ft_strlen(map->map[i]);
-//         i++;
-//     }
-//     return (len);
-// }
-
-// checks that all necessary elements are present in map struct
+/* checks that all necessary elements are present in map struct */
 static void	all_elements_present(t_map *map)
 {
 	if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
@@ -68,7 +51,7 @@ static void	all_elements_present(t_map *map)
 		print_error("No map present", map);
 }
 
-// adds information to map struct from input file
+/* adds information to map struct from input file */
 static void	set_initial_map(char *arg, t_map *map)
 {
 	int		fd;
@@ -96,7 +79,7 @@ static void	set_initial_map(char *arg, t_map *map)
 	close(fd);
 }
 
-// initializes all map struct elements to NULL
+/* initializes all map struct elements to NULL */
 static void	elements_to_null(t_map *map, int no_of_lines)
 {
 	int	i;
@@ -111,8 +94,8 @@ static void	elements_to_null(t_map *map, int no_of_lines)
 	map->f = NULL;
 	map->c = NULL;
 	map->map = malloc((no_of_lines + 1) * sizeof(char *));
-	if (map->map == NULL) 
-    	print_error("Memory allocation failed", map);
+	if (map->map == NULL)
+		print_error("Memory allocation failed", map);
 	while (i < no_of_lines)
 	{
 		map->map[i] = NULL;

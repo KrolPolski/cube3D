@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:20 by tparratt          #+#    #+#             */
-/*   Updated: 2024/09/12 13:25:39 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:26:31 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	is_it_space(char *s, int i)
 	return (1);
 }
 
-// checks whether or not a string is composed entirely of whitespace characters
+/* checks whether or not a string is composed
+entirely of whitespace characters */
 int	all_whitespace(char *line)
 {
 	int	i;
@@ -35,6 +36,7 @@ int	all_whitespace(char *line)
 	return (1);
 }
 
+/* prints error message to stderr and frees the map if needed */
 void	print_error(char *str, t_map *map)
 {
 	ft_putendl_fd("Error", 2);
@@ -47,7 +49,7 @@ void	print_error(char *str, t_map *map)
 	exit(1);
 }
 
-// the number of strings contained in a 2d array
+/* the number of strings contained in a 2d array */
 size_t	len_2d(char **arr)
 {
 	size_t	len;
@@ -59,6 +61,7 @@ size_t	len_2d(char **arr)
 	return (len);
 }
 
+/* strchr that works from the end of the string instead of the beginning */
 char	*ft_strchr_rev(const char *s, int c)
 {
 	char	*str;

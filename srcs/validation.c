@@ -6,13 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/15 12:47:22 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:49:44 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// checks if all remaining lines are whitespace
+/* checks if all remaining lines are whitespace */
 static int	all_remaining(int i, char **arr)
 {
 	while (arr[i])
@@ -24,7 +24,7 @@ static int	all_remaining(int i, char **arr)
 	return (1);
 }
 
-// determines if there are any empty lines within the map element
+/* determines if there are any empty lines within the map element */
 static void	find_empty_line(t_map *map)
 {
 	int	i;
@@ -38,6 +38,7 @@ static void	find_empty_line(t_map *map)
 	}
 }
 
+/* checks for valid texture extension and whether the file can be opened */
 static void	check_textures(char *texture, t_map *map)
 {
 	int	fd;

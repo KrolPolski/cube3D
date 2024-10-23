@@ -6,12 +6,14 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 11:54:25 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:10:19 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* checks that we are within the map, character is not  wall,
+and hasn't been already filled */
 static size_t	valid_position(t_map *map, size_t i, size_t j)
 {
 	if (!map->copy[i])
@@ -25,7 +27,7 @@ static size_t	valid_position(t_map *map, size_t i, size_t j)
 	return (1);
 }
 
-// recursively fills the space within the map with 'a' characters
+/* recursively fills the space within the map with 'a' characters */
 static void	fill_if_valid(t_map *map, int i, int j)
 {
 	if (i < 0 || j < 0)
@@ -39,6 +41,7 @@ static void	fill_if_valid(t_map *map, int i, int j)
 	fill_if_valid(map, i, j + 1);
 }
 
+/* checks that there are no gaps in the walls by comparing the maps */
 static void	compare_maps(t_map *map)
 {
 	size_t	i;
@@ -67,6 +70,7 @@ static void	compare_maps(t_map *map)
 	}
 }
 
+/* sets the start position in the map struct */
 static void	get_start_pos(t_map *map)
 {
 	int	i;
@@ -90,7 +94,8 @@ static void	get_start_pos(t_map *map)
 	}
 }
 
-// gets the start position for fill_if_valid, copies map, fills if valid, compares maps
+/*gets the start position for fill_if_valid, 
+copies map, fills if valid, compares maps*/
 void	check_walls(t_map *map)
 {
 	get_start_pos(map);

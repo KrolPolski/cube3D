@@ -1,8 +1,8 @@
-NO textures/wall.png
-SO textures/wall.png
-WE textures/wall.png
-EA textures/wall.png
-SO textures/wall.png
+NO textures/CRATE_1A.PNG
+SO textures/BRICK_1B.PNG
+WE textures/BRICK_2A.PNG
+EA textures/DOOR_1A.PNG
+SO textures/BRICK_1B.PNG
 
 F 220,100,0
 C 225,30,0

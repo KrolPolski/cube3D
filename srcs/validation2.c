@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   validation2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:30:49 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/18 14:15:42 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:51:04 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int invalid_file_extension(char *arg, char *lower, char *upper)
+/* Returns 1 if the file extension is invalid or doesn't exist */
+int	invalid_file_extension(char *arg, char *lower, char *upper)
 {
-    char *str;
+	char	*str;
 
-    str = ft_strchr_rev(arg, '.');
-    if (str == NULL)
+	str = ft_strchr_rev(arg, '.');
+	if (str == NULL)
 		return (1);
-	if (ft_strncmp(str, lower, ft_strlen(lower)) != 0 && ft_strncmp(str, upper, ft_strlen(upper)) != 0)
+	if (ft_strncmp(str, lower, ft_strlen(lower)) != 0
+		&& ft_strncmp(str, upper, ft_strlen(upper)) != 0)
 		return (1);
 	return (0);
 }
@@ -31,6 +33,7 @@ static void	valid_chars(char c, t_map *map)
 		print_error("Invalid map character(s)", map);
 }
 
+/* throws an error if there is more than one start position */
 static int	start_positions(char c, int player_count, t_map *map)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -42,7 +45,7 @@ static int	start_positions(char c, int player_count, t_map *map)
 	return (player_count);
 }
 
-// determines whether or not the map element contains all valid characters
+/* determines whether or not the map element contains all valid characters */
 void	check_chars(t_map *map)
 {
 	int	i;
