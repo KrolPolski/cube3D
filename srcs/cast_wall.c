@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:45:27 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/23 16:00:59 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:03:33 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	draw_wall(t_cw *cw, t_info *info, unsigned int i)
 		}
 		mlx_put_pixel(info->img->world, i, cw->top_pixel + cw->pixels,
 			cw->color);
-		if (info->high_res && i < info->s_width - 1)
+		if (info->high_res && i < info->s_width - 3)
 		{
 			mlx_put_pixel(info->img->world, i + 1, cw->top_pixel + cw->pixels,
 				cw->color);
