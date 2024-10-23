@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_mlx.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:25:30 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/23 16:06:19 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:07:35 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	setup_mlx(t_map *map)
 	t_images	img;
 
 	init_screen_size(&info, &img, map);
-	info.mlx = mlx_init(info.s_width, info.s_height, "cub3d", true);
+	info.mlx = mlx_init(info.s_width, info.s_height, "cub3D", true);
 	if (!info.mlx)
 	{
 		ft_putstr_fd("MLX initialization error\n", 2);
