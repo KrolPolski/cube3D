@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 11:19:48 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:42:21 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# define BPP sizeof(int32_t)
+# define BPP 4
 # define EPSILON 1e-5
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/include/libft.h"
