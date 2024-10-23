@@ -6,13 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:25:46 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 13:01:43 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:04:26 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// creates a copy of map->map for use in fill
+/* creates a copy of map->map for use in fill */
 void	copy_map(t_map *map)
 {
 	int	len;
