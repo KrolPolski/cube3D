@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 12:05:40 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 11:42:21 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:30:04 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_info
 {
 	unsigned int	s_width;
 	unsigned int	s_height;
+	int				high_res;
 	mlx_t			*mlx;
 	t_map			*map;
 	t_images		*img;

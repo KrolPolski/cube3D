@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 10:46:43 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 17:37:56 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:00:33 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ void	raycaster(t_map *map, t_images *img, t_info *info)
 		info->ray_y = info->p_y;
 		ray_len = determine_ray_len(info, &inter, map);
 		cast_wall(ray_len, i, info, inter);
+		if (info->high_res && i < info->s_width - 3)
+		{
+			i += 3;
+			info->ray_orient += 3 * ((M_PI / 3.0)
+					* (1.0 / (double)(info->s_width)));
+		}
 		i++;
 		info->ray_orient += (M_PI / 3.0) * (1.0 / (double)info->s_width);
 	}
