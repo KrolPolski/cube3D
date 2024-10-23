@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 17:04:33 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:24:00 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ static int	get_start_pos(t_map *map)
 		j = 0;
 		while (map->copy[i][j])
 		{
-			if (map->copy[i][j] == '0')
+			if (map->copy[i][j] == '0'
+				|| map->copy[i][j] == 'N' || map->copy[i][j] == 'S'
+				|| map->copy[i][j] == 'E' || map->copy[i][j] == 'W')
 			{
 				map->start_i = i;
 				map->start_j = j;
