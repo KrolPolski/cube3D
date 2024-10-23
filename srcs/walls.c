@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 09:51:01 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 10:10:19 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 17:00:25 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	fill_if_valid(t_map *map, int i, int j)
 /* checks that there are no gaps in the walls by comparing the maps */
 static void	compare_maps(t_map *map)
 {
+	print_2d(map->copy);
 	size_t	i;
 	size_t	j;
 
@@ -70,37 +71,42 @@ static void	compare_maps(t_map *map)
 	}
 }
 
-/* sets the start position in the map struct */
-static void	get_start_pos(t_map *map)
+/* sets the flood fill start position */
+static int	get_start_pos(t_map *map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map->map[i])
+	while (map->copy[i])
 	{
 		j = 0;
-		while (map->map[i][j])
+		while (map->copy[i][j])
 		{
-			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
-				|| map->map[i][j] == 'E' || map->map[i][j] == 'W')
+			if (map->copy[i][j] == '0')
 			{
 				map->start_i = i;
 				map->start_j = j;
+				return (1);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
 
 /*gets the start position for fill_if_valid, 
-copies map, fills if valid, compares maps*/
+copies map, fills if valid, compares maps
+until there are no more 0s in the map */
 void	check_walls(t_map *map)
 {
-	get_start_pos(map);
 	copy_map(map);
-	fill_if_valid(map, map->start_i, map->start_j);
-	compare_maps(map);
+	while (get_start_pos(map))
+	{
+		get_start_pos(map);
+		fill_if_valid(map, map->start_i, map->start_j);
+		compare_maps(map);
+	}
 	free_2d(map->copy);
 }
