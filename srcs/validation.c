@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:13:27 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 09:49:44 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:15:19 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	check_textures(char *texture, t_map *map)
 	fd = open(texture, O_RDONLY);
 	if (fd == -1)
 		print_error(NULL, NULL);
+	close(fd);
 }
 
 void	validate(t_map *map)
