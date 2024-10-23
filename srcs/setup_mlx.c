@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:25:30 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/23 15:52:40 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:06:19 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,9 @@ void	handle_resize(int width, int height, void *param)
 	info->s_width = width;
 	info->s_height = height;
 	if (width > 1500)
-	{
 		info->high_res = 1;
-		ft_printf("High res mode activated\n");
-	}
 	else
-	{
 		info->high_res = 0;
-		ft_printf("High res mode deactivated\n");
-	}
 	info->map_width = width * info->map_size_factor;
 	info->map_height = height * info->map_size_factor;
 	mlx_resize_image(info->img->bg, width, height);
