@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 11:12:47 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 10:01:00 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:08:41 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	map_line_count(char *arg)
 	return (no_of_lines);
 }
 
-// checks that all necessary elements are present in map struct
+/* checks that all necessary elements are present in map struct */
 static void	all_elements_present(t_map *map)
 {
 	if (!map->no || !map->so || !map->ea || !map->we || !map->f || !map->c)
