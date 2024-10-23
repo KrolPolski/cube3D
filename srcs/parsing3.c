@@ -6,12 +6,13 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:11:02 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 13:10:19 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:45:41 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* converts the characters to integers */
 static int	*set(char **str_arr, t_map *map, int *int_arr)
 {
 	int	i;
@@ -38,7 +39,7 @@ static int	*set(char **str_arr, t_map *map, int *int_arr)
 	return (int_arr);
 }
 
-// creates int array by atoi-ing each string in ceiling and floor
+/* checks for too many ints before returning color int array */
 static int	*set_color_array(char *str, t_map *map)
 {
 	char	**str_arr;

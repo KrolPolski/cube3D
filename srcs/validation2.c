@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:30:49 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 13:22:12 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:51:04 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	valid_chars(char c, t_map *map)
 		print_error("Invalid map character(s)", map);
 }
 
+/* throws an error if there is more than one start position */
 static int	start_positions(char c, int player_count, t_map *map)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -44,7 +45,7 @@ static int	start_positions(char c, int player_count, t_map *map)
 	return (player_count);
 }
 
-// determines whether or not the map element contains all valid characters
+/* determines whether or not the map element contains all valid characters */
 void	check_chars(t_map *map)
 {
 	int	i;
