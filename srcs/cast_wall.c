@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:45:27 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/23 16:03:33 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/24 08:22:04 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	draw_wall(t_cw *cw, t_info *info, unsigned int i)
 	while (cw->pixels < cw->column_height - 1)
 	{
 		if (cw->top_pixel + cw->pixels > info->s_height - 1 || cw->top_pixel
-			+ cw->pixels < 0 || i > info->s_width || i < 0)
+			+ (int)cw->pixels < 0 || i > info->s_width)
 		{
 			break ;
 		}

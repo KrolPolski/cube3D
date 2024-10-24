@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:37:24 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 17:29:36 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/24 08:20:39 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ double	find_first_vertical(t_info *info)
 {
 	double	delta_x;
 	double	delta_y;
-	double	previous_position;
 	double	len;
 
-	previous_position = info->ray_x;
 	get_to_vert_sq_edge(info);
 	if (info->ray_orient >= M_PI_2 && info->ray_orient < 3 * M_PI_2)
 		delta_x = -fabs(info->verti_vec[0] - info->ray_x);

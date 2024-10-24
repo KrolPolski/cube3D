@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:39:49 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 17:28:39 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/24 08:22:49 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ double	find_first_horizontal(t_info *info)
 {
 	double	delta_x;
 	double	delta_y;
-	double	previous_position;
 	double	len;
 
-	previous_position = info->ray_y;
 	get_to_horiz_sq_edge(info);
 	if (info->ray_orient > M_PI)
 		delta_y = -fabs(info->horiz_vec[1] - info->ray_y);
