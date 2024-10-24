@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_mlx.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:25:30 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/24 08:37:34 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/24 10:32:35 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,21 @@ void	handle_resize(int width, int height, void *param)
 	info = (t_info *)param;
 	if (height > 50 && width > 50)
 	{
-	info->s_width = width;
-	info->s_height = height;
-	if (width > 1500)
-		info->high_res = 1;
-	else
-		info->high_res = 0;
-	info->map_width = width * info->map_size_factor;
-	info->map_height = height * info->map_size_factor;
-	mlx_resize_image(info->img->bg, width, height);
-	mlx_resize_image(info->img->world, width, height);
-	mlx_resize_image(info->img->map, info->map_width, info->map_height);
-	mlx_resize_image(info->img->plyr, info->map_width, info->map_height);
-	floor_and_ceiling(info->img, info, info->map);
-	draw_2d_map(info->mlx, info->map, info);}
+		info->s_width = width;
+		info->s_height = height;
+		if (width > 1500)
+			info->high_res = 1;
+		else
+			info->high_res = 0;
+		info->map_width = width * info->map_size_factor;
+		info->map_height = height * info->map_size_factor;
+		mlx_resize_image(info->img->bg, width, height);
+		mlx_resize_image(info->img->world, width, height);
+		mlx_resize_image(info->img->map, info->map_width, info->map_height);
+		mlx_resize_image(info->img->plyr, info->map_width, info->map_height);
+		floor_and_ceiling(info->img, info, info->map);
+		draw_2d_map(info->mlx, info->map, info);
+	}
 }
 
 /* Initial values set for window and minimap size */
