@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:31:09 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/24 08:18:13 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:29:15 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,23 @@ void	draw_2d_player(t_map *map, t_info *info)
 
 	px_x = info->p_x * map->sq;
 	px_y = info->p_y * map->sq;
-	i = 0;
-	k = 0;
+	i = -5;
+	k = -5;
 	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width
 		* info->img->plyr->height * BPP);
-	while (k < 10)
+	while (k < 5)
 	{
-		while (i < 10)
+		while (i < 5)
 		{
-			mlx_put_pixel(info->img->plyr, px_x + i, px_y + k,
-				get_rgba(255, 0, 0, 255));
+			if (px_x + i >= 0 && px_y + k >= 0)
+				mlx_put_pixel(info->img->plyr, px_x + i, px_y + k,
+					get_rgba(255, 0, 0, 255));
 			i++;
 		}
-		i = 0;
+		i = -5;
 		k++;
 	}
-	draw_fov(info, px_x + 5, px_y + 5);
+	draw_fov(info, px_x, px_y);
 }
 
 /* creates img instances and draws minimap */
