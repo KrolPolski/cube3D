@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:31:09 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/21 16:56:22 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/24 08:18:13 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	draw_2d_player(t_map *map, t_info *info)
 	int	i;
 	int	k;
 
-	px_x = info->p_x * map->sq - 5;
-	px_y = info->p_y * map->sq - 5;
+	px_x = info->p_x * map->sq;
+	px_y = info->p_y * map->sq;
 	i = 0;
 	k = 0;
 	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width
