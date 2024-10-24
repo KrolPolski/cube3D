@@ -6,7 +6,7 @@
 /*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:31:09 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/24 13:29:15 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:44:41 by rboudwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,18 @@ void	draw_2d_player(t_map *map, t_info *info)
 	int	px_y;
 	int	i;
 	int	k;
+	int plyr_sq;
 
 	px_x = info->p_x * map->sq;
 	px_y = info->p_y * map->sq;
-	i = -5;
-	k = -5;
+	plyr_sq = map->sq / 2;
+	i = -plyr_sq;
+	k = -plyr_sq;
 	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width
 		* info->img->plyr->height * BPP);
-	while (k < 5)
+	while (k < plyr_sq)
 	{
-		while (i < 5)
+		while (i < plyr_sq)
 		{
 			if (px_x + i >= 0 && px_y + k >= 0)
 				mlx_put_pixel(info->img->plyr, px_x + i, px_y + k,
