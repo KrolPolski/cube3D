@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:30:49 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/23 09:51:04 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:08:50 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	invalid_file_extension(char *arg, char *lower, char *upper)
 	str = ft_strchr_rev(arg, '.');
 	if (str == NULL)
 		return (1);
-	if (ft_strncmp(str, lower, ft_strlen(lower)) != 0
-		&& ft_strncmp(str, upper, ft_strlen(upper)) != 0)
+	if (ft_strncmp(str, lower, ft_strlen(lower) + 1) != 0
+		&& ft_strncmp(str, upper, ft_strlen(upper) + 1) != 0)
 		return (1);
 	return (0);
 }
