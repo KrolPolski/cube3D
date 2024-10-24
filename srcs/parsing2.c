@@ -6,7 +6,7 @@
 /*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 13:03:02 by tparratt          #+#    #+#             */
-/*   Updated: 2024/10/22 13:09:46 by tparratt         ###   ########.fr       */
+/*   Updated: 2024/10/24 10:48:23 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 (0) a non-map element, (1) an empty line, or (2) part of map element */
 int	identify_line(char *line)
 {
-	if (!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2)
-		|| !ft_strncmp(line, "EA", 2) || !ft_strncmp(line, "WE", 2)
-		|| !ft_strncmp(line, "F", 1) || !ft_strncmp(line, "C", 1))
+	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
+		|| !ft_strncmp(line, "EA ", 3) || !ft_strncmp(line, "WE ", 3)
+		|| !ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
 		return (0);
 	else if (!ft_strncmp(line, "\n", 1) || all_whitespace(line))
 		return (1);
