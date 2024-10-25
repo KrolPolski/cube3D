@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_2d_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rboudwin <rboudwin@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tparratt <tparratt@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:31:09 by rboudwin          #+#    #+#             */
-/*   Updated: 2024/10/24 13:44:41 by rboudwin         ###   ########.fr       */
+/*   Updated: 2024/10/25 10:13:39 by tparratt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,16 @@ void	draw_2d_player(t_map *map, t_info *info)
 	int	px_y;
 	int	i;
 	int	k;
-	int plyr_sq;
 
 	px_x = info->p_x * map->sq;
 	px_y = info->p_y * map->sq;
-	plyr_sq = map->sq / 2;
-	i = -plyr_sq;
-	k = -plyr_sq;
+	i = -(map->sq / 2);
+	k = -(map->sq / 2);
 	ft_memset(info->img->plyr->pixels, 0, info->img->plyr->width
 		* info->img->plyr->height * BPP);
-	while (k < plyr_sq)
+	while (k < (map->sq / 2))
 	{
-		while (i < plyr_sq)
+		while (i < (map->sq / 2))
 		{
 			if (px_x + i >= 0 && px_y + k >= 0)
 				mlx_put_pixel(info->img->plyr, px_x + i, px_y + k,
